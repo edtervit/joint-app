@@ -31,7 +31,7 @@ function App() {
 
   //handlers
 
-  const getPlaylistHandler = async () => {
+  const getPlaylistHandler = () => {
     let token = queryString.parse(window.location.search);
     let parsedToken = token.access_token;
     if (parsedToken) {
