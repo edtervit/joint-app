@@ -3,7 +3,7 @@ import queryString from "query-string";
 import { useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
-function Playlists({ theList, setTheList }) {
+function Playlists({ theList, setTheList, setIsLoggedIn }) {
   //state
   const [playlists, setPlaylists] = useState({});
   const [hasPlaylists, setHasPlaylists] = useState(false);
@@ -23,7 +23,8 @@ function Playlists({ theList, setTheList }) {
           setPlaylists(data);
           console.log(data);
           setHasPlaylists(true);
-        });
+        })
+        .catch((err) => setIsLoggedIn(false));
     }
   };
 
@@ -46,7 +47,6 @@ function Playlists({ theList, setTheList }) {
               <div className="aplaylist">
                 <input type="checkbox" />
                 {aPlaylist.name}
-                <p>{aPlaylist.id}</p>
               </div>
             ))}
         </div>
