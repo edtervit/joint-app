@@ -2,6 +2,7 @@ import "./App.css";
 import queryString from "query-string";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import TopTracks from "./components/TopTracks";
 
 function App() {
   //state
@@ -9,6 +10,7 @@ function App() {
   const [profile, setProfile] = useState({});
   const [playlists, setPlaylists] = useState({});
   const [hasPlaylists, setHasPlaylists] = useState(false);
+  const [topStuff, setTopStuff] = useState(null);
 
   //useeffect
   useEffect(() => {
@@ -51,7 +53,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Hello world</h1>
+      <h1>Joint Playlist</h1>
       {isLoggedIn ? (
         <div className="loggedIn">
           <h2>You're logged in, Hi {profile.display_name}!</h2>
@@ -63,12 +65,13 @@ function App() {
           >
             Get Playlists
           </button>
+          <TopTracks topStuff={topStuff} setTopStuff={setTopStuff} />
         </div>
       ) : (
         <div className="login">
           <button
             onClick={() =>
-              (window.location = "https://joint-backend.herokuapp.com/login")
+              (window.location = "https://joint-spotify.herokuapp.com/login")
             }
           >
             CLICK HERE TO LOGIN
@@ -82,6 +85,7 @@ function App() {
             <div className="aplaylist">
               <input type="checkbox" />
               {aPlaylist.name}
+              <p>{aPlaylist.id}</p>
             </div>
           ))}
         </div>
