@@ -76,13 +76,15 @@ function TopTracks({ topStuff, setTopStuff }) {
         <br />
         {topStuff
           ? topStuff.data.items.map((aSong) => (
-              <SongBox>
-                <img src={aSong.album.images[0].url} alt="album art" />
-                <p>
-                  <strong>{aSong.name}</strong> - {aSong.artists[0].name}
-                </p>
-                <audio src={aSong.preview_url} controls></audio>
-              </SongBox>
+              <Cont>
+                <SongBox>
+                  <img src={aSong.album.images[0].url} alt="album art" />
+                  <p>
+                    <strong>{aSong.name}</strong> - {aSong.artists[0].name}
+                  </p>
+                  <audio src={aSong.preview_url} controls></audio>
+                </SongBox>
+              </Cont>
             ))
           : ""}
       </div>
@@ -97,11 +99,22 @@ const ErrorText = styled.p`
 `;
 
 const SongBox = styled.div`
+  display: flex;
   img {
-    width: 50%;
+    width: 10%;
   }
-  margin: 2rem 1rem;
-  width: 25%;
-  display: inline-block;
-  padding: 3rem 1rem;
+  margin: 0.5rem 0rem;
+  width: 50%;
+
+  border-radius: 30px;
+  justify-content: space-between;
+  align-items: center;
+  background: #fafafa;
+`;
+
+const Cont = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  background: white;
 `;
