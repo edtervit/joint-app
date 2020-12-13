@@ -71,7 +71,7 @@ function App() {
         <div className="login">
           <button
             onClick={() =>
-              (window.location = "https://joint-spotify.herokuapp.com/login")
+              (window.location = "https://joint-backend.herokuapp.com/login")
             }
           >
             CLICK HERE TO LOGIN
