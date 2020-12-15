@@ -6,6 +6,7 @@ const model = {
   isLoggedIn: false,
   usersSelectedTracks: null,
   failedCookie: false,
+  token: null,
 
   //Thunks
   getProfile: thunk(async (actions) => {
@@ -20,7 +21,7 @@ const model = {
       const data = await res.json();
       console.log(data);
       actions.setProfile(data);
-      actions.logIn();
+      actions.logIn(parsedToken);
     } else {
       actions.failCookie();
     }
@@ -30,8 +31,9 @@ const model = {
   setProfile: action((state, profile) => {
     state.profile = profile;
   }),
-  logIn: action((state) => {
+  logIn: action((state, token) => {
     state.isLoggedIn = true;
+    state.token = token;
     state.failedCookie = false;
   }),
   logOut: action((state) => {
