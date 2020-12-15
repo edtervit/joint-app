@@ -1,28 +1,15 @@
 import React from "react";
-import queryString from "query-string";
 import { useEffect } from "react";
-import axios from "axios";
+import { useStoreActions } from "easy-peasy";
 
-function Login({ setIsLoggedIn, setProfile }) {
+function Login({ setIsLoggedIn }) {
+  const getProfile= useStoreActions(actions => actions.getProfile);
+
   //use effect
   useEffect(() => {
-    let token = queryString.parse(window.location.search);
-    let parsedToken = token.access_token;
-    if (parsedToken) {
-      axios
-        .get("https://api.spotify.com/v1/me", {
-          headers: {
-            Authorization: `Bearer ${parsedToken}`,
-          },
-        })
-        .then((data) => {
-          setProfile(data.data);
-          setIsLoggedIn(true);
-          console.log(data);
-        })
-        .catch((err) => setIsLoggedIn(false));
-    }
-  }, [setProfile, setIsLoggedIn]);
+    getProfile();
+    // eslint-disable-next-line
+  }, [ ]);
 
   return (
     <div>
