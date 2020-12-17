@@ -1,10 +1,10 @@
 import "./App.css";
 import { useStoreState } from "easy-peasy";
 
-import TopTracks from "./components/afterLogin/collectTracks/TopTracks";
-import Playlists from "./components/afterLogin/collectTracks/Playlists";
 import Login from "./components/beforeLogin/Login";
 import Profile from "./components/afterLogin/Profile";
+import Stepone from "./components/afterLogin/Stepone";
+import Yourtracks from "./components/afterLogin/Yourtracks";
 import logo from "./joint.png";
 
 function App() {
@@ -21,8 +21,8 @@ function App() {
         <div className="isloggedIn">
           <Profile />
           <br />
-          <Playlists />
-          <TopTracks />
+          <Stepone />
+          <Yourtracks />
         </div>
       ) : (
         <Login />

@@ -27,6 +27,23 @@ const model = {
     }
   }),
 
+  callAPI: thunk(async (actions, payload, { getStoreState }) => {
+    const storeState = getStoreState();
+    const token = storeState.token;
+    const url = payload.url;
+    const res = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (res.ok) {
+      const data = await res.json();
+      return data;
+    } else {
+      console.log(res);
+      actions.failCookie();
+    }
+  }),
   //actions
   setProfile: action((state, profile) => {
     state.profile = profile;
@@ -43,6 +60,29 @@ const model = {
   failCookie: action((state) => {
     state.isLoggedIn = false;
     state.failedCookie = true;
+  }),
+  addToList: action((state, payload) => {
+    let List = state.usersSelectedTracks;
+    let songs = payload;
+    console.log(songs);
+    console.log(List);
+    songs.map((item) => {
+      //check if list is empty
+      if (!List) {
+        const empty = { item };
+        state.usersSelectedTracks = empty;
+        console.log(
+          `This is the first song and I added the song ${item.name} by ${item.artist}`
+        );
+      } else {
+        //check if item is in the list
+        if (!Object.values(List).includes(item.uri)) {
+          console.log("song already exists in list");
+        } else {
+          console.log(`I added the song ${item.name} by ${item.artist}`);
+        }
+      }
+    });
   }),
 };
 
