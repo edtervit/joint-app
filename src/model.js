@@ -61,28 +61,23 @@ const model = {
     state.isLoggedIn = false;
     state.failedCookie = true;
   }),
+  clearList: action((state) => {
+    state.usersSelectedTracks = null;
+  }),
   addToList: action((state, payload) => {
     let List = state.usersSelectedTracks;
-    let songs = payload;
-    console.log(songs);
-    console.log(List);
-    songs.map((item) => {
-      //check if list is empty
-      if (!List) {
-        const empty = { item };
-        state.usersSelectedTracks = empty;
-        console.log(
-          `This is the first song and I added the song ${item.name} by ${item.artist}`
-        );
+    //check if list is empty
+    if (!List) {
+      //if first song to be added to list , create the array
+      const empty = [payload];
+      state.usersSelectedTracks = empty;
+    } else {
+      // check if payload is in the list
+      if (List.some((el) => el.uri === payload.uri)) {
       } else {
-        //check if item is in the list
-        if (!Object.values(List).includes(item.uri)) {
-          console.log("song already exists in list");
-        } else {
-          console.log(`I added the song ${item.name} by ${item.artist}`);
-        }
+        state.usersSelectedTracks.push(payload);
       }
-    });
+    }
   }),
 };
 

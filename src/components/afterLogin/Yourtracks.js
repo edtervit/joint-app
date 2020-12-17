@@ -1,13 +1,12 @@
 import React, { useState } from "react";
-import { useStoreState } from "easy-peasy";
+import { useStoreState, useStoreActions } from "easy-peasy";
 import styled from "styled-components";
 
 function Yourtracks() {
   //Local state
-  const [toggleList, setToggleList] = useState(false);
-  const usersSelectedTracks = useStoreState(
-    (state) => state.usersSelectedTracks
-  );
+  const [toggleList, setToggleList] = useState(true);
+  let usersSelectedTracks = useStoreState((state) => state.usersSelectedTracks);
+  const clearList = useStoreActions((action) => action.clearList);
 
   return (
     <TLdiv>
@@ -16,11 +15,22 @@ function Yourtracks() {
         These are the songs we will compare against your friend looking for
         matches.
       </p>
+      {usersSelectedTracks && <p>Total songs: {usersSelectedTracks.length}</p>}
+      <button onClick={() => clearList()}>Clear list</button>
       <button onClick={() => setToggleList(!toggleList)}>show/hide</button>
       {toggleList && (
         <div className="songs">
           {usersSelectedTracks ? (
-            <h2>your tracks here</h2>
+            usersSelectedTracks.map((track) => (
+              <div className="aTrack-cont">
+                <div className="aTrack">
+                  <img src={track.image} alt="" />
+                  <p>
+                    <strong>{track.name}</strong> by {track.artist}
+                  </p>
+                </div>
+              </div>
+            ))
           ) : (
             <h4>You haven't selected any tracks yet!</h4>
           )}
@@ -35,4 +45,23 @@ export default Yourtracks;
 const TLdiv = styled.div`
   background-color: #fafafa;
   padding: 1.5rem 0;
+  .songs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    .aTrack-cont {
+      width: 100%;
+      .aTrack {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 50%;
+        margin: 0 auto;
+        img {
+          width: 75px;
+        }
+      }
+    }
+  }
 `;
