@@ -29,7 +29,9 @@ function Login() {
           </div>
         )}
         <button
-          onClick={() => (window.location = "http://localhost:8888/login")}
+          onClick={() =>
+            (window.location = "https://joint-backend.herokuapp.com/login")
+          }
         >
           CLICK HERE TO LOGIN
         </button>
