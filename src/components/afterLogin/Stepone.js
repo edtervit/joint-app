@@ -99,7 +99,7 @@ function Stepone() {
           />
         </div>
         <div className="aOption">
-          <label htmlFor="TsYear">Top 50 played songs from past year</label>
+          <label htmlFor="TsYear">Top 50 played songs all time</label>
           <input
             onChange={() => {
               setTsYear(!TsYear);
