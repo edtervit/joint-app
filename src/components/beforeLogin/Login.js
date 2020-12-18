@@ -30,7 +30,7 @@ function Login() {
         )}
         <button
           onClick={() =>
-            (window.location = "https://joint-backend.herokuapp.com/login")
+            (window.location = `${process.env.REACT_APP_BACK_URL}/login`)
           }
         >
           CLICK HERE TO LOGIN
