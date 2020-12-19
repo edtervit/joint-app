@@ -17,13 +17,13 @@ function Steptwo() {
     };
 
     axios.post(`${process.env.REACT_APP_BACK_URL}/create`, newProfile);
-    console.log("Sent the profile to database, hopefuly...");
+    console.log("Saved tracklist to database.... hopefully.");
   };
 
   return (
     <div>
       <button onClick={() => sendToDbHandler(profile, usersSelectedTracks)}>
-        Send to DB
+        Save current tracklist to database.
       </button>
     </div>
   );

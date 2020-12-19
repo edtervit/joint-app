@@ -7,7 +7,7 @@ import Stepone from "./components/afterLogin/Stepone";
 import Yourtracks from "./components/afterLogin/Yourtracks";
 import logo from "./joint.png";
 import Steptwo from "./components/afterLogin/Steptwo";
-import SavedProfiles from "./components/afterLogin/SavedProfiles";
+import SavedTrackLists from "./components/afterLogin/SavedTrackLists";
 
 function App() {
   //state
@@ -25,7 +25,7 @@ function App() {
           <br />
           <Stepone />
           <Steptwo />
-          <SavedProfiles />
+          <SavedTrackLists />
           <Yourtracks />
         </div>
       ) : (

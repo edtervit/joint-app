@@ -7,6 +7,8 @@ const model = {
   usersSelectedTracks: null,
   failedCookie: false,
   token: null,
+  hasSavedTrackLists: false,
+  savedTrackLists: null,
 
   //Thunks
   getProfile: thunk(async (actions) => {
@@ -44,6 +46,22 @@ const model = {
       actions.failCookie();
     }
   }),
+
+  callDB: thunk(async (actions, payload) => {
+    const baseUrl = process.env.REACT_APP_BACK_URL;
+    const url = `${baseUrl}${payload.url}`;
+
+    const res = await fetch(url, {
+      method: `${payload.method}`,
+    });
+    if (res.ok) {
+      const data = await res.json();
+      return data;
+    } else {
+      console.log(res);
+    }
+  }),
+
   //actions
   setProfile: action((state, profile) => {
     state.profile = profile;
@@ -64,6 +82,14 @@ const model = {
   clearList: action((state) => {
     state.usersSelectedTracks = null;
   }),
+
+  setHasSavedTrackLists: action((state, value) => {
+    state.hasSavedTrackLists = value;
+  }),
+  setSavedTrackLists: action((state, value) => {
+    state.savedTrackLists = value;
+  }),
+
   addToList: action((state, payload) => {
     let List = state.usersSelectedTracks;
     //check if list is empty

@@ -27,22 +27,23 @@ function Stepone() {
     };
     //uses the callapi thunk action
     const spotifyResponse = await callAPI(params);
-
-    spotifyResponse.items.forEach((song) => {
-      const songName = song.name;
-      const songArtist = song.artists[0].name;
-      const songImage = song.album.images[0].url;
-      const songUri = song.uri;
-      const payload = {
-        name: songName,
-        artist: songArtist,
-        image: songImage,
-        uri: songUri,
-      };
-      //for each song use addtolist action to add it to overall list
-      addToList(payload);
-    });
-
+    console.log(spotifyResponse);
+    if (spotifyResponse) {
+      spotifyResponse.items.forEach((song) => {
+        const songName = song.name;
+        const songArtist = song.artists[0].name;
+        const songImage = song.album.images[0].url;
+        const songUri = song.uri;
+        const payload = {
+          name: songName,
+          artist: songArtist,
+          image: songImage,
+          uri: songUri,
+        };
+        //for each song use addtolist action to add it to overall list
+        addToList(payload);
+      });
+    }
     // const callRes = await callAPI(payload);
     // console.log(callRes);
   };
