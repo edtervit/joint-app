@@ -51,15 +51,12 @@ const model = {
     const baseUrl = process.env.REACT_APP_BACK_URL;
     const url = `${baseUrl}${payload.url}`;
 
-    const res = await fetch(url, {
-      method: `${payload.method}`,
-    });
-    if (res.ok) {
-      const data = await res.json();
-      return data;
-    } else {
-      console.log(res);
+    const res = await fetch(url, { method: `${payload.method}` });
+    if (!res.ok) {
+      return null;
     }
+    const data = await res.json();
+    return data;
   }),
 
   //actions

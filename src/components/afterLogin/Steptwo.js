@@ -10,13 +10,13 @@ function Steptwo() {
     const name = profile.display_name;
     const id = profile.id;
     const list = theList;
-    const newProfile = {
+    const newTrackList = {
       name: name,
       theList: list,
       id: id,
     };
 
-    axios.post(`${process.env.REACT_APP_BACK_URL}/create`, newProfile);
+    axios.post(`${process.env.REACT_APP_BACK_URL}/create`, newTrackList);
     console.log("Saved tracklist to database.... hopefully.");
   };
 
