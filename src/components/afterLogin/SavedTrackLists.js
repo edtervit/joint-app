@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { useStoreState, useStoreActions } from "easy-peasy";
 
@@ -36,6 +36,7 @@ function SavedTracklists() {
       setIsLoading(false);
     }
   };
+
   return (
     <div>
       {isLoading && <p>Loading..</p>}
@@ -44,15 +45,20 @@ function SavedTracklists() {
       </button>
       {hasSavedTrackLists ? (
         <div className="gotTrackLists">
+          <h2>You're saved track lists</h2>
           {savedTrackLists.map((TrackList) => {
-            return (
-              <div className="aTrackList">
-                <p>
-                  Your name is {TrackList.name}, your id is {TrackList.id} and
-                  the unique id for this TrackList is {TrackList._id}
-                </p>
-              </div>
-            );
+            if (TrackList) {
+              return (
+                <div className="aTrackList">
+                  <p>
+                    This track list has {TrackList.theList.length} songs. The
+                    unique id for this TrackList is {TrackList._id}
+                  </p>
+                </div>
+              );
+            } else {
+              return null;
+            }
           })}
         </div>
       ) : (

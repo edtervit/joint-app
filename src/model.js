@@ -29,9 +29,8 @@ const model = {
     }
   }),
 
-  callAPI: thunk(async (actions, payload, { getStoreState }) => {
-    const storeState = getStoreState();
-    const token = storeState.token;
+  callAPI: thunk(async (actions, payload) => {
+    const token = payload.token;
     const url = payload.url;
     const res = await fetch(url, {
       headers: {

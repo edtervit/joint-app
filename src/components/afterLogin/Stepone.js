@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-import { useStoreActions } from "easy-peasy";
+import { useStoreActions, useStoreState } from "easy-peasy";
 import styled from "styled-components";
 
 function Stepone() {
   const callAPI = useStoreActions((actions) => actions.callAPI);
   const addToList = useStoreActions((actions) => actions.addToList);
+
+  //state
+  let token = useStoreState((state) => state.token);
 
   //Song sources refs local states
   const [TsMonth, setTsMonth] = useState(false);
@@ -24,6 +27,7 @@ function Stepone() {
   const callAPIHandler = async (payload) => {
     const params = {
       url: `https://api.spotify.com/v1/me/top/tracks?time_range=${payload}&limit=50`,
+      token: token,
     };
     //uses the callapi thunk action
     const spotifyResponse = await callAPI(params);
