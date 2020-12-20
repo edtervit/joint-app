@@ -21,7 +21,7 @@ function Steptwo() {
     };
 
     axios
-      .post(`${process.env.REACT_APP_BACK_URL}/create`, newTrackList)
+      .post(`${process.env.REACT_APP_BACK_URL}/trackLists/create`, newTrackList)
       .then((response) => {
         if (response.ok) {
           setFailedSaving(false);

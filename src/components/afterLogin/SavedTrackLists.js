@@ -21,7 +21,7 @@ function SavedTracklists() {
   const getSavedTrackLists = async (id) => {
     setIsLoading(true);
     let payload = {
-      url: `/getTrackLists/${id}`,
+      url: `/tracklists/getTrackLists/${id}`,
       method: "GET",
     };
     const res = await callDB(payload);
