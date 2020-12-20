@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useStoreState, useStoreActions } from "easy-peasy";
 import styled from "styled-components";
+import Steptwo from "./Steptwo";
 
 function Yourtracks() {
   //Local state
@@ -15,6 +16,7 @@ function Yourtracks() {
         These are the songs we will compare against your friend looking for
         matches.
       </p>
+      {usersSelectedTracks && <Steptwo />}
       {usersSelectedTracks && <p>Total songs: {usersSelectedTracks.length}</p>}
       <button onClick={() => clearList()}>Clear list</button>
       <button onClick={() => setToggleList(!toggleList)}>show/hide</button>

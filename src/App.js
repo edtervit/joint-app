@@ -6,11 +6,12 @@ import Profile from "./components/afterLogin/Profile";
 import Stepone from "./components/afterLogin/Stepone";
 import Yourtracks from "./components/afterLogin/Yourtracks";
 import logo from "./joint.png";
-import Steptwo from "./components/afterLogin/Steptwo";
+
 import SavedTrackLists from "./components/afterLogin/SavedTrackLists";
 
 function App() {
   //state
+
   const isLogged = useStoreState((state) => state.isLoggedIn);
   console.log("Is logged in: " + isLogged);
 
@@ -24,7 +25,6 @@ function App() {
           <Profile />
           <br />
           <Stepone />
-          <Steptwo />
           <SavedTrackLists />
           <Yourtracks />
         </div>
