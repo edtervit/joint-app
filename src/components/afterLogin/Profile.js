@@ -7,7 +7,9 @@ function Profile() {
   return (
     <div>
       <h2>You're logged in, Hi {profile.display_name}!</h2>
-      {profile.images[0].url && <img src={profile.images[0].url} alt="" />}
+      {profile.images.length > 0 && profile.images[0].url && (
+        <img src={profile.images[0].url} alt="" />
+      )}
       <br />
       <button onClick={() => logOut()}>Logout</button>
     </div>
