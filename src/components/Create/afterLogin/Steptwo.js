@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useStoreState, useStoreActions } from "easy-peasy";
 import axios from "axios";
-import lemonke from "../../Images/lemonke.jpg";
+import lemonke from "../../../Images/lemonke.jpg";
 
 function Steptwo() {
   let usersSelectedTracks = useStoreState((state) => state.usersSelectedTracks);
