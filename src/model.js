@@ -56,8 +56,8 @@ const model = {
     if (!res.ok) {
       return null;
     }
-    const data = await res.json();
-    return data;
+
+    return res;
   }),
 
   //actions
