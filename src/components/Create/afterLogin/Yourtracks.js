@@ -24,7 +24,7 @@ function Yourtracks() {
         <div className="songs">
           {usersSelectedTracks ? (
             usersSelectedTracks.map((track) => (
-              <div className="aTrack-cont">
+              <div className="aTrack-cont" key={track.uri}>
                 <div className="aTrack">
                   <img src={track.image} alt="" />
                   <p>

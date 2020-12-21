@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import { useStoreState, useStoreActions } from "easy-peasy";
+import { Link } from "react-router-dom";
 
 function SavedTracklists() {
   //state
@@ -20,6 +21,31 @@ function SavedTracklists() {
   let profile = useStoreState((state) => state.profile);
   const hasSavedTrackLists = useStoreState((state) => state.hasSavedTrackLists);
   let savedTrackLists = useStoreState((state) => state.savedTrackLists);
+
+  const amountOfSavedTrackLists = useStoreState(
+    (state) => state.amountOfSavedTrackLists
+  );
+
+  const deleteTrackHandler = async (id) => {
+    let payload = {
+      url: `/tracklists/deleteTrackList/${id}`,
+      method: "DELETE",
+    };
+    const res = await callDB(payload);
+
+    if (res) {
+      setHasSavedTrackLists(false);
+      if (amountOfSavedTrackLists === 1) {
+        setSavedTrackLists([]);
+      } else if (amountOfSavedTrackLists !== 1) {
+        setHasSavedTrackLists(true);
+      }
+      setAmountOfSavedTrackLists();
+      console.log(res);
+    } else {
+      console.log("Failed to delete!");
+    }
+  };
 
   useEffect(() => {
     const getSavedTrackLists = async (id) => {
@@ -48,7 +74,7 @@ function SavedTracklists() {
   return (
     <div>
       {isLoading && <p>Loading..</p>}
-      {savedTrackLists ? (
+      {savedTrackLists && hasSavedTrackLists ? (
         <div className="gotTrackLists">
           <h2>You're saved track lists</h2>
           <p>
@@ -59,13 +85,22 @@ function SavedTracklists() {
           {savedTrackLists.map((TrackList) => {
             if (TrackList) {
               return (
-                <div className="aTrackList">
+                <div className="aTrackList" key={TrackList._id}>
                   <p>
                     This track list has {TrackList.theList.length} songs. The
-                    unique id for this TrackList is {TrackList._id}, it was
-                    created on {TrackList.createdAt.slice(0, -14)} at{" "}
+                    unique id for this TrackList is , it was created on{" "}
+                    {TrackList.createdAt.slice(0, -14)} at{" "}
                     {TrackList.createdAt.slice(11, 16)}
                   </p>
+                  <p>
+                    Copy this link to share with friends:{" "}
+                    <Link to={`share/${TrackList._id}`} target="_blank">
+                      {process.env.REACT_APP_FRONT_URL}/share/{TrackList._id}
+                    </Link>
+                  </p>
+                  <button onClick={() => deleteTrackHandler(TrackList._id)}>
+                    Delete this tracklist
+                  </button>
                 </div>
               );
             } else {

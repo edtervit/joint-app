@@ -1,15 +1,15 @@
 import "./App.css";
 
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
-import ASavedTracklist from "./components/share/ASavedTracklist";
+import FriendsSavedTracklist from "./components/share/FriendsSavedTracklist";
 import Create from "./components/Create/Create";
 
 function App() {
   return (
     <div>
       <Router>
-        <Route path="/share/:trackListID" component={ASavedTracklist} />
+        <Route path="/share/:trackListID" component={FriendsSavedTracklist} />
         <Route path="/" exact component={Create} />
       </Router>
     </div>

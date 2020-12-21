@@ -10,6 +10,7 @@ const model = {
   hasSavedTrackLists: false,
   savedTrackLists: null,
   amountOfSavedTrackLists: 0,
+  friendsTrackList: null,
 
   //Thunks
   getProfile: thunk(async (actions) => {
@@ -86,8 +87,11 @@ const model = {
   setSavedTrackLists: action((state, value) => {
     state.savedTrackLists = value;
   }),
-  setAmountOfSavedTrackLists: action((state) => {
+  setAmountOfSavedTrackLists: action((state, value) => {
     state.amountOfSavedTrackLists = state.savedTrackLists.length;
+  }),
+  setFriendsTrackList: action((state, value) => {
+    state.friendsTrackList = value;
   }),
 
   addToList: action((state, payload) => {
