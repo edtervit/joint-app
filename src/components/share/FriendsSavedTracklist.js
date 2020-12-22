@@ -2,17 +2,23 @@ import React, { useState, useEffect } from "react";
 import { useStoreActions, useStoreState } from "easy-peasy";
 import styled from "styled-components";
 import lemonke from "../../Images/lemonke.jpg";
+import { Redirect } from "react-router-dom";
 
 function FriendsSavedTracklist({ match }) {
   //state
   const [isValid, setIsVaild] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [redirect, setRedirect] = useState(false);
 
   //easy state
   const friendsTrackList = useStoreState((state) => state.friendsTrackList);
+
   //actions
   const setFriendsTrackList = useStoreActions(
     (actions) => actions.setFriendsTrackList
+  );
+  const setPersistFriendsTrackList = useStoreActions(
+    (actions) => actions.setPersistFriendsTrackList
   );
 
   //thunk
@@ -43,8 +49,22 @@ function FriendsSavedTracklist({ match }) {
     // eslint-disable-next-line
   }, [params]);
 
+  const compareTracksHandler = async (list) => {
+    console.log(list);
+    await setPersistFriendsTrackList(list);
+    setRedirect(true);
+  };
+
   return (
     <div>
+      {redirect && (
+        <Redirect
+          to={{
+            pathname: "/",
+            state: { fromShare: "fromShare", fromWho: friendsTrackList.name },
+          }}
+        />
+      )}
       {!isValid && !isLoading && (
         <div className="failed">
           <h1>Uh oh stinky!</h1>
@@ -58,6 +78,9 @@ function FriendsSavedTracklist({ match }) {
       {isValid && (
         <TLdiv>
           <h1>This tracklist belongs to {friendsTrackList.name}!</h1>
+          <button onClick={() => compareTracksHandler(friendsTrackList)}>
+            Compare this tracklist to mine!
+          </button>
           <div className="songs">
             {friendsTrackList &&
               friendsTrackList.theList.map((track, index) => (

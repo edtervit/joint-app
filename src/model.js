@@ -1,4 +1,4 @@
-import { action, thunk } from "easy-peasy";
+import { action, thunk, persist } from "easy-peasy";
 import queryString from "query-string";
 
 const model = {
@@ -11,11 +11,20 @@ const model = {
   savedTrackLists: null,
   amountOfSavedTrackLists: 0,
   friendsTrackList: null,
+  persistFriendsTrackList: persist(null),
+  fromSharePage: false,
 
   //Thunks
   getProfile: thunk(async (actions) => {
-    let token = queryString.parse(window.location.search);
-    let parsedToken = token.access_token;
+    let params = queryString.parse(window.location.search);
+    let parsedToken = params.access_token;
+    let urlState = params.state;
+    if (urlState === "fromShare") {
+      actions.setFromSharePage(true);
+    } else if (urlState === "normal") {
+      actions.setPersistFriendsTrackList({});
+      actions.setFromSharePage(false);
+    }
     const res = await fetch("https://api.spotify.com/v1/me", {
       headers: {
         Authorization: `Bearer ${parsedToken}`,
@@ -92,6 +101,14 @@ const model = {
   }),
   setFriendsTrackList: action((state, value) => {
     state.friendsTrackList = value;
+  }),
+
+  setPersistFriendsTrackList: action((state, value) => {
+    state.persistFriendsTrackList = value;
+  }),
+
+  setFromSharePage: action((state, value) => {
+    state.fromSharePage = value;
   }),
 
   addToList: action((state, payload) => {

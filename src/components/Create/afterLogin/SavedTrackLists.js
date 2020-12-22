@@ -7,6 +7,7 @@ function SavedTracklists() {
   //state
   const [isLoading, setIsLoading] = useState(false);
 
+  //actions
   const callDB = useStoreActions((actions) => actions.callDB);
   const setHasSavedTrackLists = useStoreActions(
     (actions) => actions.setHasSavedTrackLists
@@ -18,32 +19,39 @@ function SavedTracklists() {
     (actions) => actions.setAmountOfSavedTrackLists
   );
 
+  //easy state
   let profile = useStoreState((state) => state.profile);
   const hasSavedTrackLists = useStoreState((state) => state.hasSavedTrackLists);
   let savedTrackLists = useStoreState((state) => state.savedTrackLists);
-
   const amountOfSavedTrackLists = useStoreState(
     (state) => state.amountOfSavedTrackLists
   );
+  const persistFriendsTrackList = useStoreState(
+    (state) => state.persistFriendsTrackList
+  );
 
+  //handlers
   const deleteTrackHandler = async (id) => {
-    let payload = {
-      url: `/tracklists/deleteTrackList/${id}`,
-      method: "DELETE",
-    };
-    const res = await callDB(payload);
+    const check = window.confirm("You sure you want to delete this?");
 
-    if (res) {
-      setHasSavedTrackLists(false);
-      if (amountOfSavedTrackLists === 1) {
-        setSavedTrackLists([]);
-      } else if (amountOfSavedTrackLists !== 1) {
-        setHasSavedTrackLists(true);
+    if (check) {
+      let payload = {
+        url: `/tracklists/deleteTrackList/${id}`,
+        method: "DELETE",
+      };
+      const res = await callDB(payload);
+
+      if (res) {
+        setHasSavedTrackLists(false);
+        if (amountOfSavedTrackLists === 1) {
+          setSavedTrackLists([]);
+        } else if (amountOfSavedTrackLists !== 1) {
+          setHasSavedTrackLists(true);
+        }
+        setAmountOfSavedTrackLists();
+      } else {
+        console.log("Failed to delete!");
       }
-      setAmountOfSavedTrackLists();
-      console.log(res);
-    } else {
-      console.log("Failed to delete!");
     }
   };
 
@@ -71,6 +79,10 @@ function SavedTracklists() {
     getSavedTrackLists(profile.id);
     // eslint-disable-next-line
   }, [profile.id, hasSavedTrackLists]);
+
+  useEffect(() => {
+    return () => {};
+  }, [persistFriendsTrackList]);
   return (
     <div>
       {isLoading && <p>Loading..</p>}
@@ -98,6 +110,11 @@ function SavedTracklists() {
                       {process.env.REACT_APP_FRONT_URL}/share/{TrackList._id}
                     </Link>
                   </p>
+                  {Object.keys(persistFriendsTrackList).length !== 0 && (
+                    <div className="hasPList">
+                      <button>Compare this tracklist to friends</button>
+                    </div>
+                  )}
                   <button onClick={() => deleteTrackHandler(TrackList._id)}>
                     Delete this tracklist
                   </button>

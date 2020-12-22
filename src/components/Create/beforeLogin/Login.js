@@ -1,12 +1,29 @@
-import React from "react";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useStoreActions, useStoreState } from "easy-peasy";
 import queryString from "query-string";
+import { useHistory } from "react-router-dom";
 
 function Login() {
+  const history = useHistory();
+  const browserState = history.location.state;
+
+  //local state
+  let who = null;
+  let state = "normal";
+
+  if (browserState) {
+    state = browserState.fromShare;
+    who = browserState.fromWho;
+  }
+
+  //easy actions
   const getProfile = useStoreActions((actions) => actions.getProfile);
+
+  //easy peasyy state
   const failedCookie = useStoreState((state) => state.failedCookie);
+
   //use effect
+
   useEffect(() => {
     if (!failedCookie) {
       let token = queryString.parse(window.location.search);
@@ -28,9 +45,10 @@ function Login() {
             </p>
           </div>
         )}
+        {who && <p>Please login to compare music with {who}!</p>}
         <button
           onClick={() =>
-            (window.location = `${process.env.REACT_APP_BACK_URL}/login`)
+            (window.location = `${process.env.REACT_APP_BACK_URL}/login/${state}`)
           }
         >
           CLICK HERE TO LOGIN
