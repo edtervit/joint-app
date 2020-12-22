@@ -1,14 +1,24 @@
 import React from "react";
+import { useStoreState } from "easy-peasy";
 
-function Compare({ match }) {
-  const trackList1 = match.params.trackList1;
-  const trackList2 = match.params.trackList2;
+import { Redirect } from "react-router-dom";
+import BothTrackLists from "./BothTrackLists";
+
+function Compare() {
+  //easy state
+  let myTrackListToCompare = useStoreState(
+    (state) => state.myTrackListToCompare
+  );
+  let persistFriendsTrackList = useStoreState(
+    (state) => state.persistFriendsTrackList
+  );
 
   return (
     <div>
+      {!myTrackListToCompare && <Redirect to="/" />}
+      {!persistFriendsTrackList && <Redirect to="/" />}
       <h1>Compare page</h1>
-      <p>Track List 1: {trackList1}</p>
-      <p>Track List 2: {trackList2}</p>
+      {myTrackListToCompare && persistFriendsTrackList && <BothTrackLists />}
     </div>
   );
 }

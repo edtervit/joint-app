@@ -12,6 +12,7 @@ const model = {
   amountOfSavedTrackLists: 0,
   friendsTrackList: null,
   persistFriendsTrackList: persist(null),
+  myTrackListToCompare: null,
   fromSharePage: false,
 
   //Thunks
@@ -105,6 +106,9 @@ const model = {
 
   setPersistFriendsTrackList: action((state, value) => {
     state.persistFriendsTrackList = value;
+  }),
+  setMyTrackListToCompare: action((state, value) => {
+    state.myTrackListToCompare = value;
   }),
 
   setFromSharePage: action((state, value) => {

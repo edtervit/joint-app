@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import { useStoreState, useStoreActions } from "easy-peasy";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 function SavedTracklists() {
   //state
@@ -17,6 +17,9 @@ function SavedTracklists() {
   );
   const setAmountOfSavedTrackLists = useStoreActions(
     (actions) => actions.setAmountOfSavedTrackLists
+  );
+  const setMyTrackListToCompare = useStoreActions(
+    (actions) => actions.setMyTrackListToCompare
   );
 
   //easy state
@@ -53,6 +56,12 @@ function SavedTracklists() {
         console.log("Failed to delete!");
       }
     }
+  };
+
+  const history = useHistory();
+  const compareTracksHandler = (index) => {
+    setMyTrackListToCompare(savedTrackLists[index]);
+    history.push("/compare");
   };
 
   useEffect(() => {
@@ -94,7 +103,7 @@ function SavedTracklists() {
               You have {savedTrackLists.length}/ 3 saved track lists
             </strong>
           </p>
-          {savedTrackLists.map((TrackList) => {
+          {savedTrackLists.map((TrackList, index) => {
             if (TrackList) {
               return (
                 <div className="aTrackList" key={TrackList._id}>
@@ -112,7 +121,9 @@ function SavedTracklists() {
                   </p>
                   {Object.keys(persistFriendsTrackList).length !== 0 && (
                     <div className="hasPList">
-                      <button>Compare this tracklist to friends</button>
+                      <button onClick={() => compareTracksHandler(index)}>
+                        Compare this tracklist to friends
+                      </button>
                     </div>
                   )}
                   <button onClick={() => deleteTrackHandler(TrackList._id)}>

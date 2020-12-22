@@ -11,7 +11,7 @@ function App() {
     <div>
       <Router>
         <Route path="/share/:trackListID" component={FriendsSavedTracklist} />
-        <Route path="/compare" exact component={Compare} />
+        <Route path="/compare" component={Compare} />
         <Route path="/" exact component={Create} />
       </Router>
     </div>
