@@ -59,6 +59,26 @@ const model = {
     }
   }),
 
+  postAPI: thunk(async (actions, payload) => {
+    const token = payload.token;
+    const url = payload.url;
+    const res = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify(payload.body),
+    });
+    if (res.ok) {
+      const data = await res.json();
+      return data;
+    } else {
+      const dataFailed = await res.json();
+      return dataFailed;
+    }
+  }),
+
   callDB: thunk(async (actions, payload) => {
     const baseUrl = process.env.REACT_APP_BACK_URL;
     const url = `${baseUrl}${payload.url}`;

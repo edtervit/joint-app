@@ -1,21 +1,25 @@
 import React, { useState } from "react";
 import { useStoreState } from "easy-peasy";
 import styled from "styled-components";
+import MakePlaylist from "./MakePlaylist";
 
 function JointList() {
   //normal state
   const [toggleList1, setToggleList1] = useState(true);
   //easy peasy state
   let jointList = useStoreState((state) => state.jointList);
-  console.log(jointList);
+
   return (
     <div>
       <h1>Joint list here</h1>
-      <h3>
-        {jointList.userCreatorName}'s and {jointList.userFriendName}'s joint
-        playlist
-      </h3>
+
       <TLdiv>
+        <h3>
+          {jointList.userCreatorName}'s and {jointList.userFriendName}'s joint
+          playlist
+        </h3>
+        <p>You have {jointList.theList.length} songs in common!</p>
+        {jointList && <MakePlaylist />}
         <button onClick={() => setToggleList1(!toggleList1)}>show/hide</button>
         {toggleList1 && (
           <div className="songs">
