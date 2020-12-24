@@ -14,6 +14,7 @@ const model = {
   persistFriendsTrackList: persist(null),
   myTrackListToCompare: null,
   fromSharePage: false,
+  jointList: null,
 
   //Thunks
   getProfile: thunk(async (actions) => {
@@ -113,6 +114,10 @@ const model = {
 
   setFromSharePage: action((state, value) => {
     state.fromSharePage = value;
+  }),
+
+  setJointList: action((state, value) => {
+    state.jointList = value;
   }),
 
   addToList: action((state, payload) => {
