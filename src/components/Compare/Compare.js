@@ -30,6 +30,11 @@ function Compare() {
         }
       });
     } else {
+      yours.forEach((i) => {
+        if (theirs.some((me) => me.uri === i.uri)) {
+          jointList.push(i);
+        }
+      });
     }
     const final = {
       theList: jointList,

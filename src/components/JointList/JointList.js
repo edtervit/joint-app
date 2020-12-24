@@ -7,9 +7,14 @@ function JointList() {
   const [toggleList1, setToggleList1] = useState(true);
   //easy peasy state
   let jointList = useStoreState((state) => state.jointList);
+  console.log(jointList);
   return (
     <div>
       <h1>Joint list here</h1>
+      <h3>
+        {jointList.userCreatorName}'s and {jointList.userFriendName}'s joint
+        playlist
+      </h3>
       <TLdiv>
         <button onClick={() => setToggleList1(!toggleList1)}>show/hide</button>
         {toggleList1 && (
