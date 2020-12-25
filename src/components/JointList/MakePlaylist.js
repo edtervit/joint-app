@@ -63,7 +63,7 @@ function MakePlaylist() {
     <div>
       {!passedCreating && (
         <button onClick={() => createJointPlaylist()}>
-          Create Joint Playlist on Spotify
+          Save playlist to my spotify
         </button>
       )}
       {failedCreating && (

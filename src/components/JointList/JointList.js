@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useStoreState } from "easy-peasy";
 import styled from "styled-components";
 import MakePlaylist from "./MakePlaylist";
+import SaveJointPlaylist from "./SaveJointPlaylist";
 
 function JointList() {
   //normal state
@@ -20,6 +21,7 @@ function JointList() {
         </h3>
         <p>You have {jointList.theList.length} songs in common!</p>
         {jointList && <MakePlaylist />}
+        {jointList && <SaveJointPlaylist />}
         <button onClick={() => setToggleList1(!toggleList1)}>show/hide</button>
         {toggleList1 && (
           <div className="songs">
