@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { useStoreState, useStoreActions } from "easy-peasy";
 import styled from "styled-components";
 import Steptwo from "./Steptwo";
 
 function Yourtracks() {
   //Local state
-  const [toggleList, setToggleList] = useState(true);
+
   let usersSelectedTracks = useStoreState((state) => state.usersSelectedTracks);
   const clearList = useStoreActions((action) => action.clearList);
 
@@ -18,26 +18,24 @@ function Yourtracks() {
       </p>
       {usersSelectedTracks && <Steptwo />}
       {usersSelectedTracks && <p>Total songs: {usersSelectedTracks.length}</p>}
-      <button onClick={() => clearList()}>Clear list</button>
-      <button onClick={() => setToggleList(!toggleList)}>show/hide</button>
-      {toggleList && (
-        <div className="songs">
-          {usersSelectedTracks ? (
-            usersSelectedTracks.map((track) => (
-              <div className="aTrack-cont" key={track.uri}>
-                <div className="aTrack">
-                  <img src={track.image} alt="" />
-                  <p>
-                    <strong>{track.name}</strong> by {track.artist}
-                  </p>
-                </div>
+      <button onClick={() => clearList()}>Not happy? Go Back</button>
+      <div className="songs">
+        {usersSelectedTracks ? (
+          usersSelectedTracks.map((track) => (
+            <div className="aTrack-cont" key={track.uri}>
+              <div className="aTrack">
+                <img src={track.image} alt="" />
+                <p>
+                  <strong>{track.name}</strong> by {track.artist}
+                </p>
               </div>
-            ))
-          ) : (
-            <h4>You haven't selected any tracks yet!</h4>
-          )}
-        </div>
-      )}
+            </div>
+          ))
+        ) : (
+          <h4>You haven't selected any tracks yet!</h4>
+        )}
+      </div>
+      )
     </TLdiv>
   );
 }

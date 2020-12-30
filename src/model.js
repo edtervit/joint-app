@@ -4,7 +4,14 @@ import queryString from "query-string";
 const model = {
   profile: null,
   isLoggedIn: false,
+
+  //////Profile Builder/////
   usersSelectedTracks: null,
+  isGettingData: false,
+  gotAllData: false,
+  //Top Songs//
+  gotTopSongs: false,
+
   failedCookie: false,
   token: null,
   hasSavedTrackLists: false,
@@ -34,7 +41,6 @@ const model = {
     });
     if (res.ok) {
       const data = await res.json();
-      console.log(data);
       actions.setProfile(data);
       actions.logIn(parsedToken);
     } else {
@@ -90,8 +96,9 @@ const model = {
     const data = res.json();
     return data;
   }),
-
-  //actions
+  ////////////////
+  //actions//////
+  ////////////////
   setProfile: action((state, profile) => {
     state.profile = profile;
   }),
@@ -100,6 +107,7 @@ const model = {
     state.token = token;
     state.failedCookie = false;
   }),
+
   logOut: action((state) => {
     state.isLoggedIn = false;
     document.location.href = "../";
@@ -110,6 +118,20 @@ const model = {
   }),
   clearList: action((state) => {
     state.usersSelectedTracks = null;
+    state.gotAllData = false;
+    state.gotTopSongs = false;
+  }),
+
+  ///Profile Builder///
+  setIsGettingData: action((state, value) => {
+    state.isGettingData = value;
+  }),
+  setGotAllData: action((state, value) => {
+    state.gotAllData = value;
+  }),
+
+  setGotTopSongs: action((state, value) => {
+    state.gotTopSongs = value;
   }),
 
   setHasSavedTrackLists: action((state, value) => {

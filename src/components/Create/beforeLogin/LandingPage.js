@@ -3,7 +3,7 @@ import { useStoreActions, useStoreState } from "easy-peasy";
 import queryString from "query-string";
 import { useHistory } from "react-router-dom";
 
-function Login() {
+function LandingPage() {
   const history = useHistory();
   const browserState = history.location.state;
 
@@ -58,4 +58,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default LandingPage;

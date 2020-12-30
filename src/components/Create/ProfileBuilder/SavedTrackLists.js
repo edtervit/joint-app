@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 
 import { useStoreState, useStoreActions } from "easy-peasy";
 import { Link, useHistory } from "react-router-dom";
 
 function SavedTracklists() {
   //state
-  const [isLoading, setIsLoading] = useState(false);
 
   //actions
   const callDB = useStoreActions((actions) => actions.callDB);
@@ -23,7 +22,7 @@ function SavedTracklists() {
   );
 
   //easy state
-  let profile = useStoreState((state) => state.profile);
+
   const hasSavedTrackLists = useStoreState((state) => state.hasSavedTrackLists);
   let savedTrackLists = useStoreState((state) => state.savedTrackLists);
   const amountOfSavedTrackLists = useStoreState(
@@ -65,36 +64,11 @@ function SavedTracklists() {
   };
 
   useEffect(() => {
-    const getSavedTrackLists = async (id) => {
-      setIsLoading(true);
-      let payload = {
-        url: `/tracklists/getTrackLists/${id}`,
-        method: "GET",
-      };
-      const res = await callDB(payload);
-
-      if (res && res.length > 0) {
-        setIsLoading(false);
-        setSavedTrackLists(res);
-        setHasSavedTrackLists(true);
-        setAmountOfSavedTrackLists();
-        console.log(res);
-      } else {
-        console.log("Database error or savedtracklists is empty array");
-        setHasSavedTrackLists(false);
-        setIsLoading(false);
-      }
-    };
-    getSavedTrackLists(profile.id);
-    // eslint-disable-next-line
-  }, [profile.id, hasSavedTrackLists]);
-
-  useEffect(() => {
     return () => {};
   }, [persistFriendsTrackList]);
+
   return (
     <div>
-      {isLoading && <p>Loading..</p>}
       {savedTrackLists && hasSavedTrackLists ? (
         <div className="gotTrackLists">
           <h2>You're saved track lists</h2>

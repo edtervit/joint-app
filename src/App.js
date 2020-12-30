@@ -3,7 +3,7 @@ import "./App.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import FriendsSavedTracklist from "./components/share/FriendsSavedTracklist";
-import Create from "./components/Create/Create";
+import Brain from "./components/Create/Brain";
 import Compare from "./components/Compare/Compare";
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
       <Router>
         <Route path="/share/:trackListID" component={FriendsSavedTracklist} />
         <Route path="/compare" component={Compare} />
-        <Route path="/" exact component={Create} />
+        <Route path="/" exact component={Brain} />
       </Router>
     </div>
   );
