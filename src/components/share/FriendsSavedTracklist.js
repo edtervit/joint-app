@@ -77,9 +77,9 @@ function FriendsSavedTracklist({ match }) {
       )}
       {isValid && (
         <TLdiv>
-          <h1>This tracklist belongs to {friendsTrackList.name}!</h1>
+          <h1>This music profile belongs to {friendsTrackList.name}!</h1>
           <button onClick={() => compareTracksHandler(friendsTrackList)}>
-            Compare this tracklist to mine!
+            Compare this profile to mine!
           </button>
           <div className="songs">
             {friendsTrackList &&

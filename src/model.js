@@ -9,8 +9,12 @@ const model = {
   usersSelectedTracks: null,
   isGettingData: false,
   gotAllData: false,
+
+  ///Step 1///
+  hasSelectedAnOption: false,
   //Top Songs//
   gotTopSongs: false,
+  noTopSongsSelected: true,
 
   failedCookie: false,
   token: null,
@@ -132,6 +136,9 @@ const model = {
 
   setGotTopSongs: action((state, value) => {
     state.gotTopSongs = value;
+  }),
+  setNoTopSongsSelected: action((state, value) => {
+    state.noTopSongsSelected = value;
   }),
 
   setHasSavedTrackLists: action((state, value) => {

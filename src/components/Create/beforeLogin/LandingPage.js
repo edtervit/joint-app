@@ -46,6 +46,8 @@ function LandingPage() {
           </div>
         )}
         {who && <p>Please login to compare music with {who}!</p>}
+        {who &&
+          (window.location = `${process.env.REACT_APP_BACK_URL}/login/${state}`)}
         <button
           onClick={() =>
             (window.location = `${process.env.REACT_APP_BACK_URL}/login/${state}`)

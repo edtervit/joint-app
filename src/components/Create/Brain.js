@@ -5,13 +5,15 @@ import ProfileBuilder from "./ProfileBuilder/ProfileBuilder";
 import logo from "../../joint.png";
 
 import { useStoreState, useStoreActions } from "easy-peasy";
-import SavedTracklists from "./ProfileBuilder/SavedTrackLists";
+import Dashboard from "./Dashboard/Dashboard";
+import FromShare from "./Dashboard/FromShare";
 
 function Brain() {
   //state
   const isLogged = useStoreState((state) => state.isLoggedIn);
-  const hasSavedTrackLists = useStoreState((state) => state.hasSaveTrackLists);
+  const hasSavedTrackLists = useStoreState((state) => state.hasSavedTrackLists);
   const profile = useStoreState((state) => state.profile);
+  const fromSharePage = useStoreState((state) => state.fromSharePage);
 
   //actions
   const callDB = useStoreActions((actions) => actions.callDB);
@@ -34,13 +36,12 @@ function Brain() {
       if (res && res.length > 0) {
         setSavedTrackLists(res);
         setHasSavedTrackLists(true);
-
-        console.log(res);
       } else {
         console.log("Database error or savedtracklists is empty array");
         setHasSavedTrackLists(false);
       }
     };
+
     if (profile) {
       getSavedTrackLists(profile.id);
     }
@@ -54,9 +55,10 @@ function Brain() {
 
       {isLogged ? (
         <div className="isloggedIn">
+          {fromSharePage && <FromShare />}
           <Profile />
           <br />
-          {hasSavedTrackLists ? <SavedTracklists /> : <ProfileBuilder />}
+          {hasSavedTrackLists ? <Dashboard /> : <ProfileBuilder />}
         </div>
       ) : (
         <LandingPage />

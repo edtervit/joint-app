@@ -6,6 +6,9 @@ function TopSongs() {
   const callAPI = useStoreActions((actions) => actions.callAPI);
   const addToList = useStoreActions((actions) => actions.addToList);
   const setGotTopSongs = useStoreActions((actions) => actions.setGotTopSongs);
+  const setNoTopSongsSelected = useStoreActions(
+    (actions) => actions.setNoTopSongsSelected
+  );
 
   //state
   let token = useStoreState((state) => state.token);
@@ -30,7 +33,7 @@ function TopSongs() {
     };
     //uses the callapi thunk action
     const spotifyResponse = await callAPI(params);
-    console.log(spotifyResponse);
+
     if (spotifyResponse) {
       spotifyResponse.items.forEach((song) => {
         const songName = song.name;
@@ -73,6 +76,25 @@ function TopSongs() {
     return () => {};
     // eslint-disable-next-line
   }, [isGettingData]);
+
+  //checks to see if no boxes are ticked before sending request
+  useEffect(() => {
+    if (TsMonth) {
+      setNoTopSongsSelected(false);
+    }
+    if (TsSix) {
+      setNoTopSongsSelected(false);
+    }
+    if (TsYear) {
+      setNoTopSongsSelected(false);
+    }
+    if (!TsYear && !TsSix && !TsMonth) {
+      setNoTopSongsSelected(true);
+    }
+    return () => {};
+    // eslint-disable-next-line
+  }, [TsMonth, TsYear, TsSix]);
+
   return (
     <div>
       <TopSongsDiv>

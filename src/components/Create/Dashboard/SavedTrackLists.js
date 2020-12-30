@@ -34,7 +34,9 @@ function SavedTracklists() {
 
   //handlers
   const deleteTrackHandler = async (id) => {
-    const check = window.confirm("You sure you want to delete this?");
+    const check = window.confirm(
+      "You sure you want to delete your music profile?"
+    );
 
     if (check) {
       let payload = {
@@ -71,20 +73,15 @@ function SavedTracklists() {
     <div>
       {savedTrackLists && hasSavedTrackLists ? (
         <div className="gotTrackLists">
-          <h2>You're saved track lists</h2>
-          <p>
-            <strong>
-              You have {savedTrackLists.length}/ 3 saved track lists
-            </strong>
-          </p>
+          <h2>You're saved music profile.</h2>
+
           {savedTrackLists.map((TrackList, index) => {
             if (TrackList) {
               return (
                 <div className="aTrackList" key={TrackList._id}>
                   <p>
-                    This track list has {TrackList.theList.length} songs. The
-                    unique id for this TrackList is , it was created on{" "}
-                    {TrackList.createdAt.slice(0, -14)} at{" "}
+                    This music profile has {TrackList.theList.length} songs, it
+                    was created on {TrackList.createdAt.slice(0, -14)} at{" "}
                     {TrackList.createdAt.slice(11, 16)}
                   </p>
                   <p>
@@ -95,13 +92,11 @@ function SavedTracklists() {
                   </p>
                   {Object.keys(persistFriendsTrackList).length !== 0 && (
                     <div className="hasPList">
-                      <button onClick={() => compareTracksHandler(index)}>
-                        Compare this tracklist to friends
-                      </button>
+                      {compareTracksHandler(index)}
                     </div>
                   )}
                   <button onClick={() => deleteTrackHandler(TrackList._id)}>
-                    Delete this tracklist
+                    Delete your music profile and rebuild!
                   </button>
                 </div>
               );
