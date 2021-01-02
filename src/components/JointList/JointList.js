@@ -12,8 +12,6 @@ function JointList() {
 
   return (
     <div>
-      <h1>Joint list here</h1>
-
       <TLdiv>
         <h3>
           {jointList.userCreatorName}'s and {jointList.userFriendName}'s joint

@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useStoreActions, useStoreState } from "easy-peasy";
 
 import { Redirect } from "react-router-dom";
-import BothTrackLists from "./BothTrackLists";
 import JointList from "../JointList/JointList";
 
 function Compare() {
+  //local state
+  const [compareLoading, setCompareLoading] = useState(null);
   //easy state
   let myTrackListToCompare = useStoreState(
     (state) => state.myTrackListToCompare
@@ -20,6 +21,7 @@ function Compare() {
 
   //handlers
   const compareTracksHandler = () => {
+    setCompareLoading(true);
     const theirs = persistFriendsTrackList.theList;
     const yours = myTrackListToCompare.theList;
     let jointList = [];
@@ -44,20 +46,26 @@ function Compare() {
       userFriendID: persistFriendsTrackList.id,
     };
     setJointList(final);
+    setCompareLoading(false);
   };
+
+  useEffect(() => {
+    myTrackListToCompare &&
+      persistFriendsTrackList &&
+      !compareLoading &&
+      !jointList &&
+      jointList > 0 &&
+      compareTracksHandler();
+    return () => {};
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <div>
       {!myTrackListToCompare && <Redirect to="/" />}
       {!persistFriendsTrackList && <Redirect to="/" />}
       <h1>Compare page</h1>
-      {!jointList && (
-        <button onClick={() => compareTracksHandler()}>
-          Click to find matches!
-        </button>
-      )}
       {jointList && <JointList />}
-      {myTrackListToCompare && persistFriendsTrackList && <BothTrackLists />}
     </div>
   );
 }

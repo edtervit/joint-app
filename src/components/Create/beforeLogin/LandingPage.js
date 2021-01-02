@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useStoreActions, useStoreState } from "easy-peasy";
 import queryString from "query-string";
 import { useHistory } from "react-router-dom";
+import styled from "styled-components";
 
 function LandingPage() {
   const history = useHistory();
@@ -46,8 +47,10 @@ function LandingPage() {
           </div>
         )}
         {who && <p>Please login to compare music with {who}!</p>}
-        {who &&
-          (window.location = `${process.env.REACT_APP_BACK_URL}/login/${state}`)}
+        <WhoDiv>
+          {who &&
+            (window.location = `${process.env.REACT_APP_BACK_URL}/login/${state}`)}
+        </WhoDiv>
         <button
           onClick={() =>
             (window.location = `${process.env.REACT_APP_BACK_URL}/login/${state}`)
@@ -61,3 +64,7 @@ function LandingPage() {
 }
 
 export default LandingPage;
+
+const WhoDiv = styled.div`
+  display: none;
+`;
