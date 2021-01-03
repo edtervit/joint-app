@@ -33,7 +33,6 @@ const model = {
   getProfile: thunk(async (actions) => {
     let params = queryString.parse(window.location.search);
     let parsedToken = params.access_token;
-    console.log(params);
     let urlState = params.state;
     if (urlState === "fromShare") {
       actions.setFromSharePage(true);
