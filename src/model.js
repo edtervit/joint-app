@@ -25,18 +25,25 @@ const model = {
   persistFriendsTrackList: persist(null),
   myTrackListToCompare: null,
   fromSharePage: false,
+  fromShareJPage: false,
+  shareJID: null,
   jointList: null,
 
   //Thunks
   getProfile: thunk(async (actions) => {
     let params = queryString.parse(window.location.search);
     let parsedToken = params.access_token;
+    console.log(params);
     let urlState = params.state;
     if (urlState === "fromShare") {
       actions.setFromSharePage(true);
     } else if (urlState === "normal") {
       actions.setPersistFriendsTrackList({});
       actions.setFromSharePage(false);
+    } else if (urlState === "fromShareJ") {
+      actions.setFromShareJPage(true);
+      actions.setPersistFriendsTrackList({});
+      actions.setShareJID(params.shareJID);
     }
     const res = await fetch("https://api.spotify.com/v1/me", {
       headers: {
@@ -164,9 +171,15 @@ const model = {
   setFromSharePage: action((state, value) => {
     state.fromSharePage = value;
   }),
+  setFromShareJPage: action((state, value) => {
+    state.fromShareJPage = value;
+  }),
 
   setJointList: action((state, value) => {
     state.jointList = value;
+  }),
+  setShareJID: action((state, value) => {
+    state.shareJID = value;
   }),
 
   addToList: action((state, payload) => {

@@ -2,12 +2,21 @@ import React, { useState, useEffect } from "react";
 import { useStoreActions, useStoreState } from "easy-peasy";
 import styled from "styled-components";
 import lemonke from "../../Images/lemonke.jpg";
+import { Link, Redirect } from "react-router-dom";
+import MakePlaylist from "../JointList/MakePlaylist";
 
 function ShareJoint({ match }) {
   //state
   const [isValid, setIsVaild] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [jointList, setJointList] = useState(null);
+  const [redirect, setRedirect] = useState(false);
+
+  // easy peasy sstate
+  let jointList = useStoreState((state) => state.jointList);
+  let isLoggedIn = useStoreState((state) => state.isLoggedIn);
+
+  // EP actions
+  const setJointList = useStoreActions((actions) => actions.setJointList);
 
   //thunk
   const callDB = useStoreActions((actions) => actions.callDB);
@@ -37,8 +46,24 @@ function ShareJoint({ match }) {
     // eslint-disable-next-line
   }, [params]);
 
+  useEffect(() => {
+    if (!isLoggedIn && jointList) {
+      setRedirect(true);
+    }
+    return () => {};
+    // eslint-disable-next-line
+  }, [jointList]);
+
   return (
     <div>
+      {redirect && (
+        <Redirect
+          to={{
+            pathname: "/",
+            state: { fromShareJ: "fromShareJ", fromWho: jointList._id },
+          }}
+        />
+      )}
       {isLoading && <p>Loading....</p>}
       {!isValid && !isLoading && (
         <div className="failed">
@@ -56,7 +81,14 @@ function ShareJoint({ match }) {
             This is the joint list of {jointList.userCreatorName} and{" "}
             {jointList.userFriendName} !
           </h1>
+          <p>
+            Share this joint with someone!<br></br>
+            <Link to={`${jointList._id}`} target="_blank">
+              {process.env.REACT_APP_FRONT_URL}/shareJ/{jointList._id}
+            </Link>
+          </p>
           <div className="songs">
+            <MakePlaylist />
             {jointList &&
               jointList.theList.map((track, index) => (
                 <div className="aTrack-cont" key={track.uri}>

@@ -54,7 +54,6 @@ function Compare() {
       persistFriendsTrackList &&
       !compareLoading &&
       !jointList &&
-      jointList > 0 &&
       compareTracksHandler();
     return () => {};
     // eslint-disable-next-line

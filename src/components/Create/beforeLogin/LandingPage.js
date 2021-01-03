@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useStoreActions, useStoreState } from "easy-peasy";
 import queryString from "query-string";
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 import styled from "styled-components";
 
 function LandingPage() {
@@ -11,10 +11,17 @@ function LandingPage() {
   //local state
   let who = null;
   let state = "normal";
+  let shareJID = null;
 
   if (browserState) {
-    state = browserState.fromShare;
-    who = browserState.fromWho;
+    if (browserState.fromShare) {
+      state = browserState.fromShare;
+      who = browserState.fromWho;
+    }
+    if (browserState.fromShareJ) {
+      shareJID = browserState.fromWho;
+      state = `${browserState.fromShareJ}&shareJID=${shareJID}`;
+    }
   }
 
   //easy actions
@@ -22,6 +29,10 @@ function LandingPage() {
 
   //easy peasyy state
   const failedCookie = useStoreState((state) => state.failedCookie);
+
+  const fromShareJPage = useStoreState((state) => state.fromShareJPage);
+
+  const shareJIDstate = useStoreState((state) => state.shareJID);
 
   //use effect
 
@@ -37,6 +48,7 @@ function LandingPage() {
 
   return (
     <div>
+      {fromShareJPage && <Redirect to={`/shareJ/${shareJIDstate}`} />}
       <div className="login">
         {failedCookie && (
           <div className="failedCookie">
@@ -46,18 +58,32 @@ function LandingPage() {
             </p>
           </div>
         )}
+        {shareJID && (
+          <div>
+            <h1>Please login to see this jointplaylist!</h1>
+            <button
+              onClick={() =>
+                (window.location = `${process.env.REACT_APP_BACK_URL}/login/${state}`)
+              }
+            >
+              CLICK HERE TO LOGIN
+            </button>
+          </div>
+        )}
         {who && <p>Please login to compare music with {who}!</p>}
         <WhoDiv>
           {who &&
             (window.location = `${process.env.REACT_APP_BACK_URL}/login/${state}`)}
         </WhoDiv>
-        <button
-          onClick={() =>
-            (window.location = `${process.env.REACT_APP_BACK_URL}/login/${state}`)
-          }
-        >
-          CLICK HERE TO LOGIN
-        </button>
+        {!shareJID && (
+          <button
+            onClick={() =>
+              (window.location = `${process.env.REACT_APP_BACK_URL}/login/${state}`)
+            }
+          >
+            CLICK HERE TO LOGIN
+          </button>
+        )}
       </div>
     </div>
   );
