@@ -3,6 +3,8 @@ import queryString from "query-string";
 import { useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
+import { Button } from "@chakra-ui/react";
+
 function Playlists({ theList, setTheList, setIsLoggedIn }) {
   //state
   const [playlists, setPlaylists] = useState({});
@@ -33,15 +35,15 @@ function Playlists({ theList, setTheList, setIsLoggedIn }) {
       {hasPlaylists ? (
         <div className="playlists">
           <h2>Your playlists</h2>
-          <button onClick={() => setDisplayPlaylists(!displayPlaylists)}>
+          <Button onClick={() => setDisplayPlaylists(!displayPlaylists)}>
             Hide/Show
-          </button>
-          <button
+          </Button>
+          <Button
             style={{ display: "inline-block" }}
             onClick={() => getPlaylistHandler()}
           >
             Get Playlists again
-          </button>
+          </Button>
           {displayPlaylists &&
             playlists.data.items.map((aPlaylist) => (
               <div className="aplaylist">
@@ -55,12 +57,12 @@ function Playlists({ theList, setTheList, setIsLoggedIn }) {
       )}
       <br />
       {!hasPlaylists && (
-        <button
+        <Button
           style={{ display: "inline-block" }}
           onClick={() => getPlaylistHandler()}
         >
           Get Playlists
-        </button>
+        </Button>
       )}
     </Cont>
   );

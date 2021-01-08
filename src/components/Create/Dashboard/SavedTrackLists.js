@@ -1,11 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useStoreState, useStoreActions } from "easy-peasy";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { Button } from "@chakra-ui/react";
+import { Link, useClipboard } from "@chakra-ui/react";
+import { Link as ReactLink } from "react-router-dom";
 
 function SavedTracklists() {
-  //state
-
   //actions
   const callDB = useStoreActions((actions) => actions.callDB);
   const setHasSavedTrackLists = useStoreActions(
@@ -69,11 +70,19 @@ function SavedTracklists() {
     return () => {};
   }, [persistFriendsTrackList]);
 
+  //Save to clipboard
+  const [clipboardValue, setClipboardValue] = useState(null);
+  const { hasCopied, onCopy } = useClipboard(clipboardValue);
+  const doClipboard = (value) => {
+    setClipboardValue(value);
+    onCopy();
+  };
+
   return (
     <div>
       {savedTrackLists && hasSavedTrackLists ? (
         <div className="gotTrackLists">
-          <h2>You're saved music profile.</h2>
+          <h2>You have a saved music profile.</h2>
 
           {savedTrackLists.map((TrackList, index) => {
             if (TrackList) {
@@ -86,18 +95,32 @@ function SavedTracklists() {
                   </p>
                   <p>
                     Copy this link to share with friends:{" "}
-                    <Link to={`share/${TrackList._id}`} target="_blank">
+                    <Link
+                      as={ReactLink}
+                      to={`share/${TrackList._id}`}
+                      target="_blank"
+                    >
                       {process.env.REACT_APP_FRONT_URL}/share/{TrackList._id}
                     </Link>
+                    <Button
+                      ml={3}
+                      onClick={() =>
+                        doClipboard(
+                          `${process.env.REACT_APP_FRONT_URL}/share/${TrackList._id}`
+                        )
+                      }
+                    >
+                      {hasCopied ? "Copied" : "Copy"}
+                    </Button>
                   </p>
                   {Object.keys(persistFriendsTrackList).length !== 0 && (
                     <div className="hasPList">
                       {compareTracksHandler(index)}
                     </div>
                   )}
-                  <button onClick={() => deleteTrackHandler(TrackList._id)}>
+                  <Button onClick={() => deleteTrackHandler(TrackList._id)}>
                     Delete your music profile and rebuild!
-                  </button>
+                  </Button>
                 </div>
               );
             } else {

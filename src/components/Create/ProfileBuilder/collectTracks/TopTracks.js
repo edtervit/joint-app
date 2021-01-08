@@ -3,6 +3,7 @@ import queryString from "query-string";
 import axios from "axios";
 import { useState } from "react";
 import styled from "styled-components";
+import { Button } from "@chakra-ui/react";
 
 function TopTracks({ topStuff, setTopStuff }) {
   //state
@@ -89,12 +90,12 @@ function TopTracks({ topStuff, setTopStuff }) {
           />
         </OptionsDiv>
         <br />
-        <button onClick={() => getTopSongsHandler()} id="toptracksbtn">
+        <Button onClick={() => getTopSongsHandler()} id="toptracksbtn">
           Get Top Tracks
-        </button>
-        <button onClick={() => getTopArtistsHandler()} id="toptracksbtn">
+        </Button>
+        <Button onClick={() => getTopArtistsHandler()} id="toptracksbtn">
           Get Top Artists
-        </button>
+        </Button>
         {whenError ? (
           <div className="error">
             <br />

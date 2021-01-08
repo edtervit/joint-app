@@ -3,6 +3,7 @@ import { useStoreActions, useStoreState } from "easy-peasy";
 import styled from "styled-components";
 import lemonke from "../../Images/lemonke.jpg";
 import { Redirect } from "react-router-dom";
+import { Button } from "@chakra-ui/react";
 
 function FriendsSavedTracklist({ match }) {
   //state
@@ -78,9 +79,9 @@ function FriendsSavedTracklist({ match }) {
       {isValid && (
         <TLdiv>
           <h1>This music profile belongs to {friendsTrackList.name}!</h1>
-          <button onClick={() => compareTracksHandler(friendsTrackList)}>
+          <Button onClick={() => compareTracksHandler(friendsTrackList)}>
             Compare this profile to mine!
-          </button>
+          </Button>
           <div className="songs">
             {friendsTrackList &&
               friendsTrackList.theList.map((track, index) => (

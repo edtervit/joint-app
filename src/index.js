@@ -1,18 +1,21 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
+
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import model from "./model.js";
 import { createStore, StoreProvider } from "easy-peasy";
+import { ChakraProvider } from "@chakra-ui/react";
 
 const store = createStore(model);
 
 ReactDOM.render(
   <React.StrictMode>
-    <StoreProvider store={store}>
-      <App />
-    </StoreProvider>
+    <ChakraProvider>
+      <StoreProvider store={store}>
+        <App />
+      </StoreProvider>
+    </ChakraProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

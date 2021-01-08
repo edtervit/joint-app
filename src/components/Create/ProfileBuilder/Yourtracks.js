@@ -2,6 +2,7 @@ import React from "react";
 import { useStoreState, useStoreActions } from "easy-peasy";
 import styled from "styled-components";
 import Steptwo from "./Steptwo";
+import { Button } from "@chakra-ui/react";
 
 function Yourtracks() {
   //Local state
@@ -18,7 +19,7 @@ function Yourtracks() {
       </p>
       {usersSelectedTracks && <Steptwo />}
       {usersSelectedTracks && <p>Total songs: {usersSelectedTracks.length}</p>}
-      <button onClick={() => clearList()}>Not happy? Go Back</button>
+      <Button onClick={() => clearList()}>Not happy? Go Back</Button>
       <div className="songs">
         {usersSelectedTracks ? (
           usersSelectedTracks.map((track) => (

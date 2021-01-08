@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useStoreState } from "easy-peasy";
+import { Button } from "@chakra-ui/react";
+
 function BothTrackLists() {
   //normal state
   const [toggleList1, setToggleList1] = useState(true);
@@ -18,7 +20,7 @@ function BothTrackLists() {
     <div>
       <TLdiv>
         <h2>Your track list</h2>
-        <button onClick={() => setToggleList1(!toggleList1)}>show/hide</button>
+        <Button onClick={() => setToggleList1(!toggleList1)}>show/hide</Button>
         {toggleList1 && (
           <div className="songs">
             {myTrackListToCompare ? (
@@ -43,7 +45,7 @@ function BothTrackLists() {
       </TLdiv>
       <TLdiv>
         <h2>{persistFriendsTrackList.name}'s track list</h2>
-        <button onClick={() => setToggleList2(!toggleList2)}>show/hide</button>
+        <Button onClick={() => setToggleList2(!toggleList2)}>show/hide</Button>
         {toggleList2 && (
           <div className="songs">
             {persistFriendsTrackList ? (

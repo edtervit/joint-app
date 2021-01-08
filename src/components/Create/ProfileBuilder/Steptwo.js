@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useStoreState, useStoreActions } from "easy-peasy";
 import axios from "axios";
 import lemonke from "../../../Images/lemonke.jpg";
+import { Button } from "@chakra-ui/react";
 
 function Steptwo() {
   let usersSelectedTracks = useStoreState((state) => state.usersSelectedTracks);
@@ -45,9 +46,9 @@ function Steptwo() {
   return (
     <div>
       {amountOfSavedTrackLists < 3 && (
-        <button onClick={() => sendToDbHandler(profile, usersSelectedTracks)}>
+        <Button onClick={() => sendToDbHandler(profile, usersSelectedTracks)}>
           Save current tracklist to database.
-        </button>
+        </Button>
       )}
 
       {failedSaving && (

@@ -1,13 +1,15 @@
 import React, { useEffect } from "react";
 import LandingPage from "./beforeLogin/LandingPage";
-import Profile from "./ProfileBuilder/Profile";
+
 import ProfileBuilder from "./ProfileBuilder/ProfileBuilder";
 import logo from "../../joint.png";
 
 import { useStoreState, useStoreActions } from "easy-peasy";
 import Dashboard from "./Dashboard/Dashboard";
 import FromShare from "./Dashboard/FromShare";
+import Nav from "./Nav";
 
+import { Center } from "@chakra-ui/react";
 function Brain() {
   //state
   const isLogged = useStoreState((state) => state.isLoggedIn);
@@ -51,12 +53,13 @@ function Brain() {
 
   return (
     <div className="App">
-      <img className="logo" src={logo} alt="" />
-
+      {isLogged && <Nav />}
+      <Center>
+        <img className="logo" src={logo} alt="" />
+      </Center>
       {isLogged ? (
         <div className="isloggedIn">
           {fromSharePage && <FromShare />}
-          <Profile />
           <br />
           {hasSavedTrackLists ? <Dashboard /> : <ProfileBuilder />}
         </div>

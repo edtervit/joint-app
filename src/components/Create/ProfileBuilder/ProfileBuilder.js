@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useStoreActions, useStoreState } from "easy-peasy";
 import Loading from "./Loading";
 import Yourtracks from "./Yourtracks";
+import { Button } from "@chakra-ui/react";
 
 function ProfileBuilder() {
   //local state
@@ -47,7 +48,7 @@ function ProfileBuilder() {
     <div>
       {!isGettingData && !gotAllData && (
         <div className="div">
-          <button onClick={() => buildProfileHandler()}>Build Profile</button>
+          <Button onClick={() => buildProfileHandler()}>Build Profile</Button>
           {nothingSelectedError && (
             <p>Error please select 1 import method below</p>
           )}

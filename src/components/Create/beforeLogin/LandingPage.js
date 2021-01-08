@@ -3,6 +3,7 @@ import { useStoreActions, useStoreState } from "easy-peasy";
 import queryString from "query-string";
 import { useHistory, Redirect } from "react-router-dom";
 import styled from "styled-components";
+import { Button } from "@chakra-ui/react";
 
 function LandingPage() {
   const history = useHistory();
@@ -61,13 +62,13 @@ function LandingPage() {
         {shareJID && (
           <div>
             <h1>Please login to see this jointplaylist!</h1>
-            <button
+            <Button
               onClick={() =>
                 (window.location = `${process.env.REACT_APP_BACK_URL}/login/${state}`)
               }
             >
               CLICK HERE TO LOGIN
-            </button>
+            </Button>
           </div>
         )}
         {who && <p>Please login to compare music with {who}!</p>}
@@ -76,13 +77,13 @@ function LandingPage() {
             (window.location = `${process.env.REACT_APP_BACK_URL}/login/${state}`)}
         </WhoDiv>
         {!shareJID && (
-          <button
+          <Button
             onClick={() =>
               (window.location = `${process.env.REACT_APP_BACK_URL}/login/${state}`)
             }
           >
             CLICK HERE TO LOGIN
-          </button>
+          </Button>
         )}
       </div>
     </div>

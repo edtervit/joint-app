@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useStoreActions, useStoreState } from "easy-peasy";
 import styled from "styled-components";
 import lemonke from "../../Images/lemonke.jpg";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import MakePlaylist from "../JointList/MakePlaylist";
+import { Link } from "@chakra-ui/react";
+import { Link as ReactLink } from "react-router-dom";
 
 function ShareJoint({ match }) {
   //state
@@ -83,7 +85,7 @@ function ShareJoint({ match }) {
           </h1>
           <p>
             Share this joint with someone!<br></br>
-            <Link to={`${jointList._id}`} target="_blank">
+            <Link as={ReactLink} to={`${jointList._id}`} target="_blank">
               {process.env.REACT_APP_FRONT_URL}/shareJ/{jointList._id}
             </Link>
           </p>
