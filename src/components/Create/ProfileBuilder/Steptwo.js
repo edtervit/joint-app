@@ -29,7 +29,6 @@ function StepTwo() {
         </Button>
         {usersSelectedTracks && <SaveProfileToDB />}
       </Box>
-
       <TL>
         <Heading size="md">Your Profile</Heading>
         <p>

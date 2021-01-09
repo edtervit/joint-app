@@ -29,7 +29,7 @@ const model = {
   fromShareJPage: false,
   shareJID: null,
   jointList: null,
-
+  yourJoints: null,
   //Thunks
   getProfile: thunk(async (actions) => {
     let params = queryString.parse(window.location.search);
@@ -179,6 +179,10 @@ const model = {
   }),
   setShareJID: action((state, value) => {
     state.shareJID = value;
+  }),
+
+  setYourJoints: action((state, value) => {
+    state.yourJoints = value;
   }),
 
   addToList: action((state, payload) => {
