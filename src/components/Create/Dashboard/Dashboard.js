@@ -1,10 +1,9 @@
 import React from "react";
-import SavedTracklists from "./SavedTrackLists";
 
 function Dashboard() {
   return (
     <div>
-      <SavedTracklists />
+      <h1>Dashboard here</h1>
     </div>
   );
 }

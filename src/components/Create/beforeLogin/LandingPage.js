@@ -3,7 +3,9 @@ import { useStoreActions, useStoreState } from "easy-peasy";
 import queryString from "query-string";
 import { useHistory, Redirect } from "react-router-dom";
 import styled from "styled-components";
-import { Button } from "@chakra-ui/react";
+import { Button, Center } from "@chakra-ui/react";
+
+import logo from "../../../joint.png";
 
 function LandingPage() {
   const history = useHistory();
@@ -50,6 +52,10 @@ function LandingPage() {
   return (
     <div>
       {fromShareJPage && <Redirect to={`/shareJ/${shareJIDstate}`} />}
+      <Center>
+        {" "}
+        <img className="logo" src={logo} alt="" />
+      </Center>
       <div className="login">
         {failedCookie && (
           <div className="failedCookie">

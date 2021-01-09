@@ -4,7 +4,7 @@ import styled from "styled-components";
 import lemonke from "../../Images/lemonke.jpg";
 import { Redirect } from "react-router-dom";
 import MakePlaylist from "../JointList/MakePlaylist";
-import { Link } from "@chakra-ui/react";
+import { Link, Box, Center } from "@chakra-ui/react";
 import { Link as ReactLink } from "react-router-dom";
 
 function ShareJoint({ match }) {
@@ -16,9 +16,13 @@ function ShareJoint({ match }) {
   // easy peasy sstate
   let jointList = useStoreState((state) => state.jointList);
   let isLoggedIn = useStoreState((state) => state.isLoggedIn);
+  const hasSavedTrackLists = useStoreState((state) => state.hasSavedTrackLists);
 
   // EP actions
   const setJointList = useStoreActions((actions) => actions.setJointList);
+  const setFromSharePage = useStoreActions(
+    (actions) => actions.setFromSharePage
+  );
 
   //thunk
   const callDB = useStoreActions((actions) => actions.callDB);
@@ -36,12 +40,14 @@ function ShareJoint({ match }) {
       if (res && res.length > 0) {
         console.log(res[0]);
         setJointList(res[0]);
+        setFromSharePage(false);
         setIsVaild(true);
         setIsLoading(false);
       } else {
         console.log("Database error or joint list is empty");
         setIsVaild(false);
         setIsLoading(false);
+        setFromSharePage(false);
       }
     };
     getSavedTrackLists(params);
@@ -67,6 +73,22 @@ function ShareJoint({ match }) {
         />
       )}
       {isLoading && <p>Loading....</p>}
+      {!hasSavedTrackLists && !isLoading && (
+        <Center>
+          <Box
+            bg="tomato"
+            color="white"
+            p={4}
+            w="max-content"
+            borderRadius="md"
+          >
+            <h2>Want to make a joint playlist like this with your friend?</h2>
+            <Link mr={4} as={ReactLink} to="/">
+              Click here to make a music profile you can compare with friends
+            </Link>
+          </Box>
+        </Center>
+      )}
       {!isValid && !isLoading && (
         <div className="failed">
           <h1>Uh oh stinky!</h1>

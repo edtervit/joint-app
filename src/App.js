@@ -6,14 +6,22 @@ import FriendsSavedTracklist from "./components/share/FriendsSavedTracklist";
 import Brain from "./components/Create/Brain";
 import Compare from "./components/Compare/Compare";
 import ShareJoint from "./components/share/ShareJoint";
+import MusicProfile from "./components/Create/Dashboard/MusicProfile";
+import Nav from "./components/Create/Nav";
+import { useStoreState } from "easy-peasy";
 
 function App() {
+  const isLogged = useStoreState((state) => state.isLoggedIn);
+
   return (
     <div>
       <Router>
+        {isLogged && <Nav />}
         <Route path="/shareJ/:trackListID" component={ShareJoint} />
         <Route path="/share/:trackListID" component={FriendsSavedTracklist} />
         <Route path="/compare" component={Compare} />
+        <Route path="/myprofile" component={MusicProfile} />
+
         <Route path="/" exact component={Brain} />
       </Router>
     </div>

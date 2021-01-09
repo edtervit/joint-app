@@ -4,6 +4,8 @@ import queryString from "query-string";
 const model = {
   profile: null,
   isLoggedIn: false,
+  hasSavedTrackLists: false,
+  savedTrackLists: null,
 
   //////Profile Builder/////
   usersSelectedTracks: null,
@@ -18,8 +20,7 @@ const model = {
 
   failedCookie: false,
   token: null,
-  hasSavedTrackLists: false,
-  savedTrackLists: null,
+
   amountOfSavedTrackLists: 0,
   friendsTrackList: null,
   persistFriendsTrackList: persist(null),
@@ -119,7 +120,6 @@ const model = {
   }),
 
   logOut: action((state) => {
-    state.isLoggedIn = false;
     document.location.href = "../";
   }),
   failCookie: action((state) => {

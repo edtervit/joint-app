@@ -45,6 +45,7 @@ function Compare() {
       userFriendName: persistFriendsTrackList.name,
       userFriendID: persistFriendsTrackList.id,
     };
+
     setJointList(final);
     setCompareLoading(false);
   };
@@ -57,12 +58,10 @@ function Compare() {
       compareTracksHandler();
     return () => {};
     // eslint-disable-next-line
-  }, []);
+  }, [myTrackListToCompare]);
 
   return (
     <div>
-      {!myTrackListToCompare && <Redirect to="/" />}
-      {!persistFriendsTrackList && <Redirect to="/" />}
       <h1>Compare page</h1>
       {jointList && <JointList />}
     </div>

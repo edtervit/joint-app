@@ -1,17 +1,19 @@
 import React from "react";
-import { useStoreState } from "easy-peasy";
+import { useStoreState, useStoreActions } from "easy-peasy";
 import styled from "styled-components";
 
 function Profile() {
   const profile = useStoreState((state) => state.profile);
-
+  const logOut = useStoreActions((actions) => actions.logOut);
   return (
     <div className="profileDiv">
       <ProfileDiv>
+        <p className="logout" onClick={() => logOut()}>
+          Logout
+        </p>
         {profile.images.length > 0 && profile.images[0].url && (
           <img src={profile.images[0].url} alt="" />
         )}
-        <h2>You're logged in, Hi {profile.display_name}!</h2>
       </ProfileDiv>
     </div>
   );
@@ -30,6 +32,6 @@ const ProfileDiv = styled.div`
     width: 75px;
     border-radius: 50%;
     object-fit: cover;
-    margin-right: 20px;
+    margin-left: 20px;
   }
 `;

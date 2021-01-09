@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { useStoreState, useStoreActions } from "easy-peasy";
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 import { Button } from "@chakra-ui/react";
 import { Link, useClipboard } from "@chakra-ui/react";
 import { Link as ReactLink } from "react-router-dom";
@@ -24,6 +24,7 @@ function SavedTracklists() {
 
   //easy state
 
+  const isLoggedIn = useStoreState((state) => state.isLoggedIn);
   const hasSavedTrackLists = useStoreState((state) => state.hasSavedTrackLists);
   let savedTrackLists = useStoreState((state) => state.savedTrackLists);
   const amountOfSavedTrackLists = useStoreState(
@@ -80,6 +81,8 @@ function SavedTracklists() {
 
   return (
     <div>
+      {!isLoggedIn && <Redirect to="/" />}
+      {!hasSavedTrackLists && <Redirect to="/" />}
       {savedTrackLists && hasSavedTrackLists ? (
         <div className="gotTrackLists">
           <h2>You have a saved music profile.</h2>
@@ -113,11 +116,12 @@ function SavedTracklists() {
                       {hasCopied ? "Copied" : "Copy"}
                     </Button>
                   </p>
-                  {Object.keys(persistFriendsTrackList).length !== 0 && (
-                    <div className="hasPList">
-                      {compareTracksHandler(index)}
-                    </div>
-                  )}
+                  {Object.keys(persistFriendsTrackList).length !== 0 &&
+                    console.log(history) && (
+                      <div className="hasPList">
+                        {compareTracksHandler(index)}
+                      </div>
+                    )}
                   <Button onClick={() => deleteTrackHandler(TrackList._id)}>
                     Delete your music profile and rebuild!
                   </Button>
