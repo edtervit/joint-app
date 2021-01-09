@@ -78,12 +78,17 @@ function Nav() {
 export default Nav;
 
 const Navbar = styled.nav`
-  background: #f8f8f8;
-  padding: 1rem 2rem;
+  background: #f7fafc;
+  padding: 0.5rem 2rem;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
 
+  .logo {
+    margin: 0;
+    padding: 0;
+    height: 50px;
+  }
   .has-profile {
     margin-left: auto;
   }

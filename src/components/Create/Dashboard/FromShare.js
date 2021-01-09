@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useStoreState, useStoreActions } from "easy-peasy";
 import ProfileBuilder from "../ProfileBuilder/ProfileBuilder";
 import Compare from "../../Compare/Compare";
+import { Heading } from "@chakra-ui/react";
 
 function FromShare() {
   //easy peasyy state
@@ -19,15 +20,16 @@ function FromShare() {
     savedTrackLists && setMyTrackListToCompare(savedTrackLists[0]);
     console.log("done");
     return () => {};
+    //eslint-disable-next-line
   }, [savedTrackLists]);
 
   return (
     <div>
       {!hasSavedTrackLists && (
         <div className="noProfile">
-          <h2>
+          <Heading size="md" my={5}>
             Please make a profile to compare with {persistFriendsTrackList.name}
-          </h2>
+          </Heading>
           <ProfileBuilder />
         </div>
       )}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useStoreActions, useStoreState } from "easy-peasy";
 import styled from "styled-components";
+import { Heading, Checkbox } from "@chakra-ui/react";
 
 function TopSongs() {
   const callAPI = useStoreActions((actions) => actions.callAPI);
@@ -98,35 +99,40 @@ function TopSongs() {
   return (
     <div>
       <TopSongsDiv>
+        <Heading size="sml">Most Played Songs</Heading>
         <div className="aOption">
-          <label htmlFor="TSmonth">Top 50 played songs from past month</label>
-          <input
+          <Checkbox
             onChange={() => {
               setTsMonth(!TsMonth);
             }}
             type="checkbox"
             id="TSmonth"
-          />
+          >
+            Top 50 played songs from past month
+          </Checkbox>
         </div>
         <div className="aOption">
-          <label htmlFor="TsSix">Top 50 played songs from past 6 months</label>
-          <input
+          <Checkbox
             onChange={() => {
               setTsSix(!TsSix);
             }}
             type="checkbox"
             id="TsSix"
-          />
+          >
+            Top 50 played songs from past 6 months
+          </Checkbox>
         </div>
         <div className="aOption">
-          <label htmlFor="TsYear">Top 50 played songs all time</label>
-          <input
+          <label htmlFor="TsYear"></label>
+          <Checkbox
             onChange={() => {
               setTsYear(!TsYear);
             }}
             type="checkbox"
             id="TsYear"
-          />
+          >
+            Top 50 played songs all time
+          </Checkbox>
         </div>
       </TopSongsDiv>
     </div>

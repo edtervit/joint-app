@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import SourcesIndex from "./Sources/SourcesIndex";
 import styled from "styled-components";
 import { useStoreActions, useStoreState } from "easy-peasy";
 import Loading from "./Loading";
-import Yourtracks from "./Yourtracks";
-import { Button } from "@chakra-ui/react";
+import StepTwo from "./StepTwo";
+import { Button, useToast, Box, Heading } from "@chakra-ui/react";
 
 function ProfileBuilder() {
+  //toast
+  const toast = useToast();
+
   //local state
-  const [nothingSelectedError, setNothingSelectedError] = useState(false);
 
   const isGettingData = useStoreState((state) => state.isGettingData);
   const setIsGettingData = useStoreActions(
@@ -25,11 +27,15 @@ function ProfileBuilder() {
   //Handlers
   const buildProfileHandler = () => {
     if (!noTopSongsSelected) {
-      setNothingSelectedError(false);
       setIsGettingData(true);
     } else {
       console.log("no option selected");
-      setNothingSelectedError(true);
+      toast({
+        title: "Error!",
+        description: "Please select 1 import method!",
+        status: "error",
+        isClosable: "true",
+      });
     }
   };
 
@@ -48,17 +54,19 @@ function ProfileBuilder() {
     <div>
       {!isGettingData && !gotAllData && (
         <div className="div">
-          <Button onClick={() => buildProfileHandler()}>Build Profile</Button>
-          {nothingSelectedError && (
-            <p>Error please select 1 import method below</p>
-          )}
+          <Box>
+            <Heading mb={5}>Step 1 - Build your profile!</Heading>
+            <Button onClick={() => buildProfileHandler()}>
+              Click to build!
+            </Button>
+          </Box>
         </div>
       )}
       <SourcesDiv isGettingData={isGettingData}>
         {!gotAllData && <SourcesIndex />}
       </SourcesDiv>
       {isGettingData && <Loading />}
-      {gotAllData && <Yourtracks />}
+      {gotAllData && <StepTwo />}
     </div>
   );
 }

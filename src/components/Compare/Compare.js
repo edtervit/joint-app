@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useStoreActions, useStoreState } from "easy-peasy";
 
-import { Redirect } from "react-router-dom";
 import JointList from "../JointList/JointList";
 
 function Compare() {

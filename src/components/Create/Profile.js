@@ -28,8 +28,8 @@ const ProfileDiv = styled.div`
     margin: 0;
   }
   img {
-    height: 75px;
-    width: 75px;
+    height: 50px;
+    width: 50px;
     border-radius: 50%;
     object-fit: cover;
     margin-left: 20px;

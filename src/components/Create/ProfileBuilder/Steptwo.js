@@ -1,64 +1,116 @@
-import React, { useState } from "react";
+import React from "react";
 import { useStoreState, useStoreActions } from "easy-peasy";
-import axios from "axios";
-import lemonke from "../../../Images/lemonke.jpg";
-import { Button } from "@chakra-ui/react";
+import SaveProfileToDB from "./SaveProfileToDB";
+import {
+  Box,
+  Button,
+  Heading,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
+  Center,
+} from "@chakra-ui/react";
+import styled from "styled-components";
 
-function Steptwo() {
+function StepTwo() {
+  //Local state
+
   let usersSelectedTracks = useStoreState((state) => state.usersSelectedTracks);
-  const profile = useStoreState((state) => state.profile);
-  const amountOfSavedTrackLists = useStoreState(
-    (state) => state.amountOfSavedTrackLists
-  );
-  const setHasSavedTrackLists = useStoreActions(
-    (action) => action.setHasSavedTrackLists
-  );
-  //state
-  const [failedSaving, setFailedSaving] = useState(false);
-
-  const sendToDbHandler = async (profile, theList) => {
-    const name = profile.display_name;
-    const id = profile.id;
-    const list = theList;
-    const newTrackList = {
-      name: name,
-      theList: list,
-      id: id,
-    };
-
-    await axios
-      .post(`${process.env.REACT_APP_BACK_URL}/trackLists/create`, newTrackList)
-      .then((response) => {
-        if (response) {
-          setFailedSaving(false);
-          setHasSavedTrackLists(false);
-          setHasSavedTrackLists(true);
-          console.log("reponse was good");
-        }
-      })
-      .catch((err) => {
-        console.log("Error occured");
-        console.log(err.message);
-        setFailedSaving(true);
-      });
-  };
+  const clearList = useStoreActions((action) => action.clearList);
 
   return (
-    <div>
-      {amountOfSavedTrackLists < 3 && (
-        <Button onClick={() => sendToDbHandler(profile, usersSelectedTracks)}>
-          Save current tracklist to database.
+    <Box>
+      <Heading mb={5}>Step 2 - Review your profile!</Heading>
+      <Box display="flex" alignItems="center" justifyContent="center">
+        <Button bg="red.100" mx={4} onClick={() => clearList()}>
+          😡 Not happy? Go Back and rebuild
         </Button>
-      )}
+        {usersSelectedTracks && <SaveProfileToDB />}
+      </Box>
 
-      {failedSaving && (
-        <div className="error">
-          <p>Uh oh stinky, Failed saving to database</p>{" "}
-          <img src={lemonke} alt="" />
-        </div>
-      )}
-    </div>
+      <TL>
+        <Heading size="md">Your Profile</Heading>
+        <p>
+          These are the songs we will compare against your friend looking for
+          matches.
+        </p>
+
+        {usersSelectedTracks && (
+          <div>
+            <p>
+              Total songs: <strong>{usersSelectedTracks.length}</strong>
+            </p>
+          </div>
+        )}
+        <Accordion
+          allowMultiple
+          allowToggle
+          bg="gray.50"
+          display="flex"
+          borderColor="gray.50"
+          defaultIndex={[0]}
+        >
+          <AccordionItem w="100%">
+            <Center>
+              <AccordionButton w="max-content">
+                <Box>Your Songs</Box>
+                <AccordionIcon />
+              </AccordionButton>
+            </Center>
+            <AccordionPanel>
+              <div className="songs">
+                {usersSelectedTracks ? (
+                  usersSelectedTracks.map((track) => (
+                    <div className="aTrack-cont" key={track.uri}>
+                      <div className="aTrack">
+                        <img src={track.image} alt="" />
+                        <p>
+                          <strong>{track.name}</strong> by {track.artist}
+                        </p>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="">
+                    <h4>You haven't selected any tracks yet!</h4>
+                    <p>Refresh your page and try creating a profile again.</p>
+                  </div>
+                )}
+              </div>
+            </AccordionPanel>
+          </AccordionItem>
+        </Accordion>
+      </TL>
+    </Box>
   );
 }
 
-export default Steptwo;
+export default StepTwo;
+
+const TL = styled.div`
+  padding: 1.5rem 0;
+  p {
+    margin: 0.5rem 0;
+  }
+  .songs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    .aTrack-cont {
+      width: 100%;
+      .aTrack {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 50%;
+        margin: 0 auto;
+        img {
+          width: 75px;
+        }
+      }
+    }
+  }
+`;
