@@ -3,7 +3,7 @@ import SourcesIndex from "./Sources/SourcesIndex";
 import styled from "styled-components";
 import { useStoreActions, useStoreState } from "easy-peasy";
 import Loading from "./Loading";
-import StepTwo from "./StepTwo";
+import StepTwo from "./Steptwo";
 import { Button, useToast, Box, Heading } from "@chakra-ui/react";
 
 function ProfileBuilder() {

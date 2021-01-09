@@ -12,7 +12,6 @@ import {
   AccordionIcon,
   Center,
 } from "@chakra-ui/react";
-import styled from "styled-components";
 
 function StepTwo() {
   //Local state
@@ -21,7 +20,7 @@ function StepTwo() {
   const clearList = useStoreActions((action) => action.clearList);
 
   return (
-    <Box>
+    <>
       <Heading mb={5}>Step 2 - Review your profile!</Heading>
       <Box display="flex" alignItems="center" justifyContent="center">
         <Button bg="red.100" mx={4} onClick={() => clearList()}>
@@ -29,7 +28,7 @@ function StepTwo() {
         </Button>
         {usersSelectedTracks && <SaveProfileToDB />}
       </Box>
-      <TL>
+      <Box py={5}>
         <Heading size="md">Your Profile</Heading>
         <p>
           These are the songs we will compare against your friend looking for
@@ -81,35 +80,9 @@ function StepTwo() {
             </AccordionPanel>
           </AccordionItem>
         </Accordion>
-      </TL>
-    </Box>
+      </Box>
+    </>
   );
 }
 
 export default StepTwo;
-
-const TL = styled.div`
-  padding: 1.5rem 0;
-  p {
-    margin: 0.5rem 0;
-  }
-  .songs {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 100%;
-    .aTrack-cont {
-      width: 100%;
-      .aTrack {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        width: 50%;
-        margin: 0 auto;
-        img {
-          width: 75px;
-        }
-      }
-    }
-  }
-`;
