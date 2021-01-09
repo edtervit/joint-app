@@ -24,29 +24,31 @@ function Compare() {
     const theirs = persistFriendsTrackList.theList;
     const yours = myTrackListToCompare.theList;
     let jointList = [];
-    if (yours.length > theirs.length) {
-      theirs.forEach((i) => {
-        if (yours.some((me) => me.uri === i.uri)) {
-          jointList.push(i);
-        }
-      });
-    } else {
-      yours.forEach((i) => {
-        if (theirs.some((me) => me.uri === i.uri)) {
-          jointList.push(i);
-        }
-      });
-    }
-    const final = {
-      theList: jointList,
-      userCreatorName: myTrackListToCompare.name,
-      userCreatorID: myTrackListToCompare.id,
-      userFriendName: persistFriendsTrackList.name,
-      userFriendID: persistFriendsTrackList.id,
-    };
+    if (yours && theirs) {
+      if (yours.length > theirs.length) {
+        theirs.forEach((i) => {
+          if (yours.some((me) => me.uri === i.uri)) {
+            jointList.push(i);
+          }
+        });
+      } else {
+        yours.forEach((i) => {
+          if (theirs.some((me) => me.uri === i.uri)) {
+            jointList.push(i);
+          }
+        });
+      }
+      const final = {
+        theList: jointList,
+        userCreatorName: myTrackListToCompare.name,
+        userCreatorID: myTrackListToCompare.id,
+        userFriendName: persistFriendsTrackList.name,
+        userFriendID: persistFriendsTrackList.id,
+      };
 
-    setJointList(final);
-    setCompareLoading(false);
+      setJointList(final);
+      setCompareLoading(false);
+    }
   };
 
   useEffect(() => {
