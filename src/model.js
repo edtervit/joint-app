@@ -30,6 +30,8 @@ const model = {
   shareJID: null,
   jointList: null,
   yourJoints: null,
+  friendsJoints: null,
+
   //Thunks
   getProfile: thunk(async (actions) => {
     let params = queryString.parse(window.location.search);
@@ -183,6 +185,10 @@ const model = {
 
   setYourJoints: action((state, value) => {
     state.yourJoints = value;
+  }),
+
+  setFriendsJoints: action((state, value) => {
+    state.friendsJoints = value;
   }),
 
   addToList: action((state, payload) => {

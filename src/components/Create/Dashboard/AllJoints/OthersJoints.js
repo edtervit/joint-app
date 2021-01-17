@@ -3,51 +3,51 @@ import { Box, Heading, Text, Link } from "@chakra-ui/react";
 import { useStoreState, useStoreActions } from "easy-peasy";
 import { Link as ReactLink } from "react-router-dom";
 
-function YourJoints() {
-  const yourJoints = useStoreState((state) => state.yourJoints);
+function OthersJoints() {
+  const friendsJoints = useStoreState((state) => state.friendsJoints);
   const profile = useStoreState((state) => state.profile);
 
   //actions
   const callDB = useStoreActions((actions) => actions.callDB);
-  const setYourJoints = useStoreActions((actions) => actions.setYourJoints);
+  const setFriendsJoints = useStoreActions(
+    (actions) => actions.setFriendsJoints
+  );
 
   useEffect(() => {
-    const getYourJoints = async (id) => {
+    const getFriendsJoints = async (id) => {
       let payload = {
-        url: `/jointPlaylist/getYourJointPlaylists/${id}`,
+        url: `/jointPlaylist/getFriendJointPlaylists/${id}`,
         method: "GET",
       };
       const res = await callDB(payload);
-
       if (res && res.length > 0) {
-        setYourJoints(res);
+        setFriendsJoints(res);
       } else {
         console.log("Database error or response is empty");
       }
     };
 
     if (profile) {
-      getYourJoints(profile.id);
+      getFriendsJoints(profile.id);
     }
 
     // eslint-disable-next-line
   }, [profile]);
 
   return (
-    <div>
+    <Box>
       <Heading size="md" my={2}>
-        Joints You Made
+        Joints others have made with you
       </Heading>
       <Box>
-        {!yourJoints && (
+        {!friendsJoints && (
           <Text>
-            You haven't made any joints, get your friends to send your their
-            share link!
+            Nothing here 🙄, send your share link to friends and check back!{" "}
           </Text>
         )}
-        {yourJoints && (
+        {friendsJoints && (
           <Box>
-            {yourJoints.map((joint, index) => (
+            {friendsJoints.map((joint, index) => (
               <Link
                 as={ReactLink}
                 to={`/sharej/${joint._id}`}
@@ -69,8 +69,8 @@ function YourJoints() {
           </Box>
         )}
       </Box>
-    </div>
+    </Box>
   );
 }
 
-export default YourJoints;
+export default OthersJoints;

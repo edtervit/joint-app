@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Heading, Center } from "@chakra-ui/react";
 import YourJoints from "./AllJoints/YourJoints";
+import OthersJoints from "./AllJoints/OthersJoints";
 
 function AllJoints() {
   return (
@@ -15,9 +16,7 @@ function AllJoints() {
       >
         <Heading>View Your Joints Here</Heading>
         <YourJoints />
-        <Heading size="md" my={2}>
-          Joints others have made with you
-        </Heading>
+        <OthersJoints />
       </Box>
     </Center>
   );

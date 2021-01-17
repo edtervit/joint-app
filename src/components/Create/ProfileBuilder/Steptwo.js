@@ -11,6 +11,7 @@ import {
   AccordionPanel,
   AccordionIcon,
   Center,
+  Image,
 } from "@chakra-ui/react";
 
 function StepTwo() {
@@ -22,8 +23,13 @@ function StepTwo() {
   return (
     <>
       <Heading mb={5}>Step 2 - Review your profile!</Heading>
-      <Box display="flex" alignItems="center" justifyContent="center">
-        <Button bg="red.100" mx={4} onClick={() => clearList()}>
+      <Box
+        display="flex"
+        flexWrap="wrap"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Button bg="red.100" m={4} onClick={() => clearList()}>
           😡 Not happy? Go Back and rebuild
         </Button>
         {usersSelectedTracks && <SaveProfileToDB />}
@@ -58,17 +64,38 @@ function StepTwo() {
               </AccordionButton>
             </Center>
             <AccordionPanel>
-              <div className="songs">
+              <Box
+                className="songs"
+                display="flex"
+                flexWrap="wrap"
+                justifyContent="center"
+              >
                 {usersSelectedTracks ? (
                   usersSelectedTracks.map((track) => (
-                    <div className="aTrack-cont" key={track.uri}>
-                      <div className="aTrack">
-                        <img src={track.image} alt="" />
-                        <p>
-                          <strong>{track.name}</strong> by {track.artist}
-                        </p>
-                      </div>
-                    </div>
+                    <Box width="100%">
+                      <Center>
+                        <Box
+                          className="aTrack"
+                          my={4}
+                          width="50%"
+                          key={track.uri}
+                          display="flex"
+                          alignItems="center"
+                          justifyContent="space-between"
+                        >
+                          <Image
+                            boxSize="100px"
+                            src={track.image}
+                            alt=""
+                            mx={5}
+                          />
+
+                          <p>
+                            <strong>{track.name}</strong> by {track.artist}
+                          </p>
+                        </Box>
+                      </Center>
+                    </Box>
                   ))
                 ) : (
                   <div className="">
@@ -76,7 +103,7 @@ function StepTwo() {
                     <p>Refresh your page and try creating a profile again.</p>
                   </div>
                 )}
-              </div>
+              </Box>
             </AccordionPanel>
           </AccordionItem>
         </Accordion>
