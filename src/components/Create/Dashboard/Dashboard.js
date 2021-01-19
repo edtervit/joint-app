@@ -1,12 +1,15 @@
 import React from "react";
 import AllJoints from "./AllJoints";
+import QuickLinks from "./QuickLinks";
+import { Box, Heading } from "@chakra-ui/react";
 
 function Dashboard() {
   return (
-    <div>
-      <h1>Dashboard here</h1>
+    <Box>
+      <Heading>Dashboard </Heading>
+      <QuickLinks />
       <AllJoints />
-    </div>
+    </Box>
   );
 }
 

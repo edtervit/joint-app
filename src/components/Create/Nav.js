@@ -62,6 +62,17 @@ function Nav() {
             <Link mr={4} as={ReactLink} to="/myprofile">
               My Music Profile
             </Link>
+            <Link mr={4} as={ReactLink} to="/playlistmaker">
+              Playlist Maker
+            </Link>
+            <Link
+              mr={4}
+              as="a"
+              href="https://ko-fi.com/edtervit"
+              target="_blank"
+            >
+              Donate
+            </Link>
             <Profile />
           </div>
         )}
