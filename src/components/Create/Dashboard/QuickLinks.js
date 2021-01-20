@@ -12,7 +12,7 @@ function QuickLinks() {
         borderRadius="lg"
         p={5}
         boxShadow="lg"
-        my={5}
+        my={3}
       >
         <Heading size="md"> Quick links </Heading>
         <Text>

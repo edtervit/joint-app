@@ -12,9 +12,10 @@ function AllJoints() {
         justifyContent="center"
         borderRadius="lg"
         p={5}
+        my={3}
         boxShadow="lg"
       >
-        <Heading>View Your Joints Here</Heading>
+        <Heading size="lg">View Your Joints Here</Heading>
         <YourJoints />
         <OthersJoints />
       </Box>

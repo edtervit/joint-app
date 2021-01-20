@@ -68,16 +68,14 @@ function SavedTracklists() {
   };
 
   useEffect(() => {
-    return () => {};
-  }, [persistFriendsTrackList]);
+    setClipboardValue(
+      `${process.env.REACT_APP_FRONT_URL}/share/${savedTrackLists[0]._id}`
+    );
+  }, [persistFriendsTrackList, savedTrackLists]);
 
   //Save to clipboard
   const [clipboardValue, setClipboardValue] = useState(null);
   const { hasCopied, onCopy } = useClipboard(clipboardValue);
-  const doClipboard = (value) => {
-    setClipboardValue(value);
-    onCopy();
-  };
 
   return (
     <div>
@@ -105,14 +103,7 @@ function SavedTracklists() {
                     >
                       {process.env.REACT_APP_FRONT_URL}/share/{TrackList._id}
                     </Link>
-                    <Button
-                      ml={3}
-                      onClick={() =>
-                        doClipboard(
-                          `${process.env.REACT_APP_FRONT_URL}/share/${TrackList._id}`
-                        )
-                      }
-                    >
+                    <Button ml={3} onClick={onCopy}>
                       {hasCopied ? "Copied" : "Copy"}
                     </Button>
                   </p>
