@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Heading, Center } from "@chakra-ui/react";
+import { Box, Heading, Center, Text } from "@chakra-ui/react";
 import YourJoints from "./AllJoints/YourJoints";
 import OthersJoints from "./AllJoints/OthersJoints";
 
@@ -16,6 +16,7 @@ function AllJoints() {
         boxShadow="lg"
       >
         <Heading size="lg">View Your Joints Here</Heading>
+        <Text>When you create a joint with a friend it will appear here. </Text>
         <YourJoints />
         <OthersJoints />
       </Box>

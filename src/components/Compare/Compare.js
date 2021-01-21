@@ -63,7 +63,7 @@ function Compare() {
 
   return (
     <div>
-      <h1>Compare page</h1>
+      {compareLoading && <p>Comparing...</p>}
       {jointList && <JointList />}
     </div>
   );
