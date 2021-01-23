@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useStoreActions, useStoreState } from "easy-peasy";
-import styled from "styled-components";
-import { Heading, Checkbox } from "@chakra-ui/react";
+import { Heading, Checkbox, Box } from "@chakra-ui/react";
 
 function TopSongs() {
   const callAPI = useStoreActions((actions) => actions.callAPI);
@@ -80,13 +79,7 @@ function TopSongs() {
 
   //checks to see if no boxes are ticked before sending request
   useEffect(() => {
-    if (TsMonth) {
-      setNoTopSongsSelected(false);
-    }
-    if (TsSix) {
-      setNoTopSongsSelected(false);
-    }
-    if (TsYear) {
+    if (TsMonth || TsSix || TsYear) {
       setNoTopSongsSelected(false);
     }
     if (!TsYear && !TsSix && !TsMonth) {
@@ -98,7 +91,7 @@ function TopSongs() {
 
   return (
     <div>
-      <TopSongsDiv>
+      <Box display="flex" flexDirection="column">
         <Heading size="sml">Most Played Songs</Heading>
         <div className="aOption">
           <Checkbox
@@ -134,16 +127,9 @@ function TopSongs() {
             Top 50 played songs all time
           </Checkbox>
         </div>
-      </TopSongsDiv>
+      </Box>
     </div>
   );
 }
 
 export default TopSongs;
-
-//Styled components
-
-const TopSongsDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-`;

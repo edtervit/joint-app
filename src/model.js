@@ -18,6 +18,10 @@ const model = {
   gotTopSongs: false,
   noTopSongsSelected: true,
 
+  //Liked songs//
+  gotLikedSongs: false,
+  noLikedSongsSelected: true,
+
   failedCookie: false,
   token: null,
 
@@ -128,10 +132,12 @@ const model = {
     state.isLoggedIn = false;
     state.failedCookie = true;
   }),
+
   clearList: action((state) => {
     state.usersSelectedTracks = null;
     state.gotAllData = false;
     state.gotTopSongs = false;
+    state.gotLikedSongs = false;
   }),
 
   ///Profile Builder///
@@ -142,11 +148,20 @@ const model = {
     state.gotAllData = value;
   }),
 
+  //top songs
   setGotTopSongs: action((state, value) => {
     state.gotTopSongs = value;
   }),
   setNoTopSongsSelected: action((state, value) => {
     state.noTopSongsSelected = value;
+  }),
+
+  //liked songs
+  setGotLikedSongs: action((state, value) => {
+    state.gotLikedSongs = value;
+  }),
+  setNoLikedSongsSelected: action((state, value) => {
+    state.noLikedSongsSelected = value;
   }),
 
   setHasSavedTrackLists: action((state, value) => {

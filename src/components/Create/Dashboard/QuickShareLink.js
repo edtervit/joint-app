@@ -16,13 +16,13 @@ function QuickShareLink() {
 
   const savedTrackLists = useStoreState((state) => state.savedTrackLists);
 
-  const TrackList = savedTrackLists[0];
-
   useEffect(() => {
-    setClipboardValue(
-      `${process.env.REACT_APP_FRONT_URL}/share/${TrackList._id}`
-    );
-  }, [TrackList._id]);
+    if (savedTrackLists) {
+      setClipboardValue(
+        `${process.env.REACT_APP_FRONT_URL}/share/${savedTrackLists[0]._id}`
+      );
+    }
+  }, [savedTrackLists]);
 
   //Save to clipboard
   const [clipboardValue, setClipboardValue] = useState(null);
@@ -30,34 +30,36 @@ function QuickShareLink() {
 
   return (
     <Center>
-      <Box
-        bg="gray.50"
-        w="75%"
-        justifyContent="center"
-        borderRadius="lg"
-        p={5}
-        boxShadow="lg"
-        my={3}
-      >
-        <Heading size="md">Your Share Link</Heading>
-        <Text>
-          Share this link with your friends to invite them to compare and create
-          a joint with you!
-        </Text>
-        <Link
-          boxShadow="inner"
-          p={3}
-          m={3}
-          as={ReactLink}
-          to={`share/${TrackList._id}`}
-          target="_blank"
+      {savedTrackLists && (
+        <Box
+          bg="gray.50"
+          w="75%"
+          justifyContent="center"
+          borderRadius="lg"
+          p={5}
+          boxShadow="lg"
+          my={3}
         >
-          {process.env.REACT_APP_FRONT_URL}/share/{TrackList._id}
-        </Link>
-        <Button ml={3} onClick={onCopy}>
-          {hasCopied ? "Copied" : "Copy"}
-        </Button>
-      </Box>
+          <Heading size="md">Your Share Link</Heading>
+          <Text>
+            Share this link with your friends to invite them to compare and
+            create a joint with you!
+          </Text>
+          <Link
+            boxShadow="inner"
+            p={3}
+            m={3}
+            as={ReactLink}
+            to={`share/${savedTrackLists[0]._id}`}
+            target="_blank"
+          >
+            {process.env.REACT_APP_FRONT_URL}/share/{savedTrackLists[0]._id}
+          </Link>
+          <Button ml={3} onClick={onCopy}>
+            {hasCopied ? "Copied" : "Copy"}
+          </Button>
+        </Box>
+      )}
     </Center>
   );
 }

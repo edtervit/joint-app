@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import SourcesIndex from "./Sources/SourcesIndex";
-import styled from "styled-components";
 import { useStoreActions, useStoreState } from "easy-peasy";
 import Loading from "./Loading";
 import StepTwo from "./Steptwo";
@@ -17,16 +16,23 @@ function ProfileBuilder() {
     (actions) => actions.setIsGettingData
   );
 
-  const noTopSongsSelected = useStoreState((state) => state.noTopSongsSelected);
   const setGotAllData = useStoreActions((actions) => actions.setGotAllData);
   const gotAllData = useStoreState((state) => state.gotAllData);
 
   //TopSongs
   const gotTopSongs = useStoreState((state) => state.gotTopSongs);
+  const noTopSongsSelected = useStoreState((state) => state.noTopSongsSelected);
+
+  //LikedSongs
+  const gotLikedSongs = useStoreState((state) => state.gotLikedSongs);
+  const noLikedSongsSelected = useStoreState(
+    (state) => state.noLikedSongsSelected
+  );
 
   //Handlers
   const buildProfileHandler = () => {
-    if (!noTopSongsSelected) {
+    //checks to see if no sources are selected
+    if (!noTopSongsSelected || !noLikedSongsSelected) {
       setIsGettingData(true);
     } else {
       console.log("no option selected");
@@ -42,7 +48,7 @@ function ProfileBuilder() {
   //checks to see if all the sources have completed
   //add new sources here
   useEffect(() => {
-    if (gotTopSongs) {
+    if (gotTopSongs && gotLikedSongs) {
       setGotAllData(true);
       setIsGettingData(false);
     }
@@ -62,9 +68,10 @@ function ProfileBuilder() {
           </Box>
         </div>
       )}
-      <SourcesDiv isGettingData={isGettingData}>
+
+      <Box display={isGettingData ? "none" : ""}>
         {!gotAllData && <SourcesIndex />}
-      </SourcesDiv>
+      </Box>
       {isGettingData && <Loading />}
       {gotAllData && <StepTwo />}
     </div>
@@ -72,7 +79,3 @@ function ProfileBuilder() {
 }
 
 export default ProfileBuilder;
-
-const SourcesDiv = styled.div`
-  display: ${(prop) => (prop.isGettingData ? "none" : "")};
-`;

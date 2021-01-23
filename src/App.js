@@ -6,7 +6,7 @@ import FriendsSavedTracklist from "./components/share/FriendsSavedTracklist";
 import Brain from "./components/Create/Brain";
 import Compare from "./components/Compare/Compare";
 import ShareJoint from "./components/share/ShareJoint";
-import MusicProfile from "./components/Create/Dashboard/MusicProfile";
+import MusicProfile from "./components/Create/Dashboard/MusicProfile/MusicProfile";
 import Nav from "./components/Create/Nav";
 import { useStoreState } from "easy-peasy";
 import PlaylistMaker from "./components/Create/Dashboard/PlaylistMaker";

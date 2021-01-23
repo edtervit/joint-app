@@ -1,6 +1,7 @@
 import React from "react";
 import TopSongs from "./TopSongs";
 import { Box, Heading, Text, Center } from "@chakra-ui/react";
+import LikedSongs from "./LikedSongs";
 
 function SourcesIndex() {
   return (
@@ -12,6 +13,7 @@ function SourcesIndex() {
         <Text>The more songs the better! Don't be shy!</Text>
         <Box my={5}>
           <TopSongs />
+          <LikedSongs />
         </Box>
       </Box>
     </Center>
