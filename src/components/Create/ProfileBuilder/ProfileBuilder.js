@@ -54,7 +54,7 @@ function ProfileBuilder() {
     }
     return () => {};
     // eslint-disable-next-line
-  }, [gotTopSongs]);
+  }, [gotTopSongs, gotLikedSongs]);
 
   return (
     <div>
