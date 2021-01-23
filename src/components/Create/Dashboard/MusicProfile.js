@@ -68,9 +68,11 @@ function SavedTracklists() {
   };
 
   useEffect(() => {
-    setClipboardValue(
-      `${process.env.REACT_APP_FRONT_URL}/share/${savedTrackLists[0]._id}`
-    );
+    if (savedTrackLists) {
+      setClipboardValue(
+        `${process.env.REACT_APP_FRONT_URL}/share/${savedTrackLists[0]._id}`
+      );
+    }
   }, [persistFriendsTrackList, savedTrackLists]);
 
   //Save to clipboard
