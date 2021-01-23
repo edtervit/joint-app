@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 
 import { useStoreState, useStoreActions } from "easy-peasy";
-import { useHistory, Redirect } from "react-router-dom";
-import { Button } from "@chakra-ui/react";
-import { Link, useClipboard } from "@chakra-ui/react";
-import { Link as ReactLink } from "react-router-dom";
+
+import { Link, useClipboard, useToast, Button, Box } from "@chakra-ui/react";
+import { Link as ReactLink, useHistory, Redirect } from "react-router-dom";
 
 function SavedTracklists() {
+  //  //toast
+  const toast = useToast();
+
   //actions
   const callDB = useStoreActions((actions) => actions.callDB);
   const setHasSavedTrackLists = useStoreActions(
@@ -57,6 +59,13 @@ function SavedTracklists() {
         setAmountOfSavedTrackLists();
       } else {
         console.log("Failed to delete!");
+        toast({
+          title: "Error!",
+          description:
+            "Failed to delete, maybe the database is down, or this profile doesn't exists. Try refresh!",
+          status: "error",
+          isClosable: "true",
+        });
       }
     }
   };
@@ -80,55 +89,10 @@ function SavedTracklists() {
   const { hasCopied, onCopy } = useClipboard(clipboardValue);
 
   return (
-    <div>
+    <Box>
       {!isLoggedIn && <Redirect to="/" />}
       {!hasSavedTrackLists && <Redirect to="/" />}
-      {savedTrackLists && hasSavedTrackLists ? (
-        <div className="gotTrackLists">
-          <h2>You have a saved music profile.</h2>
-
-          {savedTrackLists.map((TrackList, index) => {
-            if (TrackList) {
-              return (
-                <div className="aTrackList" key={TrackList._id}>
-                  <p>
-                    This music profile has {TrackList.theList.length} songs, it
-                    was created on {TrackList.createdAt.slice(0, -14)} at{" "}
-                    {TrackList.createdAt.slice(11, 16)}
-                  </p>
-                  <p>
-                    Copy this link to share with friends:{" "}
-                    <Link
-                      as={ReactLink}
-                      to={`share/${TrackList._id}`}
-                      target="_blank"
-                    >
-                      {process.env.REACT_APP_FRONT_URL}/share/{TrackList._id}
-                    </Link>
-                    <Button ml={3} onClick={onCopy}>
-                      {hasCopied ? "Copied" : "Copy"}
-                    </Button>
-                  </p>
-                  {Object.keys(persistFriendsTrackList).length !== 0 &&
-                    console.log(history) && (
-                      <div className="hasPList">
-                        {compareTracksHandler(index)}
-                      </div>
-                    )}
-                  <Button onClick={() => deleteTrackHandler(TrackList._id)}>
-                    Delete your music profile and rebuild!
-                  </Button>
-                </div>
-              );
-            } else {
-              return null;
-            }
-          })}
-        </div>
-      ) : (
-        <p>You don't have any saved Tracklists.</p>
-      )}
-    </div>
+    </Box>
   );
 }
 
