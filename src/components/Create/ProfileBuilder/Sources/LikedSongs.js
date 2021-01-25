@@ -125,7 +125,6 @@ function LikedSongs() {
     <div>
       <Box my={3} display="flex" flexDirection="column">
         <Heading size="sml">Liked Songs</Heading>
-        <p>Radio value: {radioValue}</p>
         <RadioGroup
           name="liked-songs"
           defaultValue="nah"
