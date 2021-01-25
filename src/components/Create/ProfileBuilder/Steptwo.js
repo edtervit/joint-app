@@ -12,6 +12,7 @@ import {
   AccordionIcon,
   Center,
   Image,
+  Text,
 } from "@chakra-ui/react";
 
 function StepTwo() {
@@ -71,28 +72,39 @@ function StepTwo() {
                 justifyContent="center"
               >
                 {usersSelectedTracks ? (
-                  usersSelectedTracks.map((track) => (
+                  usersSelectedTracks.map((track, index) => (
                     <Box width="100%">
                       <Center>
                         <Box
                           className="aTrack"
-                          my={4}
+                          my={2}
                           width="50%"
                           key={track.uri}
                           display="flex"
                           alignItems="center"
                           justifyContent="space-between"
                         >
-                          <Image
-                            boxSize="100px"
-                            src={track.image}
-                            alt=""
-                            mx={5}
-                          />
+                          {usersSelectedTracks.length < 1000 && (
+                            <Image
+                              boxSize="100px"
+                              src={track.image}
+                              alt=""
+                              mx={5}
+                            />
+                          )}
 
-                          <p>
-                            <strong>{track.name}</strong> by {track.artist}
-                          </p>
+                          <Text
+                            textAlign={
+                              usersSelectedTracks.length < 1000
+                                ? "right"
+                                : "left"
+                            }
+                          >
+                            <strong>
+                              {index + 1}. {track.name}
+                            </strong>{" "}
+                            by {track.artist}
+                          </Text>
                         </Box>
                       </Center>
                     </Box>

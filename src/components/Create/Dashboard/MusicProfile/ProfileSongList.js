@@ -10,6 +10,7 @@ import {
   AccordionIcon,
   AccordionPanel,
   Image,
+  Text,
 } from "@chakra-ui/react";
 
 function ProfileSongList() {
@@ -66,26 +67,34 @@ function ProfileSongList() {
                           <Center>
                             <Box
                               className="aTrack"
-                              my={4}
+                              my={2}
                               width="50%"
                               key={track.uri}
                               display="flex"
                               alignItems="center"
                               justifyContent="space-between"
                             >
-                              <Image
-                                boxSize="100px"
-                                src={track.image}
-                                alt=""
-                                mx={5}
-                              />
+                              {savedTrackLists[0].theList.length < 1000 && (
+                                <Image
+                                  boxSize="100px"
+                                  src={track.image}
+                                  alt=""
+                                  mx={5}
+                                />
+                              )}
 
-                              <p>
+                              <Text
+                                textAlign={
+                                  savedTrackLists[0].theList.length < 1000
+                                    ? "right"
+                                    : "left"
+                                }
+                              >
                                 <strong>
                                   {id + 1}. {track.name}
                                 </strong>{" "}
                                 by {track.artist}
-                              </p>
+                              </Text>
                             </Box>
                           </Center>
                         </Box>
