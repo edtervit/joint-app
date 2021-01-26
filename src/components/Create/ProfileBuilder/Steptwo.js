@@ -1,22 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { useStoreState, useStoreActions } from "easy-peasy";
 import SaveProfileToDB from "./SaveProfileToDB";
-import {
-  Box,
-  Button,
-  Heading,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
-  Center,
-  Image,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Button, Heading, Center, Image, Text } from "@chakra-ui/react";
+
+import InfiniteScroll from "react-infinite-scroll-component";
 
 function StepTwo() {
   //Local state
+
+  const [amount, setAmount] = useState(20);
+
+  const loadMore = () => {
+    setAmount(amount + 20);
+    console.log("loading more");
+  };
 
   let usersSelectedTracks = useStoreState((state) => state.usersSelectedTracks);
   const clearList = useStoreActions((action) => action.clearList);
@@ -49,76 +46,66 @@ function StepTwo() {
             </p>
           </div>
         )}
-        <Accordion
-          allowMultiple
-          allowToggle
-          bg="gray.50"
-          display="flex"
-          borderColor="gray.50"
-          defaultIndex={[0]}
-        >
-          <AccordionItem w="100%">
-            <Center>
-              <AccordionButton w="max-content">
-                <Box>Your Songs</Box>
-                <AccordionIcon />
-              </AccordionButton>
-            </Center>
-            <AccordionPanel>
-              <Box
-                className="songs"
-                display="flex"
-                flexWrap="wrap"
-                justifyContent="center"
-              >
-                {usersSelectedTracks ? (
-                  usersSelectedTracks.map((track, index) => (
-                    <Box width="100%">
+        <Center>
+          <Box
+            bg="gray.50"
+            display="flex"
+            borderColor="gray.50"
+            defaultIndex={[0]}
+            w="100%"
+            borderRadius={5}
+            p={2}
+          >
+            <Box
+              className="songs"
+              display="flex"
+              flexWrap="wrap"
+              justifyContent="center"
+            >
+              {usersSelectedTracks ? (
+                <InfiniteScroll
+                  dataLength={usersSelectedTracks.slice(0, amount).length}
+                  next={() => loadMore()}
+                  hasMore={true}
+                >
+                  {usersSelectedTracks.slice(0, amount).map((track, index) => (
+                    <Box w="100%" key={track.uri}>
                       <Center>
                         <Box
                           className="aTrack"
                           my={2}
-                          width="50%"
-                          key={track.uri}
+                          width="75%"
                           display="flex"
                           alignItems="center"
                           justifyContent="space-between"
                         >
-                          {usersSelectedTracks.length < 1000 && (
-                            <Image
-                              boxSize="100px"
-                              src={track.image}
-                              alt=""
-                              mx={5}
-                            />
-                          )}
-
-                          <Text
-                            textAlign={
-                              usersSelectedTracks.length < 1000
-                                ? "right"
-                                : "left"
-                            }
-                          >
+                          <Text>
                             <strong>
                               {index + 1}. {track.name}
                             </strong>{" "}
                             by {track.artist}
                           </Text>
+                          <Image
+                            objectFit="cover"
+                            src={track.image}
+                            alt="album cover of track"
+                            w="100px"
+                            h="100px"
+                          />
                         </Box>
                       </Center>
                     </Box>
-                  ))
-                ) : (
-                  <div className="">
-                    <h4>You haven't selected any tracks yet!</h4>
-                    <p>Refresh your page and try creating a profile again.</p>
-                  </div>
-                )}
-              </Box>
-            </AccordionPanel>
-          </AccordionItem>
-        </Accordion>
+                  ))}
+                </InfiniteScroll>
+              ) : (
+                <div className="">
+                  <h4>You haven't selected any tracks yet!</h4>
+                  <p>Refresh your page and try creating a profile again.</p>
+                </div>
+              )}
+            </Box>
+          </Box>
+        </Center>
       </Box>
     </>
   );

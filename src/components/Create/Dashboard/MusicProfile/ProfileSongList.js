@@ -13,10 +13,8 @@ function ProfileSongList() {
   const [amount, setAmount] = useState(20);
 
   const loadMore = () => {
-    // if (amount < savedTrackLists[0].theList.length) {
     setAmount(amount + 20);
     console.log("loading more");
-    // }
   };
 
   return (
