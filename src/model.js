@@ -36,6 +36,8 @@ const model = {
   yourJoints: null,
   friendsJoints: null,
 
+  isWaiting: false,
+
   //Thunks
   getProfile: thunk(async (actions) => {
     let params = queryString.parse(window.location.search);
@@ -105,12 +107,15 @@ const model = {
   callDB: thunk(async (actions, payload) => {
     const baseUrl = process.env.REACT_APP_BACK_URL;
     const url = `${baseUrl}${payload.url}`;
-
+    actions.setIsWaiting(true);
     const res = await fetch(url, { method: `${payload.method}` });
     if (!res.ok) {
+      actions.setIsWaiting(false);
       return null;
     }
+
     const data = res.json();
+    actions.setIsWaiting(false);
     return data;
   }),
   ////////////////
@@ -204,6 +209,10 @@ const model = {
 
   setFriendsJoints: action((state, value) => {
     state.friendsJoints = value;
+  }),
+
+  setIsWaiting: action((state, value) => {
+    state.isWaiting = value;
   }),
 
   addToList: action((state, payload) => {
