@@ -65,8 +65,8 @@ function ListOfTracks(props) {
             </InfiniteScroll>
           ) : (
             <div className="">
-              <h4>You haven't selected any tracks yet!</h4>
-              <p>Refresh your page and try creating a profile again.</p>
+              <h4>No tracks here.</h4>
+              <p>Refresh your page and try again.</p>
             </div>
           )}
         </Box>

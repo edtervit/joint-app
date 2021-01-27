@@ -22,6 +22,9 @@ const model = {
   gotLikedSongs: false,
   noLikedSongsSelected: true,
 
+  //Playlists
+  playlistsFromSpotify: null,
+
   failedCookie: false,
   token: null,
 
@@ -167,6 +170,15 @@ const model = {
   }),
   setNoLikedSongsSelected: action((state, value) => {
     state.noLikedSongsSelected = value;
+  }),
+
+  //playlist builder
+  setPlaylistsFromSpotify: action((state, value) => {
+    state.playlistsFromSpotify = value;
+  }),
+
+  appendPlaylistsFromSpotify: action((state, value) => {
+    state.playlistsFromSpotify = [...state.playlistsFromSpotify, value];
   }),
 
   setHasSavedTrackLists: action((state, value) => {
