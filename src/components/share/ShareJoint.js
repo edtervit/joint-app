@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useStoreActions, useStoreState } from "easy-peasy";
-import styled from "styled-components";
 import lemonke from "../../Images/lemonke.jpg";
 import { Redirect } from "react-router-dom";
 import MakePlaylist from "../JointList/MakePlaylist";
 import { Link, Box, Center } from "@chakra-ui/react";
 import { Link as ReactLink } from "react-router-dom";
+import ListOfTracks from "../reusable/ListOfTracks";
 
 function ShareJoint({ match }) {
   //state
@@ -100,7 +100,7 @@ function ShareJoint({ match }) {
         </div>
       )}
       {isValid && (
-        <TLdiv>
+        <Box>
           <h1>
             This is the joint list of {jointList.userCreatorName} and{" "}
             {jointList.userFriendName} !
@@ -111,52 +111,13 @@ function ShareJoint({ match }) {
               {process.env.REACT_APP_FRONT_URL}/shareJ/{jointList._id}
             </Link>
           </p>
-          <div className="songs">
-            <MakePlaylist />
-            {jointList &&
-              jointList.theList.map((track, index) => (
-                <div className="aTrack-cont" key={track.uri}>
-                  <div className="aTrack">
-                    <img src={track.image} alt="" />
-                    <p>
-                      <strong>
-                        {index + 1 + ". "}
-                        {track.name}
-                      </strong>{" "}
-                      by {track.artist}
-                    </p>
-                  </div>
-                </div>
-              ))}
-          </div>
-        </TLdiv>
+
+          <MakePlaylist />
+          {jointList.theList && <ListOfTracks TrackList={jointList.theList} />}
+        </Box>
       )}
     </div>
   );
 }
 
 export default ShareJoint;
-
-const TLdiv = styled.div`
-  background-color: #fafafa;
-  padding: 1.5rem 0;
-  .songs {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 100%;
-    .aTrack-cont {
-      width: 100%;
-      .aTrack {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        width: 50%;
-        margin: 0 auto;
-        img {
-          width: 75px;
-        }
-      }
-    }
-  }
-`;

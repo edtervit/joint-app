@@ -23,7 +23,6 @@ function App() {
         <Route path="/compare" component={Compare} />
         <Route path="/myprofile" component={MusicProfile} />
         <Route path="/playlistmaker" component={PlaylistMaker} />
-
         <Route path="/" exact component={Brain} />
       </Router>
     </div>

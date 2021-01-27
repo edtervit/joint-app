@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useStoreActions, useStoreState } from "easy-peasy";
-import styled from "styled-components";
 import lemonke from "../../Images/lemonke.jpg";
 import { Redirect } from "react-router-dom";
-import { Button } from "@chakra-ui/react";
+import { Box, Button } from "@chakra-ui/react";
+import ListOfTracks from "../reusable/ListOfTracks";
 
 function FriendsSavedTracklist({ match }) {
   //state
@@ -77,56 +77,18 @@ function FriendsSavedTracklist({ match }) {
         </div>
       )}
       {isValid && (
-        <TLdiv>
+        <Box>
           <h1>This music profile belongs to {friendsTrackList.name}!</h1>
           <Button onClick={() => compareTracksHandler(friendsTrackList)}>
             Compare this profile to mine!
           </Button>
-          <div className="songs">
-            {friendsTrackList &&
-              friendsTrackList.theList.map((track, index) => (
-                <div className="aTrack-cont" key={track.uri}>
-                  <div className="aTrack">
-                    <img src={track.image} alt="" />
-                    <p>
-                      <strong>
-                        {index + 1 + ". "}
-                        {track.name}
-                      </strong>{" "}
-                      by {track.artist}
-                    </p>
-                  </div>
-                </div>
-              ))}
-          </div>
-        </TLdiv>
+          {friendsTrackList.theList && (
+            <ListOfTracks TrackList={friendsTrackList.theList} />
+          )}
+        </Box>
       )}
     </div>
   );
 }
 
 export default FriendsSavedTracklist;
-
-const TLdiv = styled.div`
-  background-color: #fafafa;
-  padding: 1.5rem 0;
-  .songs {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 100%;
-    .aTrack-cont {
-      width: 100%;
-      .aTrack {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        width: 50%;
-        margin: 0 auto;
-        img {
-          width: 75px;
-        }
-      }
-    }
-  }
-`;
