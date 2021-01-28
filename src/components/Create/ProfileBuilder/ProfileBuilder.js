@@ -29,16 +29,22 @@ function ProfileBuilder() {
     (state) => state.noLikedSongsSelected
   );
 
+  //Playlists
+  const gotPlaylists = useStoreState((state) => state.gotPlaylists);
+  const noPlaylistsSelected = useStoreState(
+    (state) => state.noPlaylistsSelected
+  );
+
   //Handlers
   const buildProfileHandler = () => {
     //checks to see if no sources are selected
-    if (!noTopSongsSelected || !noLikedSongsSelected) {
+    if (!noTopSongsSelected || !noLikedSongsSelected || !noPlaylistsSelected) {
       setIsGettingData(true);
     } else {
       console.log("no option selected");
       toast({
         title: "Error!",
-        description: "Please select 1 import method!",
+        description: "Please select atleast 1 import method!",
         status: "error",
         isClosable: "true",
       });
@@ -48,13 +54,13 @@ function ProfileBuilder() {
   //checks to see if all the sources have completed
   //add new sources here
   useEffect(() => {
-    if (gotTopSongs && gotLikedSongs) {
+    if (gotTopSongs && gotLikedSongs && gotPlaylists) {
       setGotAllData(true);
       setIsGettingData(false);
     }
     return () => {};
     // eslint-disable-next-line
-  }, [gotTopSongs, gotLikedSongs]);
+  }, [gotTopSongs, gotLikedSongs, gotPlaylists]);
 
   return (
     <div>

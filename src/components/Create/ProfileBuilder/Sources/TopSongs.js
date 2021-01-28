@@ -36,18 +36,21 @@ function TopSongs() {
 
     if (spotifyResponse) {
       spotifyResponse.items.forEach((song) => {
-        const songName = song.name;
-        const songArtist = song.artists[0].name;
-        const songImage = song.album.images[0].url;
-        const songUri = song.uri;
-        const payload = {
-          name: songName,
-          artist: songArtist,
-          image: songImage,
-          uri: songUri,
-        };
-        //for each song use addtolist action to add it to overall list
-        addToList(payload);
+        //if the song is not local only and has album art
+        if (!song.is_local && song.album.images[0]) {
+          const songName = song.name;
+          const songArtist = song.artists[0].name;
+          const songImage = song.album.images[0].url;
+          const songUri = song.uri;
+          const payload = {
+            name: songName,
+            artist: songArtist,
+            image: songImage,
+            uri: songUri,
+          };
+          //for each song use addtolist action to add it to overall list
+          addToList(payload);
+        }
       });
     }
     // const callRes = await callAPI(payload);

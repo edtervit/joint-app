@@ -24,6 +24,8 @@ const model = {
 
   //Playlists
   playlistsFromSpotify: null,
+  gotPlaylists: false,
+  noPlaylistsSelected: true,
 
   failedCookie: false,
   token: null,
@@ -146,6 +148,7 @@ const model = {
     state.gotAllData = false;
     state.gotTopSongs = false;
     state.gotLikedSongs = false;
+    state.gotPlaylists = false;
   }),
 
   ///Profile Builder///
@@ -175,6 +178,13 @@ const model = {
   //playlist builder
   setPlaylistsFromSpotify: action((state, value) => {
     state.playlistsFromSpotify = value;
+  }),
+
+  setGotPlaylists: action((state, value) => {
+    state.gotPlaylists = value;
+  }),
+  setNoPlaylistsSelected: action((state, value) => {
+    state.noPlaylistsSelected = value;
   }),
 
   appendPlaylistsFromSpotify: action((state, value) => {

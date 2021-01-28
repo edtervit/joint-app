@@ -42,28 +42,8 @@ function LikedSongs() {
 
       if (spotifyResponse) {
         spotifyResponse.items.forEach((song) => {
-          const songName = song.track.name;
-          const songArtist = song.track.artists[0].name;
-          const songImage = song.track.album.images[0].url;
-          const songUri = song.track.uri;
-          const payload = {
-            name: songName,
-            artist: songArtist,
-            image: songImage,
-            uri: songUri,
-          };
-          //for each song use addtolist action to add it to overall list
-          addToList(payload);
-        });
-      }
-      while (spotifyResponse.next && offset < songLimit) {
-        let newParams = {
-          url: `https://api.spotify.com/v1/me/tracks?offset=${offset}&limit=50`,
-          token: token,
-        };
-        spotifyResponse = await callAPI(newParams);
-        if (spotifyResponse) {
-          spotifyResponse.items.forEach((song) => {
+          //if the song is not local only and has album art
+          if (!song.is_local && song.track.album.images[0]) {
             const songName = song.track.name;
             const songArtist = song.track.artists[0].name;
             const songImage = song.track.album.images[0].url;
@@ -76,6 +56,32 @@ function LikedSongs() {
             };
             //for each song use addtolist action to add it to overall list
             addToList(payload);
+          }
+        });
+      }
+      while (spotifyResponse.next && offset < songLimit) {
+        let newParams = {
+          url: `https://api.spotify.com/v1/me/tracks?offset=${offset}&limit=50`,
+          token: token,
+        };
+        spotifyResponse = await callAPI(newParams);
+        if (spotifyResponse) {
+          spotifyResponse.items.forEach((song) => {
+            //if the song is not local only and has album art
+            if (!song.is_local && song.track.album.images[0]) {
+              const songName = song.track.name;
+              const songArtist = song.track.artists[0].name;
+              const songImage = song.track.album.images[0].url;
+              const songUri = song.track.uri;
+              const payload = {
+                name: songName,
+                artist: songArtist,
+                image: songImage,
+                uri: songUri,
+              };
+              //for each song use addtolist action to add it to overall list
+              addToList(payload);
+            }
           });
         }
         console.log(spotifyResponse);
