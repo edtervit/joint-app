@@ -179,6 +179,22 @@ function Playlists() {
   return (
     <Box>
       <Heading size="sml">Playlists</Heading>
+      <Text>Add all playlists or select and add from the dropdown.</Text>
+      {playlistsFromSpotify && (
+        <Center>
+          <HStack>
+            <Button
+              my={2}
+              onClick={() => setChosenPlaylists(playlistsFromSpotify)}
+            >
+              Add all
+            </Button>
+            <Button my={2} onClick={() => setChosenPlaylists([])}>
+              Remove All
+            </Button>
+          </HStack>
+        </Center>
+      )}
       {playlistsFromSpotify && (
         <HStack>
           <Select
@@ -208,7 +224,8 @@ function Playlists() {
                   {playlist.name} (Tracks: {playlist.tracks.total})
                 </Text>
                 <Button
-                  size="md"
+                  size="sml"
+                  p={1}
                   bg="red.100"
                   onClick={() => deletePlaylistHandler(playlist.id)}
                 >

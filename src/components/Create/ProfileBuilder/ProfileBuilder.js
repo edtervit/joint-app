@@ -71,18 +71,18 @@ function ProfileBuilder() {
           </Box>
         </div>
       )}
-
-      <Box display={isGettingData ? "none" : ""}>
-        {!gotAllData && <SourcesIndex />}
-      </Box>
-      {isGettingData && <Loading />}
-      {gotAllData && <StepTwo />}
       {!isGettingData && !gotAllData && (
         <Button size="lg" onClick={() => buildProfileHandler()}>
           {" "}
           Click to build!
         </Button>
       )}
+
+      <Box display={isGettingData ? "none" : ""}>
+        {!gotAllData && <SourcesIndex />}
+      </Box>
+      {isGettingData && <Loading />}
+      {gotAllData && <StepTwo />}
     </div>
   );
 }
