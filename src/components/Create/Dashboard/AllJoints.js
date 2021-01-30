@@ -8,15 +8,13 @@ function AllJoints() {
     <Center>
       <Box
         bg="gray.50"
-        w="75%"
+        w={["95%", "60%"]}
         justifyContent="center"
         borderRadius="lg"
-        p={5}
+        p={4}
         my={3}
         boxShadow="lg"
       >
-        <Heading size="lg">View Your Joints Here</Heading>
-        <Text>When you create a joint with a friend it will appear here. </Text>
         <YourJoints />
         <OthersJoints />
       </Box>

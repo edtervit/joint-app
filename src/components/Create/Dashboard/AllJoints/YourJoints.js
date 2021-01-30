@@ -34,11 +34,12 @@ function YourJoints() {
   }, [profile]);
 
   return (
-    <div>
-      <Heading size="md" my={2}>
+    <Box my={5}>
+      <Heading size="lg" my={3}>
         Joints You Made
       </Heading>
-      <Box>
+      {yourJoints && <Text my={2}>Click a joint to view it!</Text>}
+      <Box border="gray.300 1px solid">
         {!yourJoints && (
           <Text>
             You haven't made any joints, get your friends to send your their
@@ -47,6 +48,12 @@ function YourJoints() {
         )}
         {yourJoints && (
           <Box>
+            <Text display="inline-block" w="50%" textAlign="center">
+              <strong>Friends Name</strong>
+            </Text>
+            <Text display="inline-block" w="50%" textAlign="center">
+              <strong>List Length</strong>
+            </Text>
             {yourJoints.map((joint, index) => (
               <Link
                 as={ReactLink}
@@ -56,20 +63,16 @@ function YourJoints() {
                 boxShadow={index % 2 === 0 ? "" : "inner"}
                 bg={index % 2 === 0 ? "" : "white"}
                 display="flex"
-                textAlign="left"
+                textAlign="center"
               >
-                <Text w="33%">Friend: {joint.userFriendName}</Text>
-                <Text w="33%">List Length: {joint.theList.length}</Text>
-                <Text w="33%">
-                  Created: {joint.createdAt.slice(0, -14)} at{" "}
-                  {joint.createdAt.slice(11, 16)}
-                </Text>
+                <Text w="50%">{joint.userFriendName}</Text>
+                <Text w="50%">{joint.theList.length}</Text>
               </Link>
             ))}
           </Box>
         )}
       </Box>
-    </div>
+    </Box>
   );
 }
 
