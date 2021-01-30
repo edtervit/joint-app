@@ -192,7 +192,9 @@ function Playlists() {
                 </option>
               ))}
           </Select>
-          <Button onClick={() => addPlaylistToSelectedHandler()}>Add Playlist</Button>
+          <Button onClick={() => addPlaylistToSelectedHandler()}>
+            Add Playlist
+          </Button>
         </HStack>
       )}
 
@@ -210,7 +212,7 @@ function Playlists() {
                   bg="red.100"
                   onClick={() => deletePlaylistHandler(playlist.id)}
                 >
-                  -
+                  Remove
                 </Button>
               </HStack>
             </Center>
