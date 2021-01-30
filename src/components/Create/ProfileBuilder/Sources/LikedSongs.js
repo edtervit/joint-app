@@ -12,6 +12,8 @@ import { useStoreActions, useStoreState } from "easy-peasy";
 function LikedSongs() {
   const [radioValue, setRadioValue] = useState("nah");
 
+  const [likedSongsInfo, setLikedSongsInfo] = useState(null);
+
   //actions
   const setGotLikedSongs = useStoreActions(
     (actions) => actions.setGotLikedSongs
@@ -127,6 +129,26 @@ function LikedSongs() {
     // eslint-disable-next-line
   }, [radioValue]);
 
+  // gets the users liked songs amount
+  useEffect(() => {
+    const callAPIforLikedSongsInfo = async () => {
+      let params = {
+        url: `https://api.spotify.com/v1/me/tracks?offset=0&limit=50`,
+        token: token,
+      };
+      let spotifyPlaylistResponse = await callAPI(params);
+      console.log(spotifyPlaylistResponse);
+      if (spotifyPlaylistResponse.total) {
+        setLikedSongsInfo(spotifyPlaylistResponse);
+      }
+    };
+    if (token) {
+      callAPIforLikedSongsInfo();
+    }
+
+    // eslint-disable-next-line
+  }, [token]);
+
   return (
     <div>
       <Box my={3} display="flex" flexDirection="column">
@@ -141,7 +163,9 @@ function LikedSongs() {
               <Radio value="nah">Nah</Radio>
               <Radio value="200">200 Most recent</Radio>
               <Radio value="500">500 Most recent</Radio>
-              <Radio value="all">All liked songs</Radio>
+              <Radio value="all">
+                All liked songs ({likedSongsInfo && likedSongsInfo.total})
+              </Radio>
             </Stack>
           </Center>
         </RadioGroup>

@@ -68,9 +68,6 @@ function ProfileBuilder() {
         <div className="div">
           <Box>
             <Heading mb={5}>Step 1 - Build your profile!</Heading>
-            <Button onClick={() => buildProfileHandler()}>
-              Click to build!
-            </Button>
           </Box>
         </div>
       )}
@@ -80,6 +77,7 @@ function ProfileBuilder() {
       </Box>
       {isGettingData && <Loading />}
       {gotAllData && <StepTwo />}
+      <Button onClick={() => buildProfileHandler()}>Click to build!</Button>
     </div>
   );
 }
