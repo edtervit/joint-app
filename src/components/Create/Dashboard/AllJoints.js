@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Heading, Center, Text } from "@chakra-ui/react";
+import { Box, Center } from "@chakra-ui/react";
 import YourJoints from "./AllJoints/YourJoints";
 import OthersJoints from "./AllJoints/OthersJoints";
 
