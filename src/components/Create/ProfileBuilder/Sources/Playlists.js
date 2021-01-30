@@ -192,7 +192,7 @@ function Playlists() {
                 </option>
               ))}
           </Select>
-          <Button onClick={() => addPlaylistToSelectedHandler()}>+</Button>
+          <Button onClick={() => addPlaylistToSelectedHandler()}>Add Playlist</Button>
         </HStack>
       )}
 

@@ -77,7 +77,12 @@ function ProfileBuilder() {
       </Box>
       {isGettingData && <Loading />}
       {gotAllData && <StepTwo />}
-      <Button onClick={() => buildProfileHandler()}>Click to build!</Button>
+      {!isGettingData && !gotAllData && (
+        <Button size="lg" onClick={() => buildProfileHandler()}>
+          {" "}
+          Click to build!
+        </Button>
+      )}
     </div>
   );
 }
