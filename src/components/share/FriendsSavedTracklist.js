@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useStoreActions, useStoreState } from "easy-peasy";
 import lemonke from "../../Images/lemonke.jpg";
 import { Redirect } from "react-router-dom";
-import { Box, Button, Heading, Text } from "@chakra-ui/react";
+import { Box, Button, Heading, Text, Center, Image } from "@chakra-ui/react";
 
 function FriendsSavedTracklist({ match }) {
   //state
@@ -66,14 +66,22 @@ function FriendsSavedTracklist({ match }) {
         />
       )}
       {!isValid && !isLoading && (
-        <div className="failed">
-          <h1>Uh oh stinky!</h1>
-          <p>
-            {params} doesn't return any matches, you sure you got the link
-            right?
-          </p>
-          <img src={lemonke} alt="" />
-        </div>
+        <Center>
+          <Box className="failed" textAlign="center">
+            <Heading my={3}>Uh oh stinky!</Heading>
+            <Text>
+              {params} doesn't return any matches, you sure you got the link
+              right?
+            </Text>
+            <Text>
+              Or maybe your friend has made a new profile since sending you the
+              link, ask them for their current share link!
+            </Text>
+            <Center>
+              <Image my={3} src={lemonke} alt="uh oh stinky le monke" />
+            </Center>
+          </Box>
+        </Center>
       )}
       {isValid && (
         <Box p={5}>
