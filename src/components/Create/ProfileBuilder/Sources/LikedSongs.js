@@ -10,7 +10,7 @@ import React, { useState, useEffect } from "react";
 import { useStoreActions, useStoreState } from "easy-peasy";
 
 function LikedSongs() {
-  const [radioValue, setRadioValue] = useState("nah");
+  const [radioValue, setRadioValue] = useState("all");
 
   const [likedSongsInfo, setLikedSongsInfo] = useState(null);
 

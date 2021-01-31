@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useStoreActions, useStoreState } from "easy-peasy";
 import lemonke from "../../Images/lemonke.jpg";
 import { Redirect } from "react-router-dom";
-import { Box, Button } from "@chakra-ui/react";
-import ListOfTracks from "../reusable/ListOfTracks";
+import { Box, Button, Heading, Text } from "@chakra-ui/react";
 
 function FriendsSavedTracklist({ match }) {
   //state
@@ -77,14 +76,20 @@ function FriendsSavedTracklist({ match }) {
         </div>
       )}
       {isValid && (
-        <Box>
-          <h1>This music profile belongs to {friendsTrackList.name}!</h1>
-          <Button onClick={() => compareTracksHandler(friendsTrackList)}>
-            Compare this profile to mine!
+        <Box p={5}>
+          <Heading my={5}>
+            {friendsTrackList.name} wants to compare music with you!
+          </Heading>
+          <Text>
+            We will compare both of your music and find matches for you!
+          </Text>
+          <Text>
+            You can then save this list of matches into a playlist for you to
+            enjoy together
+          </Text>
+          <Button my={3} onClick={() => compareTracksHandler(friendsTrackList)}>
+            Compare with {friendsTrackList.name}
           </Button>
-          {friendsTrackList.theList && (
-            <ListOfTracks TrackList={friendsTrackList.theList} />
-          )}
         </Box>
       )}
     </div>
