@@ -4,7 +4,7 @@ import React from "react";
 function Loading() {
   return (
     <div>
-      <h1>Loading....</h1>
+      <h1>Loading</h1>
       <Spinner></Spinner>
     </div>
   );
