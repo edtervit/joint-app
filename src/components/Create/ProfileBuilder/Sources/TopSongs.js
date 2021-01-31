@@ -15,9 +15,9 @@ function TopSongs() {
   const isGettingData = useStoreState((state) => state.isGettingData);
 
   //Song sources refs local states
-  const [TsMonth, setTsMonth] = useState(false);
-  const [TsSix, setTsSix] = useState(false);
-  const [TsYear, setTsYear] = useState(false);
+  const [TsMonth, setTsMonth] = useState(true);
+  const [TsSix, setTsSix] = useState(true);
+  const [TsYear, setTsYear] = useState(true);
 
   //the sources
   const theSources = {
@@ -103,6 +103,7 @@ function TopSongs() {
             }}
             type="checkbox"
             id="TSmonth"
+            defaultChecked={true}
           >
             Top 50 played songs from past month
           </Checkbox>
@@ -114,6 +115,7 @@ function TopSongs() {
             }}
             type="checkbox"
             id="TsSix"
+            defaultChecked={true}
           >
             Top 50 played songs from past 6 months
           </Checkbox>
@@ -126,6 +128,7 @@ function TopSongs() {
             }}
             type="checkbox"
             id="TsYear"
+            defaultChecked={true}
           >
             Top 50 played songs all time
           </Checkbox>

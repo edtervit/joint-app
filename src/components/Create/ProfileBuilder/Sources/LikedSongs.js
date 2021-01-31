@@ -138,7 +138,7 @@ function LikedSongs() {
       };
       let spotifyPlaylistResponse = await callAPI(params);
       console.log(spotifyPlaylistResponse);
-      if (spotifyPlaylistResponse.total) {
+      if (spotifyPlaylistResponse) {
         setLikedSongsInfo(spotifyPlaylistResponse);
       }
     };
@@ -155,7 +155,7 @@ function LikedSongs() {
         <Heading size="sml">Liked Songs</Heading>
         <RadioGroup
           name="liked-songs"
-          defaultValue="nah"
+          defaultValue="all"
           onChange={(value) => setRadioValue(value)}
         >
           <Center>

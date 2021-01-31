@@ -11,6 +11,7 @@ function SourcesIndex() {
         <Heading my={2} size="md">
           Select where we should get your music from:
         </Heading>
+        <Text>We will only show people the songs you match on.</Text>
         <Text>The more songs the better! Don't be shy!</Text>
         <Box my={5}>
           <TopSongs />
