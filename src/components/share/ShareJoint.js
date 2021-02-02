@@ -64,6 +64,14 @@ function ShareJoint({ match }) {
 
   return (
     <div>
+      {!isLoggedIn && jointList && (
+        <Redirect
+          to={{
+            pathname: "/",
+            state: { fromShareJ: "fromShareJ", fromWho: jointList._id },
+          }}
+        />
+      )}
       {redirect && (
         <Redirect
           to={{

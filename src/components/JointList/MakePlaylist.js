@@ -15,7 +15,6 @@ function MakePlaylist() {
 
   //easy peasy actions
   const postAPI = useStoreActions((actions) => actions.postAPI);
-  const setToken = useStoreActions((actions) => actions.setToken);
   const failCookie = useStoreActions((actions) => actions.failCookie);
 
   //handlers
@@ -23,7 +22,7 @@ function MakePlaylist() {
     setIsCreating(true);
     //create the empty playlist
     const payload = {
-      token: "CHANGEMEEEE",
+      token: token,
       url: `https://api.spotify.com/v1/users/${profile.id}/playlists`,
       body: {
         name: ` 🍁 ${jointList.userFriendName}'s and ${jointList.userCreatorName}'s joint list`,
@@ -41,6 +40,7 @@ function MakePlaylist() {
       if (!res.id) {
         setFailedCreating(true);
         setIsCreating(false);
+        failCookie();
       } else {
         //id of playlist to add songs to
         const playlistID = res.id;
@@ -81,7 +81,6 @@ function MakePlaylist() {
     <div>
       {!passedCreating && (
         <Box>
-          <Button onClick={() => setToken(null)}>Clear token</Button>
           <Button
             isLoading={isCreating ? true : false}
             onClick={() => createJointPlaylist()}
