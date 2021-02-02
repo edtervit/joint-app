@@ -29,6 +29,7 @@ const model = {
 
   failedCookie: false,
   token: null,
+  refreshToken: null,
 
   amountOfSavedTrackLists: 0,
   friendsTrackList: null,
@@ -46,7 +47,8 @@ const model = {
   //Thunks
   getProfile: thunk(async (actions) => {
     let params = queryString.parse(window.location.search);
-    let parsedToken = params.access_token;
+    const parsedToken = params.access_token;
+    const refreshToken = params.refresh;
     let urlState = params.state;
     if (urlState === "fromShare") {
       actions.setFromSharePage(true);
@@ -66,7 +68,11 @@ const model = {
     if (res.ok) {
       const data = await res.json();
       actions.setProfile(data);
-      actions.logIn(parsedToken);
+      const tokens = {
+        normal: parsedToken,
+        refresh: refreshToken,
+      };
+      actions.logIn(tokens);
     } else {
       actions.failCookie();
     }
@@ -100,11 +106,14 @@ const model = {
       method: "POST",
       body: JSON.stringify(payload.body),
     });
+
     if (res.ok) {
       const data = await res.json();
+      console.log("passed posting");
       return data;
     } else {
       const dataFailed = await res.json();
+      console.log("failed posting");
       return dataFailed;
     }
   }),
@@ -129,9 +138,10 @@ const model = {
   setProfile: action((state, profile) => {
     state.profile = profile;
   }),
-  logIn: action((state, token) => {
+  logIn: action((state, tokens) => {
     state.isLoggedIn = true;
-    state.token = token;
+    state.token = tokens.normal;
+    state.refreshToken = tokens.refresh;
     state.failedCookie = false;
   }),
 
@@ -235,6 +245,14 @@ const model = {
 
   setIsWaiting: action((state, value) => {
     state.isWaiting = value;
+  }),
+
+  setToken: action((state, value) => {
+    state.token = value;
+  }),
+
+  setRefreshToken: action((state, value) => {
+    state.refreshToken = value;
   }),
 
   addToList: action((state, payload) => {
