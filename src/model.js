@@ -118,6 +118,34 @@ const model = {
     }
   }),
 
+  refreshTokenAPI: thunk(async (actions, payload, { getState }) => {
+    const baseUrl = process.env.REACT_APP_BACK_URL;
+    const url = `${baseUrl}/token/refresh`;
+    actions.setIsWaiting(true);
+    const state = getState();
+    const tokens = {
+      token: state.token,
+      refreshToken: state.refreshToken,
+    };
+    const res = await fetch(url, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify(tokens),
+    });
+    if (!res.ok) {
+      const data = res.json();
+      actions.setIsWaiting(false);
+      return data;
+    } else {
+      const data = res.json();
+      actions.setToken(res.access_token);
+      actions.setIsWaiting(false);
+      return data;
+    }
+  }),
+
   callDB: thunk(async (actions, payload) => {
     const baseUrl = process.env.REACT_APP_BACK_URL;
     const url = `${baseUrl}${payload.url}`;
