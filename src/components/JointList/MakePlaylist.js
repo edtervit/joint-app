@@ -15,7 +15,6 @@ function MakePlaylist() {
 
   //easy peasy actions
   const postAPI = useStoreActions((actions) => actions.postAPI);
-  const failCookie = useStoreActions((actions) => actions.failCookie);
 
   //handlers
   const createJointPlaylist = async () => {
@@ -40,7 +39,6 @@ function MakePlaylist() {
       if (!res.id) {
         setFailedCreating(true);
         setIsCreating(false);
-        failCookie();
       } else {
         //id of playlist to add songs to
         const playlistID = res.id;
@@ -56,7 +54,7 @@ function MakePlaylist() {
         let counterBase = 0;
         let counterEnd = 100;
 
-        while (res2.snapshot_id) {
+        while (res2 && res2.snapshot_id) {
           let payload3 = {
             token: token,
             url: `https://api.spotify.com/v1/playlists/${playlistID}/tracks`,

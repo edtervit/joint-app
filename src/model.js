@@ -45,11 +45,16 @@ const model = {
   isWaiting: false,
 
   //Thunks
-  getProfile: thunk(async (actions) => {
+  getProfile: thunk(async (actions, payload, { getState }) => {
     let params = queryString.parse(window.location.search);
     const parsedToken = params.access_token;
     const refreshToken = params.refresh;
     let urlState = params.state;
+    const tokens = {
+      normal: parsedToken,
+      refresh: refreshToken,
+    };
+    await actions.setTokens(tokens);
     if (urlState === "fromShare") {
       actions.setFromSharePage(true);
     } else if (urlState === "normal") {
@@ -68,17 +73,28 @@ const model = {
     if (res.ok) {
       const data = await res.json();
       actions.setProfile(data);
-      const tokens = {
-        normal: parsedToken,
-        refresh: refreshToken,
-      };
-      actions.logIn(tokens);
+      actions.logIn();
     } else {
-      actions.failCookie();
+      await actions.refreshTokenAPI();
+      const state = getState();
+      const token = state.token;
+      console.log("refreshed token");
+      const res2 = await fetch("https://api.spotify.com/v1/me", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (res2.ok) {
+        const data2 = await res2.json();
+        actions.setProfile(data2);
+        actions.logIn();
+      } else {
+        actions.failCookie();
+      }
     }
   }),
 
-  callAPI: thunk(async (actions, payload) => {
+  callAPI: thunk(async (actions, payload, { getState }) => {
     const token = payload.token;
     const url = payload.url;
     const res = await fetch(url, {
@@ -90,12 +106,27 @@ const model = {
       const data = await res.json();
       return data;
     } else {
-      console.log(res);
-      actions.failCookie();
+      await actions.refreshTokenAPI();
+      console.log("Refreshed cookie");
+      const newState = getState();
+      const token2 = newState.token;
+      const res2 = await fetch(url, {
+        headers: {
+          Authorization: `Bearer ${token2}`,
+        },
+      });
+      if (res2.ok) {
+        const data2 = await res2.json();
+        console.log("passed after refreshing token");
+        return data2;
+      } else {
+        actions.failCookie();
+        console.log("failed calling api even after token refresh");
+      }
     }
   }),
 
-  postAPI: thunk(async (actions, payload) => {
+  postAPI: thunk(async (actions, payload, { getState }) => {
     const token = payload.token;
     const url = payload.url;
     const res = await fetch(url, {
@@ -112,9 +143,25 @@ const model = {
       console.log("passed posting");
       return data;
     } else {
-      const dataFailed = await res.json();
-      console.log("failed posting");
-      return dataFailed;
+      await actions.refreshTokenAPI();
+      console.log("Refreshed cookie");
+      const newState = getState();
+      const token2 = newState.token;
+
+      const res2 = await fetch(url, {
+        headers: {
+          Authorization: `Bearer ${token2}`,
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify(payload.body),
+      });
+      if (res2) {
+        const dataFailed = await res2.json();
+        return dataFailed;
+      } else {
+        actions.failCookie();
+      }
     }
   }),
 
@@ -139,8 +186,8 @@ const model = {
       actions.setIsWaiting(false);
       return data;
     } else {
-      const data = res.json();
-      actions.setToken(res.access_token);
+      const data = await res.json();
+      await actions.setToken(data.access_token);
       actions.setIsWaiting(false);
       return data;
     }
@@ -166,11 +213,13 @@ const model = {
   setProfile: action((state, profile) => {
     state.profile = profile;
   }),
-  logIn: action((state, tokens) => {
+  logIn: action((state) => {
     state.isLoggedIn = true;
+    state.failedCookie = false;
+  }),
+  setTokens: action((state, tokens) => {
     state.token = tokens.normal;
     state.refreshToken = tokens.refresh;
-    state.failedCookie = false;
   }),
 
   logOut: action((state) => {
