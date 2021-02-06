@@ -6,6 +6,7 @@ const model = {
   isLoggedIn: false,
   hasSavedTrackLists: false,
   savedTrackLists: null,
+  waitingTrackListCheck: true,
 
   //////Profile Builder/////
   usersSelectedTracks: null,
@@ -74,6 +75,7 @@ const model = {
       const data = await res.json();
       actions.setProfile(data);
       actions.logIn();
+      return data;
     } else {
       await actions.refreshTokenAPI();
       const state = getState();
@@ -88,6 +90,7 @@ const model = {
         const data2 = await res2.json();
         actions.setProfile(data2);
         actions.logIn();
+        return data2;
       } else {
         actions.failCookie();
       }
@@ -236,6 +239,10 @@ const model = {
     state.gotTopSongs = false;
     state.gotLikedSongs = false;
     state.gotPlaylists = false;
+  }),
+
+  setWaitingTrackListCheck: action((state, value) => {
+    state.waitingTrackListCheck = value;
   }),
 
   ///Profile Builder///

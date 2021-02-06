@@ -6,8 +6,14 @@ import ProfileBuilder from "./ProfileBuilder/ProfileBuilder";
 import { useStoreState } from "easy-peasy";
 import Dashboard from "./Dashboard/Dashboard";
 import FromShare from "./Dashboard/FromShare";
+import { Spinner } from "@chakra-ui/react";
+import Loading from "./ProfileBuilder/Loading";
 
 function Brain() {
+  const waitingTrackListCheck = useStoreState(
+    (state) => state.waitingTrackListCheck
+  );
+
   //state
   const isLogged = useStoreState((state) => state.isLoggedIn);
   const hasSavedTrackLists = useStoreState((state) => state.hasSavedTrackLists);
@@ -20,9 +26,14 @@ function Brain() {
         <div className="isloggedIn">
           {fromSharePage && <FromShare />}
           <br />
-          {hasSavedTrackLists
-            ? !fromSharePage && <Dashboard />
-            : !fromSharePage && <ProfileBuilder />}
+          {waitingTrackListCheck && !fromSharePage && (
+            <>
+              <Loading />
+            </>
+          )}
+          {!waitingTrackListCheck && !fromSharePage && (
+            <>{hasSavedTrackLists ? <Dashboard /> : <ProfileBuilder />}</>
+          )}
         </div>
       ) : (
         <LandingPage />

@@ -16,6 +16,10 @@ function Nav() {
   //actions
   const callDB = useStoreActions((actions) => actions.callDB);
 
+  const setWaitingTrackListCheck = useStoreActions(
+    (actions) => actions.setWaitingTrackListCheck
+  );
+
   const setHasSavedTrackLists = useStoreActions(
     (actions) => actions.setHasSavedTrackLists
   );
@@ -25,6 +29,7 @@ function Nav() {
 
   useEffect(() => {
     const getSavedTrackLists = async (id) => {
+      setWaitingTrackListCheck(true);
       let payload = {
         url: `/tracklists/getTrackLists/${id}`,
         method: "GET",
@@ -32,11 +37,13 @@ function Nav() {
       const res = await callDB(payload);
 
       if (res && res.length > 0) {
-        setSavedTrackLists(res);
-        setHasSavedTrackLists(true);
+        await setSavedTrackLists(res);
+        await setHasSavedTrackLists(true);
+        setWaitingTrackListCheck(false);
       } else {
         console.log("Database error or savedtracklists is empty array");
         setHasSavedTrackLists(false);
+        setWaitingTrackListCheck(false);
       }
     };
 
@@ -45,7 +52,7 @@ function Nav() {
     }
 
     // eslint-disable-next-line
-  }, [profile, hasSavedTrackLists]);
+  }, [profile]);
 
   return (
     <div>
