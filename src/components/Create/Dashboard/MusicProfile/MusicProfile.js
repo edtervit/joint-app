@@ -48,12 +48,8 @@ function SavedTracklists() {
 
       if (res) {
         setHasSavedTrackLists(false);
-        if (amountOfSavedTrackLists === 1) {
-          setSavedTrackLists([]);
-        } else if (amountOfSavedTrackLists !== 1) {
-          setHasSavedTrackLists(true);
-        }
-        setAmountOfSavedTrackLists();
+        setSavedTrackLists([]);
+        setAmountOfSavedTrackLists(0);
       } else {
         console.log("Failed to delete!");
         toast({

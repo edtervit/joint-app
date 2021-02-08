@@ -38,7 +38,7 @@ function Nav() {
 
       if (res && res.length > 0) {
         await setSavedTrackLists(res);
-        await setHasSavedTrackLists(true);
+        setHasSavedTrackLists(true);
         setWaitingTrackListCheck(false);
       } else {
         console.log("Database error or savedtracklists is empty array");
@@ -52,7 +52,7 @@ function Nav() {
     }
 
     // eslint-disable-next-line
-  }, [profile]);
+  }, [profile, hasSavedTrackLists]);
 
   return (
     <div>
