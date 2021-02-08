@@ -111,7 +111,6 @@ function Playlists() {
               }
             });
           }
-          console.log(spotifyResponse);
         }
       }
     };
@@ -164,7 +163,7 @@ function Playlists() {
     }
 
     // eslint-disable-next-line
-  }, [token]);
+  }, []);
 
   //tells profile if no playlists are selected
   useEffect(() => {

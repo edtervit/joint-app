@@ -16,7 +16,6 @@ function ListOfTracks(props) {
         bg="gray.50"
         display="flex"
         borderColor="gray.50"
-        defaultIndex={[0]}
         w="100%"
         borderRadius={5}
         p={2}

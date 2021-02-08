@@ -6,6 +6,8 @@ const model = {
   isLoggedIn: false,
   hasSavedTrackLists: false,
   savedTrackLists: null,
+  waitingTrackListCheck: true,
+  waitingForCompare: true,
 
   //////Profile Builder/////
   usersSelectedTracks: null,
@@ -29,6 +31,7 @@ const model = {
 
   failedCookie: false,
   token: null,
+  refreshToken: null,
 
   amountOfSavedTrackLists: 0,
   friendsTrackList: null,
@@ -44,10 +47,16 @@ const model = {
   isWaiting: false,
 
   //Thunks
-  getProfile: thunk(async (actions) => {
+  getProfile: thunk(async (actions, payload, { getState }) => {
     let params = queryString.parse(window.location.search);
-    let parsedToken = params.access_token;
+    const parsedToken = params.access_token;
+    const refreshToken = params.refresh;
     let urlState = params.state;
+    const tokens = {
+      normal: parsedToken,
+      refresh: refreshToken,
+    };
+    await actions.setTokens(tokens);
     if (urlState === "fromShare") {
       actions.setFromSharePage(true);
     } else if (urlState === "normal") {
@@ -66,13 +75,30 @@ const model = {
     if (res.ok) {
       const data = await res.json();
       actions.setProfile(data);
-      actions.logIn(parsedToken);
+      actions.logIn();
+      return data;
     } else {
-      actions.failCookie();
+      await actions.refreshTokenAPI();
+      const state = getState();
+      const token = state.token;
+      console.log("refreshed token");
+      const res2 = await fetch("https://api.spotify.com/v1/me", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (res2.ok) {
+        const data2 = await res2.json();
+        actions.setProfile(data2);
+        actions.logIn();
+        return data2;
+      } else {
+        actions.failCookie();
+      }
     }
   }),
 
-  callAPI: thunk(async (actions, payload) => {
+  callAPI: thunk(async (actions, payload, { getState }) => {
     const token = payload.token;
     const url = payload.url;
     const res = await fetch(url, {
@@ -84,12 +110,27 @@ const model = {
       const data = await res.json();
       return data;
     } else {
-      console.log(res);
-      actions.failCookie();
+      await actions.refreshTokenAPI();
+      console.log("Refreshed cookie");
+      const newState = getState();
+      const token2 = newState.token;
+      const res2 = await fetch(url, {
+        headers: {
+          Authorization: `Bearer ${token2}`,
+        },
+      });
+      if (res2.ok) {
+        const data2 = await res2.json();
+        console.log("passed after refreshing token");
+        return data2;
+      } else {
+        actions.failCookie();
+        console.log("failed calling api even after token refresh");
+      }
     }
   }),
 
-  postAPI: thunk(async (actions, payload) => {
+  postAPI: thunk(async (actions, payload, { getState }) => {
     const token = payload.token;
     const url = payload.url;
     const res = await fetch(url, {
@@ -100,12 +141,59 @@ const model = {
       method: "POST",
       body: JSON.stringify(payload.body),
     });
+
     if (res.ok) {
       const data = await res.json();
+      console.log("passed posting");
       return data;
     } else {
-      const dataFailed = await res.json();
-      return dataFailed;
+      await actions.refreshTokenAPI();
+      console.log("Refreshed cookie");
+      const newState = getState();
+      const token2 = newState.token;
+
+      const res2 = await fetch(url, {
+        headers: {
+          Authorization: `Bearer ${token2}`,
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify(payload.body),
+      });
+      if (res2) {
+        const dataFailed = await res2.json();
+        return dataFailed;
+      } else {
+        actions.failCookie();
+      }
+    }
+  }),
+
+  refreshTokenAPI: thunk(async (actions, payload, { getState }) => {
+    const baseUrl = process.env.REACT_APP_BACK_URL;
+    const url = `${baseUrl}/token/refresh`;
+    actions.setIsWaiting(true);
+    const state = getState();
+    const tokens = {
+      token: state.token,
+      refreshToken: state.refreshToken,
+    };
+    const res = await fetch(url, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify(tokens),
+    });
+    if (!res.ok) {
+      const data = res.json();
+      actions.setIsWaiting(false);
+      return data;
+    } else {
+      const data = await res.json();
+      await actions.setToken(data.access_token);
+      actions.setIsWaiting(false);
+      return data;
     }
   }),
 
@@ -129,10 +217,13 @@ const model = {
   setProfile: action((state, profile) => {
     state.profile = profile;
   }),
-  logIn: action((state, token) => {
+  logIn: action((state) => {
     state.isLoggedIn = true;
-    state.token = token;
     state.failedCookie = false;
+  }),
+  setTokens: action((state, tokens) => {
+    state.token = tokens.normal;
+    state.refreshToken = tokens.refresh;
   }),
 
   logOut: action((state) => {
@@ -149,6 +240,13 @@ const model = {
     state.gotTopSongs = false;
     state.gotLikedSongs = false;
     state.gotPlaylists = false;
+  }),
+
+  setWaitingTrackListCheck: action((state, value) => {
+    state.waitingTrackListCheck = value;
+  }),
+  setWaitingForCompare: action((state, value) => {
+    state.waitingForCompare = value;
   }),
 
   ///Profile Builder///
@@ -235,6 +333,14 @@ const model = {
 
   setIsWaiting: action((state, value) => {
     state.isWaiting = value;
+  }),
+
+  setToken: action((state, value) => {
+    state.token = value;
+  }),
+
+  setRefreshToken: action((state, value) => {
+    state.refreshToken = value;
   }),
 
   addToList: action((state, payload) => {

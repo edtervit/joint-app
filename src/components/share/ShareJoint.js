@@ -6,6 +6,7 @@ import MakePlaylist from "../JointList/MakePlaylist";
 import { Link, Box, Center } from "@chakra-ui/react";
 import { Link as ReactLink } from "react-router-dom";
 import ListOfTracks from "../reusable/ListOfTracks";
+import Loading from "../reusable/Loading";
 
 function ShareJoint({ match }) {
   //state
@@ -64,6 +65,14 @@ function ShareJoint({ match }) {
 
   return (
     <div>
+      {!isLoggedIn && jointList && (
+        <Redirect
+          to={{
+            pathname: "/",
+            state: { fromShareJ: "fromShareJ", fromWho: jointList._id },
+          }}
+        />
+      )}
       {redirect && (
         <Redirect
           to={{
@@ -72,7 +81,8 @@ function ShareJoint({ match }) {
           }}
         />
       )}
-      {isLoading && <p>Loading....</p>}
+      {isLoading && <Loading />}
+
       {!hasSavedTrackLists && !isLoading && (
         <Center>
           <Box

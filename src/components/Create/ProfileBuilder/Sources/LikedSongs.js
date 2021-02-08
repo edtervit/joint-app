@@ -26,6 +26,7 @@ function LikedSongs() {
 
   // estate
   const token = useStoreState((state) => state.token);
+  const refreshToken = useStoreState((state) => state.refreshToken);
 
   //handlers
 
@@ -147,7 +148,7 @@ function LikedSongs() {
     }
 
     // eslint-disable-next-line
-  }, [token]);
+  }, [refreshToken]);
 
   return (
     <div>
