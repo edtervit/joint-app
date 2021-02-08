@@ -29,10 +29,6 @@ function SavedTracklists() {
   const hasSavedTrackLists = useStoreState((state) => state.hasSavedTrackLists);
   const savedTrackLists = useStoreState((state) => state.savedTrackLists);
 
-  const amountOfSavedTrackLists = useStoreState(
-    (state) => state.amountOfSavedTrackLists
-  );
-
   //handlers
   const deleteTrackHandler = async (id) => {
     const check = window.confirm(
