@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useStoreActions, useStoreState } from "easy-peasy";
 import queryString from "query-string";
 import { useHistory, Redirect } from "react-router-dom";
@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { Button, Center } from "@chakra-ui/react";
 
 import logo from "../../../joint.png";
+import Loading from "../../reusable/Loading";
 
 function LandingPage() {
   const history = useHistory();
@@ -15,6 +16,8 @@ function LandingPage() {
   let who = null;
   let state = "normal";
   let shareJID = null;
+
+  const [gettingProfile, setGettingProfile] = useState(true);
 
   if (browserState) {
     if (browserState.fromShare) {
@@ -43,7 +46,12 @@ function LandingPage() {
     if (!failedCookie) {
       let token = queryString.parse(window.location.search);
       if (Object.entries(token).length !== 0) {
-        getProfile();
+        const calltheProfile = async () => {
+          setGettingProfile(true);
+          await getProfile();
+          setGettingProfile(false);
+        };
+        calltheProfile();
       }
     }
     // eslint-disable-next-line
@@ -77,12 +85,12 @@ function LandingPage() {
             </Button>
           </div>
         )}
-        {who && <p>Please login to compare music with {who}!</p>}
+        {who && <Loading />}
         <WhoDiv>
           {who &&
             (window.location = `${process.env.REACT_APP_BACK_URL}/login/${state}`)}
         </WhoDiv>
-        {!shareJID && (
+        {!shareJID && !who && !gettingProfile && (
           <Button
             onClick={() =>
               (window.location = `${process.env.REACT_APP_BACK_URL}/login/${state}`)
@@ -91,6 +99,7 @@ function LandingPage() {
             CLICK HERE TO LOGIN
           </Button>
         )}
+        {gettingProfile && !who && <Loading />}
       </div>
     </div>
   );

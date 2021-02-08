@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import SourcesIndex from "./Sources/SourcesIndex";
 import { useStoreActions, useStoreState } from "easy-peasy";
-import Loading from "./Loading";
+import Loading from "../../reusable/Loading";
 import StepTwo from "./Steptwo";
 import { Button, useToast, Box, Heading } from "@chakra-ui/react";
 

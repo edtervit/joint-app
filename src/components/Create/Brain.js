@@ -6,8 +6,7 @@ import ProfileBuilder from "./ProfileBuilder/ProfileBuilder";
 import { useStoreState } from "easy-peasy";
 import Dashboard from "./Dashboard/Dashboard";
 import FromShare from "./Dashboard/FromShare";
-import { Spinner } from "@chakra-ui/react";
-import Loading from "./ProfileBuilder/Loading";
+import Loading from "../reusable/Loading";
 
 function Brain() {
   const waitingTrackListCheck = useStoreState(
@@ -24,9 +23,9 @@ function Brain() {
     <div className="App">
       {isLogged ? (
         <div className="isloggedIn">
-          {fromSharePage && <FromShare />}
+          {fromSharePage && !waitingTrackListCheck && <FromShare />}
           <br />
-          {waitingTrackListCheck && !fromSharePage && (
+          {waitingTrackListCheck && (
             <>
               <Loading />
             </>

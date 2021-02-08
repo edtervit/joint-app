@@ -111,7 +111,6 @@ function Playlists() {
               }
             });
           }
-          console.log(spotifyResponse);
         }
       }
     };

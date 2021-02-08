@@ -7,6 +7,7 @@ const model = {
   hasSavedTrackLists: false,
   savedTrackLists: null,
   waitingTrackListCheck: true,
+  waitingForCompare: true,
 
   //////Profile Builder/////
   usersSelectedTracks: null,
@@ -243,6 +244,9 @@ const model = {
 
   setWaitingTrackListCheck: action((state, value) => {
     state.waitingTrackListCheck = value;
+  }),
+  setWaitingForCompare: action((state, value) => {
+    state.waitingForCompare = value;
   }),
 
   ///Profile Builder///
