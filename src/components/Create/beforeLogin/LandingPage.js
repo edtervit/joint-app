@@ -17,7 +17,7 @@ function LandingPage() {
   let state = "normal";
   let shareJID = null;
 
-  const [gettingProfile, setGettingProfile] = useState(true);
+  const [gettingProfile, setGettingProfile] = useState(false);
 
   if (browserState) {
     if (browserState.fromShare) {

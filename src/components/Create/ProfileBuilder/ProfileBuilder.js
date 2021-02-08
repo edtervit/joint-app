@@ -81,7 +81,7 @@ function ProfileBuilder() {
       <Box display={isGettingData ? "none" : ""}>
         {!gotAllData && <SourcesIndex />}
       </Box>
-      {isGettingData && <Loading />}
+      {isGettingData && <Loading importSongs={true} />}
       {gotAllData && <StepTwo />}
     </div>
   );
