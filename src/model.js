@@ -188,6 +188,7 @@ const model = {
     if (!res.ok) {
       const data = res.json();
       actions.setIsWaiting(false);
+      actions.failCookie();
       return data;
     } else {
       const data = await res.json();
