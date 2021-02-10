@@ -44,7 +44,7 @@ function YourJoints() {
         Joints You Made
       </Heading>
       {yourJoints && <Text my={2}>Click a joint to view it!</Text>}
-      {isLoading && <Loading />}
+      {isLoading && !yourJoints && <Loading />}
       <Box border="gray.300 1px solid">
         {!yourJoints && !isLoading && (
           <Text>

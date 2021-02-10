@@ -45,7 +45,7 @@ function OthersJoints() {
         Joints others have made with you
       </Heading>
       <Box>
-        {isLoading && <Loading />}
+        {isLoading && !friendsJoints && <Loading />}
         {!friendsJoints && !isLoading && (
           <Text>
             Nothing here 🙄, send your share link to friends and check back!{" "}
