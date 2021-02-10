@@ -12,11 +12,13 @@ function ShareJoint({ match }) {
   //state
   const [isValid, setIsVaild] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [redirect, setRedirect] = useState(false);
 
   // easy peasy sstate
-  let jointList = useStoreState((state) => state.jointList);
-  let isLoggedIn = useStoreState((state) => state.isLoggedIn);
+  const jointList = useStoreState((state) => state.jointList);
+  const isLoggedIn = useStoreState((state) => state.isLoggedIn);
+  const waitingTrackListCheck = useStoreState(
+    (state) => state.waitingTrackListCheck
+  );
   const hasSavedTrackLists = useStoreState((state) => state.hasSavedTrackLists);
 
   // EP actions
@@ -29,6 +31,7 @@ function ShareJoint({ match }) {
   const callDB = useStoreActions((actions) => actions.callDB);
 
   const params = match.params.trackListID;
+  console.log(params);
 
   useEffect(() => {
     const getSavedTrackLists = async (id) => {
@@ -55,14 +58,6 @@ function ShareJoint({ match }) {
     // eslint-disable-next-line
   }, [params]);
 
-  useEffect(() => {
-    if (!isLoggedIn && jointList) {
-      setRedirect(true);
-    }
-    return () => {};
-    // eslint-disable-next-line
-  }, [jointList]);
-
   return (
     <div>
       {!isLoggedIn && jointList && (
@@ -73,17 +68,10 @@ function ShareJoint({ match }) {
           }}
         />
       )}
-      {redirect && (
-        <Redirect
-          to={{
-            pathname: "/",
-            state: { fromShareJ: "fromShareJ", fromWho: jointList._id },
-          }}
-        />
-      )}
+
       {isLoading && <Loading />}
 
-      {!hasSavedTrackLists && !isLoading && (
+      {!hasSavedTrackLists && !waitingTrackListCheck && !isLoading && (
         <Center>
           <Box
             bg="tomato"
