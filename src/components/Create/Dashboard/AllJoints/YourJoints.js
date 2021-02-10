@@ -1,11 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Heading, Text, Link } from "@chakra-ui/react";
 import { useStoreState, useStoreActions } from "easy-peasy";
 import { Link as ReactLink } from "react-router-dom";
+import Loading from "../../../reusable/Loading";
 
 function YourJoints() {
   const yourJoints = useStoreState((state) => state.yourJoints);
   const profile = useStoreState((state) => state.profile);
+
+  const [isLoading, setIsLoading] = useState(true);
 
   //actions
   const callDB = useStoreActions((actions) => actions.callDB);
@@ -21,8 +24,10 @@ function YourJoints() {
 
       if (res && res.length > 0) {
         setYourJoints(res);
+        setIsLoading(false);
       } else {
         console.log("Database error or response is empty");
+        setIsLoading(false);
       }
     };
 
@@ -39,8 +44,9 @@ function YourJoints() {
         Joints You Made
       </Heading>
       {yourJoints && <Text my={2}>Click a joint to view it!</Text>}
+      {isLoading && !yourJoints && <Loading />}
       <Box border="gray.300 1px solid">
-        {!yourJoints && (
+        {!yourJoints && !isLoading && (
           <Text>
             You haven't made any joints, get your friends to send your their
             share link!

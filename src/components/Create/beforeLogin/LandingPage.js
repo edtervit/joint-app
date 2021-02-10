@@ -59,7 +59,9 @@ function LandingPage() {
 
   return (
     <div>
-      {fromShareJPage && <Redirect to={`/shareJ/${shareJIDstate}`} />}
+      {fromShareJPage && shareJIDstate && (
+        <Redirect to={`/shareJ/${shareJIDstate}`} />
+      )}
       <Center>
         {" "}
         <img className="logo" src={logo} alt="" />
