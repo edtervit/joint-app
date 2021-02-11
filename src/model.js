@@ -75,6 +75,15 @@ const model = {
     if (res.ok) {
       const data = await res.json();
       actions.setProfile(data);
+      const customPayload = {
+        url: `/profile/getbyid/${data.id}`,
+        method: "GET",
+      };
+      const customName = await actions.callDB(customPayload);
+      if (customName[0] && customName[0].userCustomName) {
+        actions.setCustomName(customName[0].userCustomName);
+      }
+      console.log(customName);
       actions.logIn();
       return data;
     } else {
@@ -207,7 +216,27 @@ const model = {
       actions.setIsWaiting(false);
       return null;
     }
+    const data = res.json();
+    actions.setIsWaiting(false);
+    return data;
+  }),
 
+  postDB: thunk(async (actions, payload) => {
+    const baseUrl = process.env.REACT_APP_BACK_URL;
+    const url = `${baseUrl}${payload.url}`;
+    actions.setIsWaiting(true);
+    const res = await fetch(url, {
+      method: `${payload.method}`,
+      body: `${JSON.stringify(payload.body)}`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (!res.ok) {
+      const data = res.json();
+      actions.setIsWaiting(false);
+      return data;
+    }
     const data = res.json();
     actions.setIsWaiting(false);
     return data;
@@ -218,6 +247,10 @@ const model = {
   setProfile: action((state, profile) => {
     state.profile = profile;
   }),
+  setCustomName: action((state, value) => {
+    state.profile.CustomName = value;
+  }),
+
   logIn: action((state) => {
     state.isLoggedIn = true;
     state.failedCookie = false;
