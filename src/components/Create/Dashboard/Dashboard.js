@@ -10,7 +10,9 @@ function Dashboard() {
 
   return (
     <Box>
-      <Heading size="xl">Hi {profile.display_name}! </Heading>
+      <Heading size="xl">
+        Hi {profile.customName ? profile.customName : profile.display_name}!
+      </Heading>
       <Heading size="xl"> Welcome to your Dashboard.</Heading>
       <QuickShareLink />
       <QuickLinks />

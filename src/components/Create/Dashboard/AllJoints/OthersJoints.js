@@ -70,6 +70,7 @@ function OthersJoints() {
                 bg={index % 2 === 0 ? "" : "white"}
                 display="flex"
                 textAlign="center"
+                my={2}
               >
                 <Text w="50%">{joint.userCreatorName}</Text>
                 <Text w="50%">{joint.theList.length}</Text>

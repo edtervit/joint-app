@@ -6,6 +6,7 @@ import { useToast, Button, Box, Heading } from "@chakra-ui/react";
 import { Redirect } from "react-router-dom";
 import QuickShareLink from "../QuickShareLink";
 import ProfileSongList from "./ProfileSongList";
+import CustomName from "./CustomName";
 
 function SavedTracklists() {
   //  //toast
@@ -64,6 +65,7 @@ function SavedTracklists() {
       {!isLoggedIn && <Redirect to="/" />}
       {!hasSavedTrackLists && <Redirect to="/" />}
       <Heading my={5}>Your Music Profile</Heading>
+      <CustomName />
       <QuickShareLink />
       <Button
         bg="red.100"
