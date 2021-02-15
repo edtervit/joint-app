@@ -3,6 +3,7 @@ import { useStoreActions, useStoreState } from "easy-peasy";
 import lemonke from "../../Images/lemonke.jpg";
 import { Redirect } from "react-router-dom";
 import { Box, Button, Heading, Text, Center, Image } from "@chakra-ui/react";
+import Loading from "../reusable/Loading";
 
 function FriendsSavedTracklist({ match }) {
   //state
@@ -10,8 +11,36 @@ function FriendsSavedTracklist({ match }) {
   const [isLoading, setIsLoading] = useState(true);
   const [redirect, setRedirect] = useState(false);
 
+  //state custom names
+  const [friendsCustomName, setFriendsCustomName] = useState("");
+  const checkCustomNameDB = useStoreActions(
+    (actions) => actions.checkCustomNameDB
+  );
+  const [isLoadingName, setIsLoadingName] = useState(true);
+
   //easy state
   const friendsTrackList = useStoreState((state) => state.friendsTrackList);
+
+  //checks for custom names
+  useEffect(() => {
+    const call = async () => {
+      const res = await checkCustomNameDB(friendsTrackList.id);
+      if (res && res[0] && res[0].userCustomName) {
+        setFriendsCustomName(res[0].userCustomName);
+        setIsLoadingName(false);
+      } else {
+        setFriendsCustomName(friendsTrackList.name);
+        setIsLoadingName(false);
+      }
+    };
+
+    if (friendsTrackList && friendsTrackList.id) {
+      setIsLoadingName(true);
+      call();
+    }
+
+    // eslint-disable-next-line
+  }, [friendsTrackList]);
 
   //actions
   const setFriendsTrackList = useStoreActions(
@@ -83,10 +112,12 @@ function FriendsSavedTracklist({ match }) {
           </Box>
         </Center>
       )}
-      {isValid && (
+      {isLoading || isLoadingName ? <Loading /> : ""}
+
+      {isValid && !isLoading && !isLoadingName && (
         <Box p={5}>
           <Heading my={5}>
-            {friendsTrackList.name} wants to compare music with you!
+            {friendsCustomName} wants to compare music with you!
           </Heading>
           <Text>
             We will compare both of your music and find matches for you!
@@ -96,7 +127,7 @@ function FriendsSavedTracklist({ match }) {
             enjoy together
           </Text>
           <Button my={3} onClick={() => compareTracksHandler(friendsTrackList)}>
-            Compare with {friendsTrackList.name}
+            Compare with {friendsCustomName}
           </Button>
         </Box>
       )}

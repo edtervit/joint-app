@@ -241,6 +241,17 @@ const model = {
     actions.setIsWaiting(false);
     return data;
   }),
+
+  checkCustomNameDB: thunk(async (actions, payload) => {
+    const baseUrl = process.env.REACT_APP_BACK_URL;
+    const url = `${baseUrl}/profile/getByID/${payload}`;
+    actions.setIsWaiting(true);
+    const res = await fetch(url, { method: `GET` });
+
+    const data = res.json();
+    actions.setIsWaiting(false);
+    return data;
+  }),
   ////////////////
   //actions//////
   ////////////////
@@ -248,7 +259,7 @@ const model = {
     state.profile = profile;
   }),
   setCustomName: action((state, value) => {
-    state.profile.CustomName = value;
+    state.profile.customName = value;
   }),
 
   logIn: action((state) => {

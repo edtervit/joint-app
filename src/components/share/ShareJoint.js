@@ -27,11 +27,50 @@ function ShareJoint({ match }) {
     (actions) => actions.setFromSharePage
   );
 
-  //thunk
-  const callDB = useStoreActions((actions) => actions.callDB);
+  //custom names
+
+  const [friendsCustomName, setFriendsCustomName] = useState("");
+  const [usersCustomName, setUsersCustomName] = useState("");
+  const checkCustomNameDB = useStoreActions(
+    (actions) => actions.checkCustomNameDB
+  );
+  const [isLoadingName, setIsLoadingName] = useState(false);
+
+  //checks for custom names
+  useEffect(() => {
+    const call = async () => {
+      //do for friend
+      const res = await checkCustomNameDB(jointList.userFriendID);
+      if (res && res[0] && res[0].userCustomName) {
+        setFriendsCustomName(res[0].userCustomName);
+      } else {
+        setFriendsCustomName(jointList.userFriendName);
+      }
+
+      //do for user
+      const res2 = await checkCustomNameDB(jointList.userCreatorID);
+      if (res2 && res2[0] && res2[0].userCustomName) {
+        setUsersCustomName(res2[0].userCustomName);
+        setIsLoadingName(false);
+      } else {
+        setUsersCustomName(jointList.userCreatorName);
+        setIsLoadingName(false);
+      }
+      setIsLoadingName(false);
+    };
+
+    if (jointList && jointList.userFriendID && jointList.userCreatorID) {
+      setIsLoadingName(true);
+      call();
+    }
+
+    // eslint-disable-next-line
+  }, [jointList]);
 
   const params = match.params.trackListID;
   console.log(params);
+  //thunk
+  const callDB = useStoreActions((actions) => actions.callDB);
 
   useEffect(() => {
     const getSavedTrackLists = async (id) => {
@@ -54,13 +93,16 @@ function ShareJoint({ match }) {
         setFromSharePage(false);
       }
     };
-    getSavedTrackLists(params);
+    if (match) {
+      getSavedTrackLists(params);
+    }
+
     // eslint-disable-next-line
   }, [params]);
 
   return (
     <div>
-      {!isLoggedIn && jointList && (
+      {!isLoggedIn && jointList && !isLoadingName && !isLoading && (
         <Redirect
           to={{
             pathname: "/",
@@ -69,39 +111,42 @@ function ShareJoint({ match }) {
         />
       )}
 
-      {isLoading && <Loading />}
+      {isLoading || isLoadingName ? <Loading /> : ""}
 
-      {!hasSavedTrackLists && !waitingTrackListCheck && !isLoading && (
-        <Center>
-          <Box
-            bg="tomato"
-            color="white"
-            p={4}
-            w="max-content"
-            borderRadius="md"
-          >
-            <h2>Want to make a joint playlist like this with your friend?</h2>
-            <Link mr={4} as={ReactLink} to="/">
-              Click here to make a music profile you can compare with friends
-            </Link>
-          </Box>
-        </Center>
-      )}
+      {!hasSavedTrackLists &&
+        !waitingTrackListCheck &&
+        !isLoading &&
+        !isLoadingName && (
+          <Center>
+            <Box
+              bg="tomato"
+              color="white"
+              p={4}
+              w="max-content"
+              borderRadius="md"
+            >
+              <h2>Want to make a joint playlist like this with your friend?</h2>
+              <Link mr={4} as={ReactLink} to="/">
+                Click here to make a music profile you can compare with friends
+              </Link>
+            </Box>
+          </Center>
+        )}
       {!isValid && !isLoading && (
         <div className="failed">
           <h1>Uh oh stinky!</h1>
           <p>
-            {params} doesn't return any matches, you sure you got the link
-            right?
+            That doesn't return any matches, you sure you got the link right?
           </p>
-          <img src={lemonke} alt="" />
+          <Center>
+            <img src={lemonke} alt="" />
+          </Center>
         </div>
       )}
-      {isValid && (
+      {isValid && !isLoadingName && (
         <Box>
           <h1>
-            This is the joint list of {jointList.userCreatorName} and{" "}
-            {jointList.userFriendName} !
+            This is the joint list of {usersCustomName} and {friendsCustomName}!
           </h1>
           <p>
             Share this joint with someone!<br></br>
