@@ -1,6 +1,7 @@
 import React from "react";
 
 import { useStoreState, useStoreActions } from "easy-peasy";
+import Konami from "react-konami-code";
 
 import { useToast, Button, Box, Heading } from "@chakra-ui/react";
 import { Redirect } from "react-router-dom";
@@ -65,7 +66,9 @@ function SavedTracklists() {
       {!isLoggedIn && <Redirect to="/" />}
       {!hasSavedTrackLists && <Redirect to="/" />}
       <Heading my={5}>Your Music Profile</Heading>
-      <CustomName />
+      <Konami>
+        <CustomName />
+      </Konami>
       <QuickShareLink />
       <Button
         bg="red.100"
