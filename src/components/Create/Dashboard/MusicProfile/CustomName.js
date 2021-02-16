@@ -21,7 +21,6 @@ function CustomName() {
       method: "GET",
     };
     const res = await callDB(payload);
-    console.log(res);
     if (res[0] && res[0].userCustomName) {
       setCustomNameInState(res[0].userCustomName);
     } else {
@@ -54,8 +53,6 @@ function CustomName() {
     } else {
       setFormResponse("Between 2-16 characters: A-Z, 0-9,-,_  ");
       setFormStatus("error");
-      console.log(inputValue);
-      console.log("failed regex");
     }
   };
 

@@ -16,13 +16,17 @@ function QuickShareLink() {
 
   const savedTrackLists = useStoreState((state) => state.savedTrackLists);
 
+  const profile = useStoreState((state) => state.profile);
+
   useEffect(() => {
-    if (savedTrackLists) {
+    if (profile && profile.customName) {
       setClipboardValue(
-        `${process.env.REACT_APP_FRONT_URL}/share/${savedTrackLists[0]._id}`
+        `${process.env.REACT_APP_FRONT_URL}/s/${profile.customName}`
       );
+    } else if (profile && profile.id) {
+      setClipboardValue(`${process.env.REACT_APP_FRONT_URL}/s/${profile.id}`);
     }
-  }, [savedTrackLists]);
+  }, [profile]);
 
   //Save to clipboard
   const [clipboardValue, setClipboardValue] = useState(null);
@@ -50,10 +54,10 @@ function QuickShareLink() {
             p={3}
             m={3}
             as={ReactLink}
-            to={`share/${savedTrackLists[0]._id}`}
+            to={{ pathname: clipboardValue }}
             target="_blank"
           >
-            {process.env.REACT_APP_FRONT_URL}/share/{savedTrackLists[0]._id}
+            {clipboardValue}
           </Link>
           <Button ml={3} onClick={onCopy}>
             {hasCopied ? "Copied" : "Copy"}
