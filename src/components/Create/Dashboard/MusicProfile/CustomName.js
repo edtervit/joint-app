@@ -21,7 +21,6 @@ function CustomName() {
       method: "GET",
     };
     const res = await callDB(payload);
-    console.log(res);
     if (res[0] && res[0].userCustomName) {
       setCustomNameInState(res[0].userCustomName);
     } else {
@@ -49,13 +48,11 @@ function CustomName() {
         let user = inputValue;
         setFormStatus("success");
         await getCustomNameHandler();
-        setFormResponse(`Nice, you got it ${user}`);
+        setFormResponse(`Nice, you got it ${user}, check your dashboard!`);
       }
     } else {
       setFormResponse("Between 2-16 characters: A-Z, 0-9,-,_  ");
       setFormStatus("error");
-      console.log(inputValue);
-      console.log("failed regex");
     }
   };
 
@@ -66,7 +63,7 @@ function CustomName() {
           <Button onClick={() => setCustomNameHandler()}>
             Set Custom Name
           </Button>
-          <Tooltip label={formResponse}>
+          <Tooltip label={formResponse} isOpen>
             <Input
               isInvalid={formStatus === "error" ? true : false}
               errorBorderColor="red.300"

@@ -19,7 +19,7 @@ function App() {
       <Router>
         {isLogged && <Nav />}
         <Route path="/shareJ/:trackListID" component={ShareJoint} />
-        <Route path="/share/:trackListID" component={FriendsSavedTracklist} />
+        <Route path="/s/:trackListID" component={FriendsSavedTracklist} />
         <Route path="/compare" component={Compare} />
         <Route path="/myprofile" component={MusicProfile} />
         <Route path="/playlistmaker" component={PlaylistMaker} />
