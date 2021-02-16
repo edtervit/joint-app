@@ -37,6 +37,8 @@ function FriendsSavedTracklist({ match }) {
     if (friendsTrackList && friendsTrackList.id) {
       setIsLoadingName(true);
       call();
+    } else {
+      setIsLoadingName(false);
     }
 
     // eslint-disable-next-line
