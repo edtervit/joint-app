@@ -10,6 +10,8 @@ function FriendsSavedTracklist({ match }) {
   const [isValid, setIsVaild] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [redirect, setRedirect] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [errorName, setErrorName] = useState("");
 
   //state custom names
   const [friendsCustomName, setFriendsCustomName] = useState("");
@@ -72,6 +74,16 @@ function FriendsSavedTracklist({ match }) {
         setIsLoading(false);
       } else {
         console.log("Database error or savedtracklists is empty array");
+        console.log(res);
+        console.log(res.statusText);
+        if (res.statusText === "Can't find tracklist") {
+          const resProfileName = await res.json();
+          console.log(resProfileName);
+          setErrorName(resProfileName);
+          setErrorMessage("who");
+        } else if (res.statusText === "Can't find anything") {
+          setErrorMessage("missing");
+        }
         setIsVaild(false);
         setIsLoading(false);
       }
@@ -99,18 +111,31 @@ function FriendsSavedTracklist({ match }) {
       {!isValid && !isLoading && (
         <Center>
           <Box className="failed" textAlign="center">
-            <Heading my={3}>Uh oh stinky!</Heading>
-            <Text>
-              {params} doesn't return any matches, you sure you got the link
-              right?
-            </Text>
-            <Text>
-              Or maybe your friend has made a new profile since sending you the
-              link, ask them for their current share link!
-            </Text>
-            <Center>
-              <Image my={3} src={lemonke} alt="uh oh stinky le monke" />
-            </Center>
+            {errorMessage && errorMessage === "missing" && (
+              <>
+                <Heading my={3}>Who? Never heard of them.</Heading>
+                <Text>
+                  {params} doesn't return any profile or tracklist matches, you
+                  sure you got the link right?
+                </Text>
+                <Center>
+                  <Image my={3} src={lemonke} alt="uh oh stinky le monke" />
+                </Center>
+              </>
+            )}
+            {errorMessage && errorMessage === "who" && (
+              <>
+                <Heading my={3}>Uh oh stinkyyyyyyyy</Heading>
+                <Text>
+                  We found {errorName} in the database but they've deleted their
+                  music profile.
+                </Text>
+                <Text>Tell them to pull their finger out and rebuild it.</Text>
+                <Center>
+                  <Image my={3} src={lemonke} alt="uh oh stinky le monke" />
+                </Center>
+              </>
+            )}
           </Box>
         </Center>
       )}

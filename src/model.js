@@ -214,7 +214,7 @@ const model = {
     const res = await fetch(url, { method: `${payload.method}` });
     if (!res.ok) {
       actions.setIsWaiting(false);
-      return null;
+      return res;
     }
     const data = res.json();
     actions.setIsWaiting(false);
