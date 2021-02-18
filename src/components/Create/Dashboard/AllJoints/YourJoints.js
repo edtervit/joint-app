@@ -79,7 +79,7 @@ function YourJoints() {
               <strong>Friends Name</strong>
             </Text>
             <Text display="inline-block" w="50%" textAlign="center" pr={10}>
-              <strong>List Length</strong>
+              <strong>Matches</strong>
             </Text>
             {yourJoints.map((joint, index) => (
               <HStack key={joint._id}>

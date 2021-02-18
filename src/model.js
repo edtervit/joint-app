@@ -8,6 +8,7 @@ const model = {
   savedTrackLists: null,
   waitingTrackListCheck: true,
   waitingForCompare: true,
+  isGuest: false,
 
   //////Profile Builder/////
   usersSelectedTracks: null,
@@ -83,7 +84,7 @@ const model = {
       if (customName[0] && customName[0].userCustomName) {
         actions.setCustomName(customName[0].userCustomName);
       }
-      console.log(customName);
+
       actions.logIn();
       return data;
     } else {
@@ -252,6 +253,32 @@ const model = {
     actions.setIsWaiting(false);
     return data;
   }),
+
+  guestTokenAPI: thunk(async (actions, payload, { getState }) => {
+    const baseUrl = process.env.REACT_APP_BACK_URL;
+    const url = `${baseUrl}/token/guest`;
+
+    const pw = {
+      pw: payload,
+    };
+
+    const res = await fetch(url, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify(pw),
+    });
+    if (!res.ok) {
+      const data = res.json();
+
+      return data;
+    } else {
+      const data = await res.json();
+
+      return data;
+    }
+  }),
   ////////////////
   //actions//////
   ////////////////
@@ -287,6 +314,9 @@ const model = {
     state.gotPlaylists = false;
   }),
 
+  setIsGuest: action((state, value) => {
+    state.isGuest = value;
+  }),
   setWaitingTrackListCheck: action((state, value) => {
     state.waitingTrackListCheck = value;
   }),

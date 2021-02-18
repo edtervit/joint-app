@@ -57,7 +57,7 @@ function OthersJoints() {
               <strong>Friends Name</strong>
             </Text>
             <Text display="inline-block" w="50%" textAlign="center">
-              <strong>List Length</strong>
+              <strong>Matches</strong>
             </Text>
 
             {friendsJoints.map((joint, index) => (

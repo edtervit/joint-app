@@ -6,7 +6,6 @@ import ListOfTracks from "../../../reusable/ListOfTracks";
 
 function ProfileSongList() {
   const savedTrackLists = useStoreState((state) => state.savedTrackLists);
-  console.log(savedTrackLists);
 
   return (
     <Box my={5}>
