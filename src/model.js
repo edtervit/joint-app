@@ -84,6 +84,34 @@ const model = {
       if (customName[0] && customName[0].userCustomName) {
         actions.setCustomName(customName[0].userCustomName);
       }
+      //if using is logged in with the guest account, activate guest mode
+      if (data.id === "jxhj2l7avhhdl4ebfywbpon4g") {
+        actions.setIsGuest(true);
+        console.log(data);
+
+        //check to see if there is a leftover profile from last user
+        let getTracklistpayload = {
+          url: `/tracklists/getTrackLists/${data.id}`,
+          method: "GET",
+        };
+        const tracklist = await actions.callDB(getTracklistpayload);
+        if (tracklist.length > 0) {
+          const profileID = tracklist[0]._id;
+          let deletepayload = {
+            url: `/tracklists/deleteTrackList/${profileID}`,
+            method: "DELETE",
+          };
+          const res = await actions.callDB(deletepayload);
+
+          if (res && res.ok) {
+            console.log("deleted profile");
+            actions.setHasSavedTrackLists(false);
+            actions.setSavedTrackLists([]);
+            actions.setAmountOfSavedTrackLists(0);
+          }
+          console.log("User is a guest");
+        }
+      }
 
       actions.logIn();
       return data;
@@ -270,9 +298,7 @@ const model = {
       body: JSON.stringify(pw),
     });
     if (!res.ok) {
-      const data = res.json();
-
-      return data;
+      return res;
     } else {
       const data = await res.json();
 

@@ -105,7 +105,7 @@ function LandingPage() {
           </Button>
         )}
         {gettingProfile && !who && <Loading />}
-        {isGuest && <GuestLogin />}
+        {isGuest && !gettingProfile && <GuestLogin />}
       </div>
     </div>
   );

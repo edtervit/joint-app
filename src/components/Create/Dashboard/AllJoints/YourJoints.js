@@ -1,12 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { Box, Heading, Text, Link, Button, HStack } from "@chakra-ui/react";
+import {
+  Box,
+  Heading,
+  Text,
+  Link,
+  Button,
+  HStack,
+  useToast,
+} from "@chakra-ui/react";
 import { useStoreState, useStoreActions } from "easy-peasy";
 import { Link as ReactLink } from "react-router-dom";
 import Loading from "../../../reusable/Loading";
 
 function YourJoints() {
+  //  //toast
+  const toast = useToast();
+
   const yourJoints = useStoreState((state) => state.yourJoints);
   const profile = useStoreState((state) => state.profile);
+  const isGuest = useStoreState((state) => state.isGuest);
 
   const [forceReload, setForceReload] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -26,12 +38,20 @@ function YourJoints() {
       url: `/jointplaylist/deleteJointPlaylist/${joint}`,
       method: "DELETE",
     };
-    if (check) {
+    if (check && !isGuest) {
       const res = await callDB(payload);
       setForceReload(true);
       setIsLoading(true);
       console.log(res);
       setForceReload(false);
+    }
+    if (isGuest) {
+      toast({
+        title: "Error!",
+        description: "Sorry this feature is disabled as a guest.",
+        status: "error",
+        isClosable: "true",
+      });
     }
   };
 
