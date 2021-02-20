@@ -11,7 +11,6 @@ function GuestLogin() {
 
   const guestLoginHandler = async () => {
     const token = await guestTokenAPI(pw);
-    console.log(token);
     if (token && token.access_token) {
       setPwError(false);
       history.push(`/?access_token=${token.access_token}`);

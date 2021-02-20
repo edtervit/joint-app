@@ -87,7 +87,6 @@ const model = {
       //if using is logged in with the guest account, activate guest mode
       if (data.id === "jxhj2l7avhhdl4ebfywbpon4g") {
         actions.setIsGuest(true);
-        console.log(data);
 
         //check to see if there is a leftover profile from last user
         let getTracklistpayload = {

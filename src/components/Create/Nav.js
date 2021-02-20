@@ -5,7 +5,7 @@ import logo from "../../joint.png";
 import styled from "styled-components";
 import Profile from "./Profile";
 import { useStoreState, useStoreActions } from "easy-peasy";
-import { Box, Heading, Link, Text } from "@chakra-ui/react";
+import { Box, Link, Text } from "@chakra-ui/react";
 import { Link as ReactLink } from "react-router-dom";
 
 function Nav() {
