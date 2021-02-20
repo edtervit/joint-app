@@ -8,6 +8,7 @@ const model = {
   savedTrackLists: null,
   waitingTrackListCheck: true,
   waitingForCompare: true,
+  isGuest: false,
 
   //////Profile Builder/////
   usersSelectedTracks: null,
@@ -83,7 +84,34 @@ const model = {
       if (customName[0] && customName[0].userCustomName) {
         actions.setCustomName(customName[0].userCustomName);
       }
-      console.log(customName);
+      //if using is logged in with the guest account, activate guest mode
+      if (data.id === "jxhj2l7avhhdl4ebfywbpon4g") {
+        actions.setIsGuest(true);
+
+        //check to see if there is a leftover profile from last user
+        let getTracklistpayload = {
+          url: `/tracklists/getTrackLists/${data.id}`,
+          method: "GET",
+        };
+        const tracklist = await actions.callDB(getTracklistpayload);
+        if (tracklist.length > 0) {
+          const profileID = tracklist[0]._id;
+          let deletepayload = {
+            url: `/tracklists/deleteTrackList/${profileID}`,
+            method: "DELETE",
+          };
+          const res = await actions.callDB(deletepayload);
+
+          if (res && res.ok) {
+            console.log("deleted profile");
+            actions.setHasSavedTrackLists(false);
+            actions.setSavedTrackLists([]);
+            actions.setAmountOfSavedTrackLists(0);
+          }
+          console.log("User is a guest");
+        }
+      }
+
       actions.logIn();
       return data;
     } else {
@@ -214,7 +242,7 @@ const model = {
     const res = await fetch(url, { method: `${payload.method}` });
     if (!res.ok) {
       actions.setIsWaiting(false);
-      return null;
+      return res;
     }
     const data = res.json();
     actions.setIsWaiting(false);
@@ -252,6 +280,30 @@ const model = {
     actions.setIsWaiting(false);
     return data;
   }),
+
+  guestTokenAPI: thunk(async (actions, payload, { getState }) => {
+    const baseUrl = process.env.REACT_APP_BACK_URL;
+    const url = `${baseUrl}/token/guest`;
+
+    const pw = {
+      pw: payload,
+    };
+
+    const res = await fetch(url, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify(pw),
+    });
+    if (!res.ok) {
+      return res;
+    } else {
+      const data = await res.json();
+
+      return data;
+    }
+  }),
   ////////////////
   //actions//////
   ////////////////
@@ -287,6 +339,9 @@ const model = {
     state.gotPlaylists = false;
   }),
 
+  setIsGuest: action((state, value) => {
+    state.isGuest = value;
+  }),
   setWaitingTrackListCheck: action((state, value) => {
     state.waitingTrackListCheck = value;
   }),

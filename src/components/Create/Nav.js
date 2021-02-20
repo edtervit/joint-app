@@ -5,7 +5,7 @@ import logo from "../../joint.png";
 import styled from "styled-components";
 import Profile from "./Profile";
 import { useStoreState, useStoreActions } from "easy-peasy";
-import { Link } from "@chakra-ui/react";
+import { Box, Link, Text } from "@chakra-ui/react";
 import { Link as ReactLink } from "react-router-dom";
 
 function Nav() {
@@ -13,6 +13,7 @@ function Nav() {
   const hasSavedTrackLists = useStoreState((state) => state.hasSavedTrackLists);
 
   const profile = useStoreState((state) => state.profile);
+  const isGuest = useStoreState((state) => state.isGuest);
   //actions
   const callDB = useStoreActions((actions) => actions.callDB);
 
@@ -89,6 +90,14 @@ function Nav() {
           </div>
         )}
       </Navbar>
+      {isGuest && (
+        <Box bg="green.100">
+          <Text p={1}>
+            You're logged in as a guest. Refreshing your page will delete any
+            progress.
+          </Text>
+        </Box>
+      )}
     </div>
   );
 }

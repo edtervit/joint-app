@@ -46,8 +46,8 @@ function QuickShareLink() {
         >
           <Heading size="md">Your Share Link</Heading>
           <Text>
-            Share this link with your friends to invite them to compare and
-            create a joint with you!
+            Share this link with your friends to invite them to compare music
+            with you!
           </Text>
           <Link
             boxShadow="inner"

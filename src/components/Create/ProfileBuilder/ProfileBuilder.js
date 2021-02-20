@@ -8,7 +8,7 @@ import { Button, useToast, Box, Heading } from "@chakra-ui/react";
 function ProfileBuilder() {
   //toast
   const toast = useToast();
-
+  const isGuest = useStoreState((state) => state.isGuest);
   //local state
 
   const isGettingData = useStoreState((state) => state.isGettingData);
@@ -61,6 +61,22 @@ function ProfileBuilder() {
     return () => {};
     // eslint-disable-next-line
   }, [gotTopSongs, gotLikedSongs, gotPlaylists]);
+
+  //if user is a guest show them a popup
+  useEffect(() => {
+    if (isGuest) {
+      toast({
+        position: "bottom",
+        title: "Hi Guest!",
+        description:
+          "If you have a spotify account I reccomend just trying the app out for yourself. As a guest some features are disabled.",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <div>

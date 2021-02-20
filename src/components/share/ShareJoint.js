@@ -68,7 +68,7 @@ function ShareJoint({ match }) {
   }, [jointList]);
 
   const params = match.params.trackListID;
-  console.log(params);
+
   //thunk
   const callDB = useStoreActions((actions) => actions.callDB);
 
@@ -81,7 +81,6 @@ function ShareJoint({ match }) {
       const res = await callDB(payload);
 
       if (res && res.length > 0) {
-        console.log(res[0]);
         setJointList(res[0]);
         setFromSharePage(false);
         setIsVaild(true);

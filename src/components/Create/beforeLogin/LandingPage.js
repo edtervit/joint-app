@@ -7,6 +7,7 @@ import { Button, Center } from "@chakra-ui/react";
 
 import logo from "../../../joint.png";
 import Loading from "../../reusable/Loading";
+import GuestLogin from "./GuestLogin";
 
 function LandingPage() {
   const history = useHistory();
@@ -39,6 +40,8 @@ function LandingPage() {
   const fromShareJPage = useStoreState((state) => state.fromShareJPage);
 
   const shareJIDstate = useStoreState((state) => state.shareJID);
+
+  const isGuest = useStoreState((state) => state.isGuest);
 
   //use effect
 
@@ -92,7 +95,7 @@ function LandingPage() {
           {who &&
             (window.location = `${process.env.REACT_APP_BACK_URL}/login/${state}`)}
         </WhoDiv>
-        {!shareJID && !who && !gettingProfile && (
+        {!shareJID && !who && !gettingProfile && !isGuest && (
           <Button
             onClick={() =>
               (window.location = `${process.env.REACT_APP_BACK_URL}/login/${state}`)
@@ -102,6 +105,7 @@ function LandingPage() {
           </Button>
         )}
         {gettingProfile && !who && <Loading />}
+        {isGuest && !gettingProfile && <GuestLogin />}
       </div>
     </div>
   );

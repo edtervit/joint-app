@@ -34,13 +34,13 @@ function LikedSongs() {
     const getTheTing = async (amount) => {
       let songLimit = amount - 50 + 1;
       amount === "all" && (songLimit = 10000);
-      console.log(songLimit);
+
       const params = {
         url: `https://api.spotify.com/v1/me/tracks?offset=0&limit=50`,
         token: token,
       };
       let spotifyResponse = await callAPI(params);
-      console.log(spotifyResponse);
+
       let offset = 50;
 
       if (spotifyResponse) {
@@ -87,7 +87,7 @@ function LikedSongs() {
             }
           });
         }
-        console.log(spotifyResponse);
+
         offset += 50;
       }
     };
@@ -138,7 +138,7 @@ function LikedSongs() {
         token: token,
       };
       let spotifyPlaylistResponse = await callAPI(params);
-      console.log(spotifyPlaylistResponse);
+
       if (spotifyPlaylistResponse) {
         setLikedSongsInfo(spotifyPlaylistResponse);
       }
