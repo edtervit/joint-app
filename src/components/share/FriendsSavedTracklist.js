@@ -2,8 +2,19 @@ import React, { useState, useEffect } from "react";
 import { useStoreActions, useStoreState } from "easy-peasy";
 import lemonke from "../../Images/lemonke.jpg";
 import { Redirect } from "react-router-dom";
-import { Box, Button, Heading, Text, Center, Image } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Heading,
+  Text,
+  Center,
+  Image,
+  Stack,
+  Container,
+} from "@chakra-ui/react";
 import Loading from "../reusable/Loading";
+import explainer from "../../video/explainervidV1.2.mp4";
+import logo from "../../joint.png";
 
 function FriendsSavedTracklist({ match }) {
   //state
@@ -100,6 +111,9 @@ function FriendsSavedTracklist({ match }) {
 
   return (
     <div>
+      <Center>
+        <Image src={logo} w="100px" my={5} />
+      </Center>
       {redirect && (
         <Redirect
           to={{
@@ -142,21 +156,74 @@ function FriendsSavedTracklist({ match }) {
       {isLoading || isLoadingName ? <Loading /> : ""}
 
       {isValid && !isLoading && !isLoadingName && (
-        <Box p={5}>
-          <Heading my={5}>
-            {friendsCustomName} wants to compare music with you!
-          </Heading>
-          <Text>
-            We will compare both of your music and find matches for you!
-          </Text>
-          <Text>
-            You can then save this list of matches into a playlist for you to
-            enjoy together
-          </Text>
-          <Button my={3} onClick={() => compareTracksHandler(friendsTrackList)}>
-            Compare with {friendsCustomName}
-          </Button>
-        </Box>
+        <>
+          <Box p={5} pt={0}>
+            <Heading my={5}>
+              {friendsCustomName} wants to compare music with you!
+            </Heading>
+            <Text>
+              We will compare both of your music and find matches for you!
+            </Text>
+            <Text>
+              You can then save this list of matches into a playlist for you to
+              enjoy together
+            </Text>
+            <Button
+              my={3}
+              onClick={() => compareTracksHandler(friendsTrackList)}
+            >
+              Compare with {friendsCustomName}
+            </Button>
+          </Box>
+          <Center>
+            <Container
+              maxWidth="1400px"
+              boxShadow="lg"
+              bg="gray.50"
+              borderRadius="md"
+              m={5}
+            >
+              <Stack direction={["column", "column", "column", "row"]}>
+                <Box
+                  textAlign="left"
+                  w={["100%", "100%", "100%", "50%"]}
+                  p={3}
+                  justifyContent="center"
+                  display="flex"
+                  flexDirection="column"
+                >
+                  <Heading textAlign="left" my={2} pr="20%">
+                    Compare music with friends and find songs in common.
+                  </Heading>
+                  <Text>1. Login and connect your spotify</Text>
+                  <Text>
+                    2. Build your profile using your playlists, liked songs etc
+                  </Text>
+                  <Text>3. Send your profile link to friends to compare</Text>
+                  <Text>4. Get a list of the songs you both like</Text>
+                  <Text>5. Save it as a playlist to your Spotify</Text>
+                  <Button
+                    my={3}
+                    onClick={() => compareTracksHandler(friendsTrackList)}
+                  >
+                    Compare with {friendsCustomName}
+                  </Button>
+                  <Text fontSize="xs">
+                    (we won’t show songs you don’t match on, your high school
+                    musical obsession is safe with us)
+                  </Text>
+                </Box>
+
+                <Box w={["100%", "100%", "100%", "50%"]} p={3}>
+                  <Heading size="lg" my={3}>
+                    How it works
+                  </Heading>
+                  <video src={explainer} controls />
+                </Box>
+              </Stack>
+            </Container>
+          </Center>
+        </>
       )}
     </div>
   );

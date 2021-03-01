@@ -3,8 +3,18 @@ import { useStoreActions, useStoreState } from "easy-peasy";
 import queryString from "query-string";
 import { useHistory, Redirect } from "react-router-dom";
 import styled from "styled-components";
-import { Button, Center } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Center,
+  Container,
+  Heading,
+  Image,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 
+import explainer from "../../../video/explainervidV1.2.mp4";
 import logo from "../../../joint.png";
 import Loading from "../../reusable/Loading";
 import GuestLogin from "./GuestLogin";
@@ -66,7 +76,6 @@ function LandingPage() {
         <Redirect to={`/shareJ/${shareJIDstate}`} />
       )}
       <Center>
-        {" "}
         <img className="logo" src={logo} alt="" />
       </Center>
       <div className="login">
@@ -91,18 +100,65 @@ function LandingPage() {
           </div>
         )}
         {who && <Loading />}
+        {/* If has who then just redirect to login */}
         <WhoDiv>
           {who &&
             (window.location = `${process.env.REACT_APP_BACK_URL}/login/${state}`)}
         </WhoDiv>
         {!shareJID && !who && !gettingProfile && !isGuest && (
-          <Button
-            onClick={() =>
-              (window.location = `${process.env.REACT_APP_BACK_URL}/login/${state}`)
-            }
-          >
-            CLICK HERE TO LOGIN
-          </Button>
+          <>
+            <Center>
+              <Container
+                maxWidth="1400px"
+                boxShadow="lg"
+                bg="gray.50"
+                borderRadius="md"
+                m={5}
+              >
+                <Stack direction={["column", "column", "column", "row"]}>
+                  <Box
+                    textAlign="left"
+                    w={["100%", "100%", "100%", "50%"]}
+                    p={3}
+                    justifyContent="center"
+                    display="flex"
+                    flexDirection="column"
+                  >
+                    <Heading textAlign="left" my={2} pr="20%">
+                      Compare music with friends and find songs in common.
+                    </Heading>
+                    <Text>1. Login and connect your spotify</Text>
+                    <Text>
+                      2. Build your profile using your playlists, liked songs
+                      etc
+                    </Text>
+                    <Text>3. Send your profile link to friends to compare</Text>
+                    <Text>4. Get a list of the songs you both like</Text>
+                    <Text>5. Save it as a playlist to your Spotify</Text>
+                    <Button
+                      my={3}
+                      onClick={() =>
+                        (window.location = `${process.env.REACT_APP_BACK_URL}/login/${state}`)
+                      }
+                    >
+                      CLICK HERE TO LOGIN
+                    </Button>
+                    <Text fontSize="xs">
+                      (we won’t show songs you don’t match on, your high school
+                      musical obsession is safe with us)
+                    </Text>
+                  </Box>
+
+                  <Box w={["100%", "100%", "100%", "50%"]} p={3}>
+                    <Heading size="lg" my={3}>
+                      How it works
+                    </Heading>
+                    <video src={explainer} controls />
+                  </Box>
+                </Stack>
+              </Container>
+            </Center>
+          </>
         )}
         {gettingProfile && !who && <Loading />}
         {isGuest && !gettingProfile && <GuestLogin />}
