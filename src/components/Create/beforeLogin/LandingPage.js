@@ -9,7 +9,6 @@ import {
   Center,
   Container,
   Heading,
-  Image,
   Stack,
   Text,
 } from "@chakra-ui/react";
