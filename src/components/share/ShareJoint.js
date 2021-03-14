@@ -148,6 +148,10 @@ function ShareJoint({ match }) {
             This is the joint list of {usersCustomName} and {friendsCustomName}!
           </h1>
           <p>
+            You have <strong>{jointList.theList.length} song matches </strong>{" "}
+            and <strong> notReadyYet artist matches. </strong>
+          </p>
+          <p>
             Share this joint with someone!<br></br>
             <Link as={ReactLink} to={`${jointList._id}`} target="_blank">
               {process.env.REACT_APP_FRONT_URL}/shareJ/{jointList._id}
