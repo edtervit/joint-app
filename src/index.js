@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import model from "./model.js";
 import { createStore, StoreProvider } from "easy-peasy";
 import { ChakraProvider } from "@chakra-ui/react";
+import "./index.css";
 
 const store = createStore(model);
 
