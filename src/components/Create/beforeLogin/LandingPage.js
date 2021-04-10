@@ -3,15 +3,8 @@ import { useStoreActions, useStoreState } from "easy-peasy";
 import queryString from "query-string";
 import { useHistory, Redirect } from "react-router-dom";
 import styled from "styled-components";
-import {
-  Box,
-  Button,
-  Center,
-  Container,
-  Heading,
-  Stack,
-  Text,
-} from "@chakra-ui/react";
+
+import { FaChevronDown } from "react-icons/fa";
 
 import explainer from "../../../video/explainervidV1.2.mp4";
 import logo from "../../../joint.png";
@@ -70,98 +63,90 @@ function LandingPage() {
   }, [failedCookie]);
 
   return (
-    <div>
-      {fromShareJPage && shareJIDstate && (
-        <Redirect to={`/shareJ/${shareJIDstate}`} />
-      )}
-      <Center>
-        <img className="logo" src={logo} alt="" />
-      </Center>
-      <div className="login">
-        {failedCookie && (
-          <div className="failedCookie">
-            <p>
-              Sorry your request to Spotify failed, try login again to get a new
-              cookie 🍪
-            </p>
-          </div>
+    <div className="bg-gray min-h-screen">
+      <div className="bg-gradient-to-r from-red to-purple rounded-b-4xl min-h-75% flex flex-col">
+        {fromShareJPage && shareJIDstate && (
+          <Redirect to={`/shareJ/${shareJIDstate}`} />
         )}
-        {shareJID && (
-          <div>
-            <h1>Please login to see this jointplaylist!</h1>
-            <Button
-              onClick={() =>
-                (window.location = `${process.env.REACT_APP_BACK_URL}/login/${state}`)
-              }
-            >
-              CLICK HERE TO LOGIN
-            </Button>
-          </div>
-        )}
-        {who && <Loading />}
-        {/* If has who then just redirect to login */}
-        <WhoDiv>
-          {who &&
-            (window.location = `${process.env.REACT_APP_BACK_URL}/login/${state}`)}
-        </WhoDiv>
-        {!shareJID && !who && !gettingProfile && !isGuest && (
-          <>
-            <Center>
-              <Container
-                maxWidth="1400px"
-                boxShadow="lg"
-                bg="gray.50"
-                borderRadius="md"
-                m={5}
+        <img
+          className="logo bg-cover pt-4  mx-auto"
+          src={logo}
+          alt="Joint playlist logo"
+        />
+        <div className="login my-auto">
+          {failedCookie && (
+            <div className="failedCookie">
+              <p>
+                Sorry your request to Spotify failed, try login again to get a
+                new cookie 🍪
+              </p>
+            </div>
+          )}
+          {shareJID && (
+            <>
+              <h1>Please login to see this jointplaylist!</h1>
+              <button
+                onClick={() =>
+                  (window.locbuttontion = `${process.env.REACT_APP_BACK_URL}/login/${state}`)
+                }
               >
-                <Stack direction={["column", "column", "column", "row"]}>
-                  <Box
-                    textAlign="left"
-                    w={["100%", "100%", "100%", "50%"]}
-                    p={3}
-                    justifyContent="center"
-                    display="flex"
-                    flexDirection="column"
-                  >
-                    <Heading textAlign="left" my={2} pr="20%">
-                      Compare music with friends and find songs in common.
-                    </Heading>
-                    <Text>1. Login and connect your spotify</Text>
-                    <Text>
-                      2. Build your profile using your playlists, liked songs
-                      etc
-                    </Text>
-                    <Text>3. Send your profile link to friends to compare</Text>
-                    <Text>4. Get a list of the songs you both like</Text>
-                    <Text>5. Save it as a playlist to your Spotify</Text>
-                    <Button
-                      my={3}
-                      onClick={() =>
-                        (window.location = `${process.env.REACT_APP_BACK_URL}/login/${state}`)
-                      }
-                    >
-                      CLICK HERE TO LOGIN
-                    </Button>
-                    <Text fontSize="xs">
-                      (we won’t show songs you don’t match on, your high school
-                      musical obsession is safe with us)
-                    </Text>
-                  </Box>
-
-                  <Box w={["100%", "100%", "100%", "50%"]} p={3}>
-                    <Heading size="lg" my={3}>
-                      How it works
-                    </Heading>
-                    <video src={explainer} controls />
-                  </Box>
-                </Stack>
-              </Container>
-            </Center>
-          </>
-        )}
-        {gettingProfile && !who && <Loading />}
-        {isGuest && !gettingProfile && <GuestLogin />}
+                CLICK HERE TO LOGIN
+              </button>
+            </>
+          )}
+          {who && <Loading />}
+          {/* If has who then just redirect to login */}
+          <WhoDiv>
+            {who &&
+              (window.location = `${process.env.REACT_APP_BACK_URL}/login/${state}`)}
+          </WhoDiv>
+          {!shareJID && !who && !gettingProfile && !isGuest && (
+            <>
+              <div className="cont items-center md:pt-32 md:pb-28">
+                <h1 className="text-4xl md:text-6xl font-bold leading-tight ">
+                  Compare music with friends and find songs in common.
+                </h1>
+                <button
+                  className="btn md:text-3xl my-4 md:mt-16 md:mb-4 "
+                  onClick={() =>
+                    (window.locbuttontion = `${process.env.REACT_APP_BACK_URL}/login/${state}`)
+                  }
+                >
+                  Connect
+                </button>
+                <p className=" md:w-96 mx-auto font-thin">
+                  (we won’t show songs you don’t match on, your high school
+                  musical obsession is safe with us)
+                </p>
+              </div>
+            </>
+          )}
+          {gettingProfile && !who && <Loading />}
+          {isGuest && !gettingProfile && <GuestLogin />}
+        </div>
       </div>
+      {!shareJID && !who && !gettingProfile && !isGuest && (
+        <div className="bg-gray">
+          <div className="cont max-w-screen-xl">
+            <p className="font-bold text-3xl my-4">This is how it works</p>
+            <FaChevronDown className="text-white text-4xl animate-bounce mx-auto" />
+            <div className="my-10 flex flex-wrap">
+              <div className="md:w-1/2 mb-4 md:pr-12">
+                <video className="shadow-xl" src={explainer} controls />
+              </div>
+              <ul className="md:w-1/2 text-2xl my-auto space-y-3 text-left pl-12 text-white list-disc list-outside">
+                <li> Login and connect your spotify</li>
+                <li>
+                  Build your profile using your playlists, liked songs etc
+                </li>
+                <li>Send your profile link to friends to compare</li>
+                <li>Get a list of the songs you both like</li>
+                <li>Save it as a playlist to your Spotify</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

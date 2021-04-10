@@ -16,6 +16,7 @@
     "query-string": "^6.13.7",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-icons": "^4.2.0",
     "react-infinite-scroll-component": "^5.1.0",
     "react-konami-code": "^2.0.1-beta.1",
     "react-lazyload": "^3.1.0",

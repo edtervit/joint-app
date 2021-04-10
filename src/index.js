@@ -8,11 +8,21 @@ import { createStore, StoreProvider } from "easy-peasy";
 import { ChakraProvider } from "@chakra-ui/react";
 import "./index.css";
 
+// 1. Import `extendTheme`
+import { extendTheme } from "@chakra-ui/react";
+// 2. Call `extendTheme` and pass your custom values
+const theme = extendTheme({
+  fonts: {
+    heading: "Montserrat",
+    body: "Montserrat",
+  },
+});
+
 const store = createStore(model);
 
 ReactDOM.render(
   <React.StrictMode>
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <StoreProvider store={store}>
         <App />
       </StoreProvider>

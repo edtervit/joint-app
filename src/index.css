@@ -1,20 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;700&display=swap');
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+
+
+p, h1, h2, h3, h4, h5{
+  color: white;
 }
 
 /* Use this to make base styles */
 @layer components{
+  .logo{
+    @apply w-28 h-full
+  },
+  .btn{
+    @apply bg-blue text-white font-bold rounded-full px-10 py-2 shadow-md hover:scale-105 transform transition-all
+  },
   .cont{
     @apply overflow-hidden px-3 py-5 w-full text-center md:p-10 flex flex-col  mx-auto flex-wrap max-w-screen-lg justify-center 
-  },
-  .tag{
-    @apply border border-white max-w-max py-1 px-3  uppercase text-sm
   }
 }
