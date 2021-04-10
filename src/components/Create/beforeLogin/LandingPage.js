@@ -109,7 +109,7 @@ function LandingPage() {
                 <button
                   className="btn md:text-3xl my-4 md:mt-16 md:mb-4 "
                   onClick={() =>
-                    (window.locbuttontion = `${process.env.REACT_APP_BACK_URL}/login/${state}`)
+                    (window.location = `${process.env.REACT_APP_BACK_URL}/login/${state}`)
                   }
                 >
                   Connect
