@@ -69,7 +69,7 @@ function LandingPage() {
           <Redirect to={`/shareJ/${shareJIDstate}`} />
         )}
         <img
-          className="logo bg-cover pt-4  mx-auto"
+          className="logo bg-cover pt-8  w- mx-auto"
           src={logo}
           alt="Joint playlist logo"
         />
