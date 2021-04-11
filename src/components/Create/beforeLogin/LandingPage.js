@@ -83,16 +83,17 @@ function LandingPage() {
             </div>
           )}
           {shareJID && (
-            <>
-              <h1>Please login to see this jointplaylist!</h1>
+            <div className="text-center">
+              <h1 className="title">Please login to see this jointplaylist!</h1>
               <button
+                className="btn my-4"
                 onClick={() =>
-                  (window.locbuttontion = `${process.env.REACT_APP_BACK_URL}/login/${state}`)
+                  (window.location = `${process.env.REACT_APP_BACK_URL}/login/${state}`)
                 }
               >
-                CLICK HERE TO LOGIN
+                Login
               </button>
-            </>
+            </div>
           )}
           {who && <Loading />}
           {/* If has who then just redirect to login */}
