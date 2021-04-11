@@ -206,7 +206,11 @@ function Playlists() {
         </div>
       )}
       <div className="my-4 ">
-        <p>Selected playlists:</p>
+        {chosenPlaylists.length > 1 ? (
+          <p>{chosenPlaylists.length} playlists selected:</p>
+        ) : (
+          <p>Selected Playlist</p>
+        )}
         <div className="max-h-36 overflow-y-auto scrollbar bg-opacity-30 bg-black rounded-md p-4">
           {chosenPlaylists &&
             chosenPlaylists.map((playlist, index) => (
@@ -231,9 +235,6 @@ function Playlists() {
           {chosenPlaylists.length === 0 && <p>No playlists selected.</p>}
         </div>
       </div>
-      {chosenPlaylists.length > 1 && (
-        <p>({chosenPlaylists.length} playlists selected)</p>
-      )}
     </div>
   );
 }
