@@ -17,16 +17,19 @@ module.exports = {
           DEFAULT: "#34c8ed",
           dark: "#3590F3",
         },
-        purple: "#2f0a2f",
-        black: "101010",
+        purple: {
+          DEFAULT: "#2f0a2f",
+          light: "#751e6e",
+        },
+        black: "#101010",
+        orange: "#cf5f1e",
         red: {
           DEFAULT: "#a21231",
-          light: "#FFB82F",
         },
         gray: "#101010",
       },
     },
   },
-  variants: ["responsive", "hover", "important"],
+  variants: ["responsive", "hover", "active", "important"],
   plugins: [require("@neojp/tailwindcss-important-variant")],
 };

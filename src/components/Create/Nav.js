@@ -2,11 +2,12 @@ import React, { useEffect } from "react";
 
 import logo from "../../joint.png";
 
-import styled from "styled-components";
 import Profile from "./Profile";
 import { useStoreState, useStoreActions } from "easy-peasy";
-import { Box, Link, Text } from "@chakra-ui/react";
+import { Box, IconButton, Text } from "@chakra-ui/react";
 import { Link as ReactLink } from "react-router-dom";
+import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
+import { HamburgerIcon } from "@chakra-ui/icons";
 
 function Nav() {
   const isLogged = useStoreState((state) => state.isLoggedIn);
@@ -57,39 +58,86 @@ function Nav() {
 
   return (
     <div>
-      <Navbar>
+      <div className="nav bg-gray bg-opacity-30 absolute p-4 w-full flex text-white items-center flex-wrap">
         <ReactLink to="/">
           {" "}
-          <img className="logo" src={logo} alt="" />
+          <img className="logo" src={logo} alt="joint playlist logo" />
         </ReactLink>
         {hasSavedTrackLists && (
-          <div className="hasSaved">
-            <Link mr={4} as={ReactLink} to="/">
-              Dashboard
-            </Link>
-            <Link mr={4} as={ReactLink} to="/myprofile">
-              My Music Profile
-            </Link>
-            <Link mr={4} as={ReactLink} to="/playlistmaker">
-              Playlist Maker
-            </Link>
-            <Link
-              mr={4}
-              as="a"
-              href="https://ko-fi.com/edtervit"
-              target="_blank"
-            >
-              Donate
-            </Link>
-            <Profile />
-          </div>
+          <>
+            <div className="ml-auto space-x-4 md:flex flex-wrap items-center hidden">
+              <ReactLink className="text-white" to="/">
+                Dashboard
+              </ReactLink>
+              <ReactLink className="text-white" to="/myprofile">
+                My Music Profile
+              </ReactLink>
+              <ReactLink className="text-white" to="/playlistmaker">
+                Playlist Maker
+              </ReactLink>
+              <a
+                className="text-white"
+                href="https://ko-fi.com/edtervit"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Donate
+              </a>
+              <Profile />
+            </div>
+            <div className="mobile nav md:hidden flex ml-auto items-center space-x-2">
+              <Profile />
+              <Menu>
+                <MenuButton
+                  className="bg-transparent!"
+                  aria-label="menu"
+                  as={IconButton}
+                  icon={<HamburgerIcon />}
+                  variant="outline"
+                />
+                <MenuList className="bg-black! bg-opacity-30!">
+                  <MenuItem className="active-override">
+                    <ReactLink className="text-white active-override" to="/">
+                      Dashboard
+                    </ReactLink>
+                  </MenuItem>
+                  <MenuItem className="active-override">
+                    <ReactLink
+                      className="text-white active-override"
+                      to="/myprofile"
+                    >
+                      My Music Profile
+                    </ReactLink>
+                  </MenuItem>
+                  <MenuItem className="active-override">
+                    <ReactLink
+                      className="text-white active-override"
+                      to="/playlistmaker"
+                    >
+                      Playlist Maker
+                    </ReactLink>
+                  </MenuItem>
+                  <MenuItem className="active-override">
+                    <a
+                      className="text-white active-override"
+                      href="https://ko-fi.com/edtervit"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Donate
+                    </a>
+                  </MenuItem>
+                </MenuList>
+              </Menu>
+            </div>
+          </>
         )}
         {isLogged && !hasSavedTrackLists && (
-          <div className="has-profile">
+          <div className="ml-auto">
             <Profile />
           </div>
         )}
-      </Navbar>
+      </div>
       {isGuest && (
         <Box bg="green.100">
           <Text p={1}>
@@ -103,28 +151,3 @@ function Nav() {
 }
 
 export default Nav;
-
-const Navbar = styled.nav`
-  background: #f7fafc;
-  padding: 0.5rem 2rem;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-
-  .logo {
-    margin: 0;
-    padding: 0;
-    height: 50px;
-  }
-  .has-profile {
-    margin-left: auto;
-  }
-  p.logout {
-    cursor: pointer;
-  }
-  .hasSaved {
-    margin-left: auto;
-    display: flex;
-    align-items: center;
-  }
-`;
