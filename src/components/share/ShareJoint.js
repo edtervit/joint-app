@@ -152,7 +152,8 @@ function ShareJoint({ match }) {
             and <strong> notReadyYet artist matches. </strong>
           </p>
           <p>
-            Share this joint with someone!<br></br>
+            Share this joint with someone!
+            <br />
             <Link as={ReactLink} to={`${jointList._id}`} target="_blank">
               {process.env.REACT_APP_FRONT_URL}/shareJ/{jointList._id}
             </Link>
