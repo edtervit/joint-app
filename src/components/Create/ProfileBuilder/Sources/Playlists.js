@@ -180,6 +180,7 @@ function Playlists() {
               addPlaylistToSelectedHandler(e.currentTarget.value);
             }}
           >
+            <option value="">Select your playlists</option>
             {playlistsFromSpotify &&
               playlistsFromSpotify.map((playlist, index) => (
                 <option key={playlist.uri} value={playlist.id}>
