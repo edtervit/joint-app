@@ -67,10 +67,10 @@ function Nav() {
           <>
             <div className="ml-auto space-x-4 md:flex flex-wrap items-center hidden">
               <ReactLink className="text-white" to="/">
-                Dashboard
+                Home
               </ReactLink>
               <ReactLink className="text-white" to="/myprofile">
-                My Music Profile
+                Profile
               </ReactLink>
               <ReactLink className="text-white" to="/playlistmaker">
                 Playlist Maker
@@ -98,7 +98,7 @@ function Nav() {
                 <MenuList className="bg-black! bg-opacity-30!">
                   <MenuItem className="active-override">
                     <ReactLink className="text-white active-override" to="/">
-                      Dashboard
+                      Home
                     </ReactLink>
                   </MenuItem>
                   <MenuItem className="active-override">
@@ -106,7 +106,7 @@ function Nav() {
                       className="text-white active-override"
                       to="/myprofile"
                     >
-                      My Music Profile
+                      Profile
                     </ReactLink>
                   </MenuItem>
                   <MenuItem className="active-override">
