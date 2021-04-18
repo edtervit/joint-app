@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useStoreState, useStoreActions } from "easy-peasy";
 import axios from "axios";
 import lemonke from "../../../Images/lemonke.jpg";
-import { Button } from "@chakra-ui/react";
 
 function SaveProfileToDB() {
   let usersSelectedTracks = useStoreState((state) => state.usersSelectedTracks);
@@ -46,12 +45,12 @@ function SaveProfileToDB() {
   return (
     <div>
       {amountOfSavedTrackLists < 3 && (
-        <Button
-          bg="green.100"
+        <button
+          className="btn"
           onClick={() => sendToDbHandler(profile, usersSelectedTracks)}
         >
-          😀 Happy? Save your profile!
-        </Button>
+          Happy!
+        </button>
       )}
 
       {failedSaving && (

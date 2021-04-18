@@ -1,7 +1,6 @@
 import React from "react";
 import { useStoreState, useStoreActions } from "easy-peasy";
 import SaveProfileToDB from "./SaveProfileToDB";
-import { Box, Button, Heading } from "@chakra-ui/react";
 
 import ListOfTracks from "../../reusable/ListOfTracks";
 
@@ -10,41 +9,32 @@ function StepTwo() {
   const clearList = useStoreActions((action) => action.clearList);
 
   return (
-    <>
-      <Heading mb={5}>Step 2 - Review your profile!</Heading>
-      <Box
-        display="flex"
-        flexWrap="wrap"
-        alignItems="center"
-        justifyContent="center"
-      >
-        <Button bg="red.100" m={4} onClick={() => clearList()}>
-          😡 Not happy? Go Back and rebuild
-        </Button>
-        {usersSelectedTracks && <SaveProfileToDB />}
-      </Box>
-      <Box py={5}>
-        <Heading size="md">Your Profile</Heading>
+    <div className="">
+      <div className="nav-pad cont">
+        <h1 className="title mb-4 ">Step 2 - Review your profile!</h1>
         <p>
           These are the songs we will compare against your friend looking for
           matches.
         </p>
-
         {usersSelectedTracks && (
           <div>
-            <p>
-              Total songs: <strong>{usersSelectedTracks.length}</strong>
-            </p>
+            <ListOfTracks TrackList={usersSelectedTracks} showTotal />
           </div>
         )}
-
-        {usersSelectedTracks && (
-          <Box display="flex" justifyContent="center">
-            <ListOfTracks TrackList={usersSelectedTracks} />
-          </Box>
-        )}
-      </Box>
-    </>
+        <div className="flex justify-center space-x-4 mt-4">
+          <div className="">
+            <button className="btn bg-red-btn" onClick={() => clearList()}>
+              Not happy
+            </button>
+            <p className="font-thin">Rebuild</p>
+          </div>
+          <div className="">
+            {usersSelectedTracks && <SaveProfileToDB />}
+            <p className="font-thin">Save your profile</p>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 

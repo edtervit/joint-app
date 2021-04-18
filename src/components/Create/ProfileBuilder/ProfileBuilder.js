@@ -56,7 +56,11 @@ function ProfileBuilder() {
   }, []);
 
   return (
-    <div className="bg-gradient-to-r from-purple-light to-orange flex flex-col min-h-screen items-center nav-pad">
+    <div
+      className={` bg-gradient-to-r from-purple-light to-orange flex flex-col min-h-screen items-center nav-pad ${
+        gotAllData && "from-blue-teal! to-green!"
+      } `}
+    >
       {!isGettingData && !gotAllData && (
         <div className="div">
           <div className="cont">

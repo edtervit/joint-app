@@ -12,10 +12,14 @@ module.exports = {
       minHeight: {
         "75%": "75vh",
       },
+      width: {
+        500: "500px",
+      },
       colors: {
         blue: {
           DEFAULT: "#34c8ed",
           dark: "#3590F3",
+          teal: "#00aa96",
         },
         purple: {
           DEFAULT: "#2f0a2f",
@@ -25,8 +29,10 @@ module.exports = {
         orange: "#cf5f1e",
         red: {
           DEFAULT: "#a21231",
+          btn: "#ed345b",
         },
         gray: "#101010",
+        green: "#94c83d",
       },
     },
   },
