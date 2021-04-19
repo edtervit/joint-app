@@ -1,15 +1,8 @@
-import {
-  Box,
-  Center,
-  Link,
-  useClipboard,
-  Button,
-  Heading,
-  Text,
-} from "@chakra-ui/react";
+import { Link, useClipboard, Button } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import { useStoreState } from "easy-peasy";
 import { Link as ReactLink } from "react-router-dom";
+import { FaCopy } from "react-icons/fa";
 
 function QuickShareLink() {
   //easy peasy state
@@ -33,38 +26,35 @@ function QuickShareLink() {
   const { hasCopied, onCopy } = useClipboard(clipboardValue);
 
   return (
-    <Center>
+    <div>
       {savedTrackLists && (
-        <Box
-          bg="gray.50"
-          w="75%"
-          justifyContent="center"
-          borderRadius="lg"
-          p={5}
-          boxShadow="lg"
-          my={3}
-        >
-          <Heading size="md">Your Share Link</Heading>
-          <Text>
+        <div className="my-4">
+          <h2 className="text-2xl font-bold">Your Share Link</h2>
+          <div className="  bg-black bg-opacity-30 rounded-2xl max-w-max px-4 py-2 text-white flex items-center mt-4 mb-2 mx-auto">
+            <Link
+              divShadow="inner"
+              as={ReactLink}
+              to={{ pathname: clipboardValue }}
+              target="_blank"
+            >
+              {clipboardValue}
+            </Link>
+            <div
+              onClick={onCopy}
+              className={`${
+                hasCopied && "bg-green! bg-opacity-80!"
+              } cursor-pointer ml-4 border-white border p-2 rounded `}
+            >
+              <FaCopy />
+            </div>
+          </div>
+          <p>
             Share this link with your friends to invite them to compare music
             with you!
-          </Text>
-          <Link
-            boxShadow="inner"
-            p={3}
-            m={3}
-            as={ReactLink}
-            to={{ pathname: clipboardValue }}
-            target="_blank"
-          >
-            {clipboardValue}
-          </Link>
-          <Button ml={3} onClick={onCopy}>
-            {hasCopied ? "Copied" : "Copy"}
-          </Button>
-        </Box>
+          </p>
+        </div>
       )}
-    </Center>
+    </div>
   );
 }
 

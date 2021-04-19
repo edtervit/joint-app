@@ -24,9 +24,13 @@ module.exports = {
         purple: {
           DEFAULT: "#2f0a2f",
           light: "#751e6e",
+          lighter: "#924f94",
         },
         black: "#101010",
-        orange: "#cf5f1e",
+        orange: {
+          DEFAULT: "#cf5f1e",
+          light: "#e66344",
+        },
         red: {
           DEFAULT: "#a21231",
           btn: "#ed345b",
