@@ -9,14 +9,17 @@ function Dashboard() {
 
   return (
     <div className="bg-gradient-to-l from-purple-lighter to-orange-light flex flex-col min-h-screen items-center nav-pad">
-      <div className="cont">
+      <div className="cont max-w-screen-xl">
         <h1 className="title mb-8">
           {profile.customName ? profile.customName : profile.display_name},
           you're done!
         </h1>
+
         <QuickShareLink />
-        <QuickLinks />
-        <AllJoints />
+        <div className="flex flex-wrap md:flex-nowrap justify-center">
+          <QuickLinks />
+          <AllJoints />
+        </div>
       </div>
     </div>
   );
