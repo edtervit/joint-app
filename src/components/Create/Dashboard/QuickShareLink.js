@@ -1,4 +1,4 @@
-import { Link, useClipboard, Button } from "@chakra-ui/react";
+import { Link, useClipboard } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import { useStoreState } from "easy-peasy";
 import { Link as ReactLink } from "react-router-dom";
