@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useStoreState } from "easy-peasy";
-import { Box, Heading, Center } from "@chakra-ui/react";
+import { Heading, Center } from "@chakra-ui/react";
 import lemonke from "../../Images/lemonke.jpg";
 import SaveJointPlaylist from "./SaveJointPlaylist";
 import Loading from "../reusable/Loading";
@@ -19,7 +19,7 @@ function JointList() {
   }, [jointList]);
 
   return (
-    <Box my={5}>
+    <div className="bg-gradient-to-r from-purple-light to-orange flex flex-col min-h-screen items-center nav-pad">
       {jointList && jointList.theList.length > 0 && <SaveJointPlaylist />}
       {jointList && !jointListIsEmpty && <Loading />}
       {jointList && jointListIsEmpty && (
@@ -38,7 +38,7 @@ function JointList() {
           <p>or maybe its just not meant to be...</p>
         </>
       )}
-    </Box>
+    </div>
   );
 }
 

@@ -19,6 +19,12 @@ function ListOfTracks(props) {
         </div>
       )}
 
+      {props.TrackList && props.matches && (
+        <div>
+          <h2 className="title mb-4 text-2xl">{props.matches} Song Matches:</h2>
+        </div>
+      )}
+
       <div
         className="max-h-52 md:max-h-96 overflow-y-auto scrollbar transition "
         id="scrollTarget"
