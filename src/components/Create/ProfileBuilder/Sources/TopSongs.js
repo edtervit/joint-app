@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useStoreActions, useStoreState } from "easy-peasy";
-import { Heading, Checkbox, Box } from "@chakra-ui/react";
+import { Checkbox } from "@chakra-ui/react";
 
 function TopSongs() {
   const callAPI = useStoreActions((actions) => actions.callAPI);
@@ -94,10 +94,10 @@ function TopSongs() {
 
   return (
     <div>
-      <Box display="flex" flexDirection="column">
-        <Heading size="sml">Most Played Songs</Heading>
-        <div className="aOption">
+      <div className="flex flex-col items-start space-y-2 pl-2">
+        <div className="aOption text-left">
           <Checkbox
+            className="text-white checkbox-custom"
             onChange={() => {
               setTsMonth(!TsMonth);
             }}
@@ -105,11 +105,12 @@ function TopSongs() {
             id="TSmonth"
             defaultChecked={true}
           >
-            Top 50 played songs from past month
+            Top 50 played songs from the past month
           </Checkbox>
         </div>
         <div className="aOption">
           <Checkbox
+            className="text-white checkbox-custom"
             onChange={() => {
               setTsSix(!TsSix);
             }}
@@ -117,12 +118,13 @@ function TopSongs() {
             id="TsSix"
             defaultChecked={true}
           >
-            Top 50 played songs from past 6 months
+            Top 50 played songs from the past 6 months
           </Checkbox>
         </div>
         <div className="aOption">
           <label htmlFor="TsYear"></label>
           <Checkbox
+            className="text-white checkbox-custom"
             onChange={() => {
               setTsYear(!TsYear);
             }}
@@ -130,10 +132,10 @@ function TopSongs() {
             id="TsYear"
             defaultChecked={true}
           >
-            Top 50 played songs all time
+            Top 50 played songs of all time
           </Checkbox>
         </div>
-      </Box>
+      </div>
     </div>
   );
 }

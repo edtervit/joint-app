@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Box, Center, Image, Text } from "@chakra-ui/react";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 function ListOfTracks(props) {
@@ -11,66 +10,56 @@ function ListOfTracks(props) {
   };
 
   return (
-    <Center>
-      <Box
-        bg="gray.50"
-        display="flex"
-        borderColor="gray.50"
-        w="100%"
-        borderRadius={5}
-        p={2}
-        justifyContent="center"
+    <div className={`cont black-box mt-4 md:w-500`}>
+      {props.TrackList && props.showTotal && (
+        <div>
+          <h2 className="title mb-4 text-2xl">
+            Total songs: {props.TrackList.length}
+          </h2>
+        </div>
+      )}
+
+      {props.TrackList && props.matches && (
+        <div>
+          <h2 className="title mb-4 text-2xl">{props.matches} Song Matches:</h2>
+        </div>
+      )}
+
+      <div
+        className="max-h-52 md:max-h-96 overflow-y-auto scrollbar transition "
+        id="scrollTarget"
       >
-        <Box
-          className="songs"
-          display="flex"
-          flexWrap="wrap"
-          justifyContent="center"
-        >
-          {props.TrackList ? (
-            <InfiniteScroll
-              dataLength={props.TrackList.slice(0, amount).length}
-              next={() => loadMore()}
-              hasMore={true}
-            >
-              {props.TrackList.slice(0, amount).map((track, index) => (
-                <Box w="100%" key={track.uri}>
-                  <Center>
-                    <Box
-                      className="aTrack"
-                      my={2}
-                      width="75%"
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="space-between"
-                    >
-                      <Text textAlign="left">
-                        <strong>
-                          {index + 1}. {track.name}
-                        </strong>{" "}
-                        by {track.artist}
-                      </Text>
-                      <Image
-                        objectFit="cover"
-                        src={track.image}
-                        alt="album cover of track"
-                        w="100px"
-                        h="100px"
-                      />
-                    </Box>
-                  </Center>
-                </Box>
-              ))}
-            </InfiniteScroll>
-          ) : (
-            <div className="">
-              <h4>No tracks here.</h4>
-              <p>Refresh your page and try again.</p>
-            </div>
-          )}
-        </Box>
-      </Box>
-    </Center>
+        {props.TrackList ? (
+          <InfiniteScroll
+            dataLength={props.TrackList.slice(0, amount).length}
+            next={() => loadMore()}
+            hasMore={true}
+            scrollableTarget="scrollTarget"
+          >
+            {props.TrackList.slice(0, amount).map((track) => (
+              <div key={track.uri} className="text-left flex items-center my-4">
+                <img
+                  src={track.image}
+                  alt={track.name}
+                  className="w-20 md:w-24 mr-4"
+                />
+                <div className="">
+                  <p>{track.artist}</p>
+                  <p className="">
+                    <strong>{track.name}</strong>
+                  </p>
+                </div>
+              </div>
+            ))}
+          </InfiniteScroll>
+        ) : (
+          <div className="">
+            <h4>No tracks here.</h4>
+            <p>Refresh your page and try again.</p>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
 

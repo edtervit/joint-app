@@ -48,7 +48,7 @@ function CustomName() {
         let user = inputValue;
         setFormStatus("success");
         await getCustomNameHandler();
-        setFormResponse(`Nice, you got it ${user}, check your dashboard!`);
+        setFormResponse(`Nice, you got it ${user}!`);
       }
     } else {
       setFormResponse("Between 2-16 characters: A-Z, 0-9,-,_  ");

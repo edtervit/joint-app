@@ -38,7 +38,6 @@ function Brain() {
       {isLogged ? (
         <div className="isloggedIn">
           {fromSharePage && !waitingTrackListCheck && <FromShare />}
-          <br />
           {waitingTrackListCheck && (
             <>
               <Loading />

@@ -3,7 +3,7 @@ import SourcesIndex from "./Sources/SourcesIndex";
 import { useStoreActions, useStoreState } from "easy-peasy";
 import Loading from "../../reusable/Loading";
 import StepTwo from "./Steptwo";
-import { Button, useToast, Box, Heading } from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/react";
 
 function ProfileBuilder() {
   //toast
@@ -21,35 +21,12 @@ function ProfileBuilder() {
 
   //TopSongs
   const gotTopSongs = useStoreState((state) => state.gotTopSongs);
-  const noTopSongsSelected = useStoreState((state) => state.noTopSongsSelected);
 
   //LikedSongs
   const gotLikedSongs = useStoreState((state) => state.gotLikedSongs);
-  const noLikedSongsSelected = useStoreState(
-    (state) => state.noLikedSongsSelected
-  );
 
   //Playlists
   const gotPlaylists = useStoreState((state) => state.gotPlaylists);
-  const noPlaylistsSelected = useStoreState(
-    (state) => state.noPlaylistsSelected
-  );
-
-  //Handlers
-  const buildProfileHandler = () => {
-    //checks to see if no sources are selected
-    if (!noTopSongsSelected || !noLikedSongsSelected || !noPlaylistsSelected) {
-      setIsGettingData(true);
-    } else {
-      console.log("no option selected");
-      toast({
-        title: "Error!",
-        description: "Please select atleast 1 import method!",
-        status: "error",
-        isClosable: "true",
-      });
-    }
-  };
 
   //checks to see if all the sources have completed
   //add new sources here
@@ -79,24 +56,26 @@ function ProfileBuilder() {
   }, []);
 
   return (
-    <div>
+    <div
+      className={` bg-gradient-to-r from-purple-light to-orange flex flex-col min-h-screen items-center nav-pad ${
+        gotAllData && "from-blue-teal! to-green!"
+      } `}
+    >
       {!isGettingData && !gotAllData && (
         <div className="div">
-          <Box>
-            <Heading mb={5}>Step 1 - Build your profile!</Heading>
-          </Box>
+          <div className="cont">
+            <h1 className="title my-4">Step 1: Build your profile</h1>
+            <p>
+              We will only show people the songs you match on. The more songs
+              the better! Don't be shy!
+            </p>
+          </div>
         </div>
       )}
-      {!isGettingData && !gotAllData && (
-        <Button size="lg" onClick={() => buildProfileHandler()}>
-          {" "}
-          Click to build!
-        </Button>
-      )}
 
-      <Box display={isGettingData ? "none" : ""}>
+      <div className={isGettingData ? "hidden" : ""}>
         {!gotAllData && <SourcesIndex />}
-      </Box>
+      </div>
       {isGettingData && <Loading importSongs={true} />}
       {gotAllData && <StepTwo />}
     </div>

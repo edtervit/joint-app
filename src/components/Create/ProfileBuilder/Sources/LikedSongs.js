@@ -1,11 +1,3 @@
-import {
-  Box,
-  Center,
-  Heading,
-  Radio,
-  RadioGroup,
-  Stack,
-} from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import { useStoreActions, useStoreState } from "easy-peasy";
 
@@ -151,26 +143,28 @@ function LikedSongs() {
   }, [refreshToken]);
 
   return (
-    <div>
-      <Box my={3} display="flex" flexDirection="column">
-        <Heading size="sml">Liked Songs</Heading>
-        <RadioGroup
-          name="liked-songs"
-          defaultValue="all"
-          onChange={(value) => setRadioValue(value)}
+    <div className="my-4">
+      <div className="flex flex-col ">
+        <h2 className="font-bold my-4">Liked Songs</h2>
+        <select
+          className="select"
+          onChange={(e) => setRadioValue(e.currentTarget.value)}
+          value={radioValue}
         >
-          <Center>
-            <Stack spacing={4} direction="row">
-              <Radio value="nah">Nah</Radio>
-              <Radio value="200">200 Most recent</Radio>
-              <Radio value="500">500 Most recent</Radio>
-              <Radio value="all">
-                All liked songs ({likedSongsInfo && likedSongsInfo.total})
-              </Radio>
-            </Stack>
-          </Center>
-        </RadioGroup>
-      </Box>
+          <option className="text-center" value="all">
+            All liked songs ({likedSongsInfo && likedSongsInfo.total})
+          </option>
+          <option className="text-center" value="500">
+            500 most recent
+          </option>
+          <option className="text-center" value="200">
+            200 most recent
+          </option>
+          <option className="text-center" value="nah">
+            Nah
+          </option>
+        </select>
+      </div>
     </div>
   );
 }

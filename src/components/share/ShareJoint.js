@@ -100,68 +100,70 @@ function ShareJoint({ match }) {
   }, [params]);
 
   return (
-    <div>
-      {!isLoggedIn && jointList && !isLoadingName && !isLoading && (
-        <Redirect
-          to={{
-            pathname: "/",
-            state: { fromShareJ: "fromShareJ", fromWho: jointList._id },
-          }}
-        />
-      )}
-
-      {isLoading || isLoadingName ? <Loading /> : ""}
-
-      {!hasSavedTrackLists &&
-        !waitingTrackListCheck &&
-        !isLoading &&
-        !isLoadingName && (
-          <Center>
-            <Box
-              bg="tomato"
-              color="white"
-              p={4}
-              w="max-content"
-              borderRadius="md"
-            >
-              <h2>Want to make a joint playlist like this with your friend?</h2>
-              <Link mr={4} as={ReactLink} to="/">
-                Click here to make a music profile you can compare with friends
-              </Link>
-            </Box>
-          </Center>
+    <div className="bg-gradient-to-r from-purple-lightest via-odd to-blue-light flex flex-col min-h-screen items-center nav-pad">
+      <div className="cont">
+        {!isLoggedIn && jointList && !isLoadingName && !isLoading && (
+          <Redirect
+            to={{
+              pathname: "/",
+              state: { fromShareJ: "fromShareJ", fromWho: jointList._id },
+            }}
+          />
         )}
-      {!isValid && !isLoading && (
-        <div className="failed">
-          <h1>Uh oh stinky!</h1>
-          <p>
-            That doesn't return any matches, you sure you got the link right?
-          </p>
-          <Center>
-            <img src={lemonke} alt="" />
-          </Center>
-        </div>
-      )}
-      {isValid && !isLoadingName && (
-        <Box>
-          <h1>
-            This is the joint list of {usersCustomName} and {friendsCustomName}!
-          </h1>
-          <p>
-            You have <strong>{jointList.theList.length} song matches </strong>{" "}
-            and <strong> notReadyYet artist matches. </strong>
-          </p>
-          <p>
-            Share this joint with someone!<br></br>
-            <Link as={ReactLink} to={`${jointList._id}`} target="_blank">
-              {process.env.REACT_APP_FRONT_URL}/shareJ/{jointList._id}
-            </Link>
-          </p>
 
-          <MakePlaylist />
-          {jointList.theList && <ListOfTracks TrackList={jointList.theList} />}
-        </Box>
-      )}
+        {isLoading || isLoadingName ? <Loading /> : ""}
+
+        {!hasSavedTrackLists &&
+          !waitingTrackListCheck &&
+          !isLoading &&
+          !isLoadingName && (
+            <Center>
+              <Box
+                bg="tomato"
+                color="white"
+                p={4}
+                w="max-content"
+                borderRadius="md"
+              >
+                <h2>
+                  Want to make a joint playlist like this with your friend?
+                </h2>
+                <Link mr={4} as={ReactLink} to="/">
+                  Click here to make a music profile you can compare with
+                  friends
+                </Link>
+              </Box>
+            </Center>
+          )}
+        {!isValid && !isLoading && (
+          <div className="failed">
+            <h1>Uh oh stinky!</h1>
+            <p>
+              That doesn't return any matches, you sure you got the link right?
+            </p>
+            <Center>
+              <img src={lemonke} alt="" />
+            </Center>
+          </div>
+        )}
+        {isValid && !isLoadingName && (
+          <Box>
+            <h1 className="title font-normal mb-8">
+              This is the joint list of <br />
+              <strong>{usersCustomName}</strong> and{" "}
+              <strong>{friendsCustomName}</strong>!
+            </h1>
+
+            {jointList.theList && (
+              <ListOfTracks
+                TrackList={jointList.theList}
+                matches={jointList.theList.length}
+              />
+            )}
+            <MakePlaylist />
+          </Box>
+        )}
+      </div>
     </div>
   );
 }

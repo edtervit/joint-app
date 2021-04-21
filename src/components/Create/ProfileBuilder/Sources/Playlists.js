@@ -1,12 +1,3 @@
-import {
-  Box,
-  Heading,
-  Button,
-  Text,
-  Select,
-  HStack,
-  Center,
-} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useStoreActions, useStoreState } from "easy-peasy";
 
@@ -40,7 +31,7 @@ function Playlists() {
 
   //Handlers
 
-  const addPlaylistToSelectedHandler = () => {
+  const addPlaylistToSelectedHandler = (selectValue) => {
     //if the value of the playlist select is not the default value and not already in the chosen playlists list then add it to the array of chosen playlists
     if (selectValue && !chosenPlaylists.find((e) => e.id === selectValue)) {
       setChosenPlaylists([
@@ -176,66 +167,76 @@ function Playlists() {
   }, [chosenPlaylists]);
 
   return (
-    <Box>
-      <Heading size="sml">Playlists</Heading>
-      <Text>Add all playlists or select and add from the dropdown.</Text>
+    <div className="w-full ">
+      <h1 className="font-bold mt-4 mb-2">Playlists</h1>
+
       {playlistsFromSpotify && (
-        <Center>
-          <HStack>
-            <Button
-              my={2}
-              onClick={() => setChosenPlaylists(playlistsFromSpotify)}
-            >
-              Add all
-            </Button>
-            <Button my={2} onClick={() => setChosenPlaylists([])}>
-              Remove All
-            </Button>
-          </HStack>
-        </Center>
-      )}
-      {playlistsFromSpotify && (
-        <HStack>
-          <Select
-            placeholder="Select playlist"
-            onChange={(e) => setSelectValue(e.currentTarget.value)}
+        <div>
+          <select
+            className="select w-full"
+            value={selectValue}
+            onChange={(e) => {
+              setSelectValue(e.currentTarget.value);
+              addPlaylistToSelectedHandler(e.currentTarget.value);
+            }}
           >
+            <option value="">Select your playlists</option>
             {playlistsFromSpotify &&
               playlistsFromSpotify.map((playlist, index) => (
                 <option key={playlist.uri} value={playlist.id}>
-                  {playlist.name} (Tracks: {playlist.tracks.total})
+                  {playlist.name.length > 30
+                    ? playlist.name.slice(0, 30).concat("...")
+                    : playlist.name}{" "}
+                  (Tracks: {playlist.tracks.total})
                 </option>
               ))}
-          </Select>
-          <Button onClick={() => addPlaylistToSelectedHandler()}>
-            Add Playlist
-          </Button>
-        </HStack>
+          </select>
+        </div>
       )}
-
-      <Box my={5}>
-        <Text>Selected playlists:</Text>
-        {chosenPlaylists &&
-          chosenPlaylists.map((playlist, index) => (
-            <Center key={"playlist item" + index}>
-              <HStack my={2}>
-                <Text>
-                  {playlist.name} (Tracks: {playlist.tracks.total})
-                </Text>
-                <Button
-                  size="sml"
-                  p={1}
-                  bg="red.100"
+      {playlistsFromSpotify && (
+        <div className="my-2">
+          <button
+            className="btn2 "
+            onClick={() => setChosenPlaylists(playlistsFromSpotify)}
+          >
+            Add all
+          </button>
+          <button className="btn2 " onClick={() => setChosenPlaylists([])}>
+            Remove All
+          </button>
+        </div>
+      )}
+      <div className="my-4 ">
+        {chosenPlaylists.length > 1 ? (
+          <p>{chosenPlaylists.length} playlists selected:</p>
+        ) : (
+          <p>Selected Playlist</p>
+        )}
+        <div className="max-h-36 overflow-y-auto scrollbar bg-opacity-30 bg-black rounded-md p-4">
+          {chosenPlaylists &&
+            chosenPlaylists.map((playlist, index) => (
+              <div
+                key={"playlist item" + index}
+                className="flex justify-between my-1"
+              >
+                <p>
+                  {playlist.name.length > 20
+                    ? playlist.name.slice(0, 20).concat("...")
+                    : playlist.name}{" "}
+                  (Tracks: {playlist.tracks.total})
+                </p>
+                <button
+                  className="btn2"
                   onClick={() => deletePlaylistHandler(playlist.id)}
                 >
                   Remove
-                </Button>
-              </HStack>
-            </Center>
-          ))}
-        {chosenPlaylists.length === 0 && <Text>No playlists selected.</Text>}
-      </Box>
-    </Box>
+                </button>
+              </div>
+            ))}
+          {chosenPlaylists.length === 0 && <p>No playlists selected.</p>}
+        </div>
+      </div>
+    </div>
   );
 }
 

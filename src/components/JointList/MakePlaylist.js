@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useStoreState, useStoreActions } from "easy-peasy";
-import { Button, Box, useToast } from "@chakra-ui/react";
+import { Button, useToast } from "@chakra-ui/react";
 
 function MakePlaylist() {
   // local state
@@ -90,14 +90,15 @@ function MakePlaylist() {
   return (
     <div>
       {!passedCreating && (
-        <Box>
+        <div>
           <Button
             isLoading={isCreating ? true : false}
             onClick={() => createJointPlaylist()}
+            className="btn bg-blue!"
           >
             Save playlist to my spotify
           </Button>
-        </Box>
+        </div>
       )}
       {failedCreating && (
         <p>
@@ -107,7 +108,9 @@ function MakePlaylist() {
         </p>
       )}
       {passedCreating && (
-        <p>Creating succesful! Check your spotify for your new playlist!</p>
+        <button class="btn">
+          Creating succesful! Check your spotify for your new playlist!
+        </button>
       )}
     </div>
   );

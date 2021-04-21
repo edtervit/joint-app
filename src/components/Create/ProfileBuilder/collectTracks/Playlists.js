@@ -55,7 +55,6 @@ function Playlists({ theList, setTheList, setIsLoggedIn }) {
       ) : (
         ""
       )}
-      <br />
       {!hasPlaylists && (
         <Button
           style={{ display: "inline-block" }}

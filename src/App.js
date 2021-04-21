@@ -1,5 +1,3 @@
-import "./App.css";
-
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import FriendsSavedTracklist from "./components/share/FriendsSavedTracklist";

@@ -8,7 +8,7 @@ function Profile() {
   return (
     <div className="profileDiv">
       <ProfileDiv>
-        <p className="logout" onClick={() => logOut()}>
+        <p className="text-white cursor-pointer" onClick={() => logOut()}>
           Logout
         </p>
         {profile.images.length > 0 && profile.images[0].url && (
