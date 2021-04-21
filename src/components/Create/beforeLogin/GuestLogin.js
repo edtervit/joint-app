@@ -1,4 +1,4 @@
-import { Button, Center, Input } from "@chakra-ui/react";
+import { Center, Input } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useStoreActions } from "easy-peasy";
 import { useHistory } from "react-router-dom";
