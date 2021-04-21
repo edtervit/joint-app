@@ -20,7 +20,7 @@ function QuickLinks() {
           to="/myprofile"
           className="btn bg-black bg-opacity-30 w-full max-w-full"
         >
-          View/Edit Your Music Profile
+          View/Edit Your Profile
         </ReactLink>
         <a
           href="https://ko-fi.com/edtervit"

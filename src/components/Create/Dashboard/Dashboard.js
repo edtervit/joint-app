@@ -10,13 +10,13 @@ function Dashboard() {
   return (
     <div className="bg-gradient-to-l from-purple-lighter to-orange-light flex flex-col min-h-screen items-center nav-pad">
       <div className="cont max-w-screen-xl">
-        <h1 className="title mb-8">
+        <h1 className="title mb-4">
           {profile.customName ? profile.customName : profile.display_name},
           you're done!
         </h1>
 
         <QuickShareLink />
-        <div className="flex flex-wrap md:flex-nowrap justify-center">
+        <div className="flex flex-wrap md:flex-nowrap justify-center space-x-2">
           <QuickLinks />
           <AllJoints />
         </div>

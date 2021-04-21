@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Box, Heading, Text, Link } from "@chakra-ui/react";
 import { useStoreState, useStoreActions } from "easy-peasy";
 import { Link as ReactLink } from "react-router-dom";
 import Loading from "../../../reusable/Loading";
@@ -40,46 +39,29 @@ function OthersJoints() {
   }, [profile]);
 
   return (
-    <Box my={5}>
-      <Heading size="lg" my={3}>
-        Joints others have made with you
-      </Heading>
-      <Box>
+    <div className="my-4">
+      <h2 className="title text-2xl">Joints others made with your link:</h2>
+      <div>
         {isLoading && !friendsJoints && <Loading />}
         {!friendsJoints && !isLoading && (
-          <Text>
+          <p>
             Nothing here 🙄, send your share link to friends and check back!{" "}
-          </Text>
+          </p>
         )}
         {friendsJoints && (
-          <Box>
-            <Text display="inline-block" w="50%" textAlign="center">
-              <strong>Friends Name</strong>
-            </Text>
-            <Text display="inline-block" w="50%" textAlign="center">
-              <strong>Matches</strong>
-            </Text>
-
+          <div className="flex flex-col">
             {friendsJoints.map((joint, index) => (
-              <Link
-                as={ReactLink}
-                to={`/sharej/${joint._id}`}
-                w="100%"
-                key={joint._id}
-                boxShadow={index % 2 === 0 ? "" : "inner"}
-                bg={index % 2 === 0 ? "" : "white"}
-                display="flex"
-                textAlign="center"
-                my={2}
-              >
-                <Text w="50%">{joint.userCreatorName}</Text>
-                <Text w="50%">{joint.theList.length}</Text>
-              </Link>
+              <div className="flex text-left my-2 w-full justify-between">
+                <ReactLink to={`/sharej/${joint._id}`} key={joint._id}>
+                  <p>{joint.userCreatorName}</p>
+                  <p className="font-bold">{joint.theList.length} Matches</p>
+                </ReactLink>
+              </div>
             ))}
-          </Box>
+          </div>
         )}
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 }
 

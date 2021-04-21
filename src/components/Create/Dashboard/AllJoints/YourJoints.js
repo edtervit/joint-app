@@ -1,13 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Box,
-  Heading,
-  Text,
-  Link,
-  Button,
-  HStack,
-  useToast,
-} from "@chakra-ui/react";
+import { Link, useToast } from "@chakra-ui/react";
 import { useStoreState, useStoreActions } from "easy-peasy";
 import { Link as ReactLink } from "react-router-dom";
 import Loading from "../../../reusable/Loading";
@@ -65,6 +57,7 @@ function YourJoints() {
 
       if (res && res.length > 0) {
         setYourJoints(res);
+        console.log(res);
         setIsLoading(false);
       } else {
         console.log("Database error or response is empty");
@@ -80,56 +73,39 @@ function YourJoints() {
   }, [profile, forceReload]);
 
   return (
-    <Box my={5}>
-      <Heading size="lg" my={3}>
-        Joints You Made
-      </Heading>
-      {yourJoints && <Text my={2}>Click a joint to view it!</Text>}
+    <div>
+      <h2 className="title text-2xl">Your Joints:</h2>
       {isLoading && <Loading />}
-      <Box border="gray.300 1px solid">
+      <div>
         {!yourJoints && !isLoading && (
-          <Text>
+          <p>
             You haven't made any joints, get your friends to send your their
             share link!
-          </Text>
+          </p>
         )}
         {yourJoints && !isLoading && (
-          <Box>
-            <Text display="inline-block" w="50%" textAlign="center" pr={5}>
-              <strong>Friends Name</strong>
-            </Text>
-            <Text display="inline-block" w="50%" textAlign="center" pr={10}>
-              <strong>Matches</strong>
-            </Text>
+          <div className="flex flex-col">
             {yourJoints.map((joint, index) => (
-              <HStack key={joint._id}>
-                <Link
-                  as={ReactLink}
-                  to={`/sharej/${joint._id}`}
-                  w="100%"
-                  boxShadow={index % 2 === 0 ? "" : "inner"}
-                  bg={index % 2 === 0 ? "" : "white"}
-                  display="flex"
-                  textAlign="center"
-                  my={2}
-                >
-                  <Text w="50%">{joint.userFriendName}</Text>
-                  <Text w="50%">{joint.theList.length}</Text>
+              <div
+                key={joint._id}
+                className="flex text-left my-2 w-full justify-between"
+              >
+                <Link as={ReactLink} to={`/sharej/${joint._id}`}>
+                  <p>{joint.userFriendName}</p>
+                  <p className="font-bold">{joint.theList.length} Matches</p>
                 </Link>
-                <Button
+                <button
+                  className="btn2 mr-4"
                   onClick={() => deleteJointHandler(joint._id)}
-                  size="sml"
-                  p={2}
-                  bg="red.50"
                 >
-                  -
-                </Button>
-              </HStack>
+                  Delete
+                </button>
+              </div>
             ))}
-          </Box>
+          </div>
         )}
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 }
 
