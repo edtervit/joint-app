@@ -95,7 +95,7 @@ function Nav() {
                   icon={<HamburgerIcon />}
                   variant="outline"
                 />
-                <MenuList className="bg-black! bg-opacity-30!">
+                <MenuList className="bg-black! bg-opacity-90!">
                   <MenuItem className="active-override">
                     <ReactLink className="text-white active-override" to="/">
                       Home

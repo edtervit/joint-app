@@ -3,7 +3,7 @@ import React from "react";
 import { useStoreState, useStoreActions } from "easy-peasy";
 import Konami from "react-konami-code";
 
-import { useToast, Button, Box, Heading } from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/react";
 import { Redirect } from "react-router-dom";
 import QuickShareLink from "../QuickShareLink";
 import ProfileSongList from "./ProfileSongList";
@@ -62,22 +62,25 @@ function SavedTracklists() {
   };
 
   return (
-    <Box>
-      {!isLoggedIn && <Redirect to="/" />}
-      {!hasSavedTrackLists && <Redirect to="/" />}
-      <Heading my={5}>Your Music Profile</Heading>
-      <Konami>
-        <CustomName />
-      </Konami>
-      <QuickShareLink />
-      <Button
-        bg="red.100"
-        onClick={() => deleteTrackHandler(savedTrackLists[0]._id)}
-      >
-        Delete profile and rebuild
-      </Button>
-      <ProfileSongList />
-    </Box>
+    <div className="bg-gradient-to-l from-purple-lighter to-orange-light flex flex-col min-h-screen items-center nav-pad">
+      <div className="cont">
+        {!isLoggedIn && <Redirect to="/" />}
+        {!hasSavedTrackLists && <Redirect to="/" />}
+        <h1 className="title mb-4">Your Music Profile</h1>
+        <Konami>
+          <CustomName />
+        </Konami>
+        <QuickShareLink />
+
+        <ProfileSongList />
+        <button
+          className="bg-red-btn! btn mx-auto"
+          onClick={() => deleteTrackHandler(savedTrackLists[0]._id)}
+        >
+          Delete profile and rebuild
+        </button>
+      </div>
+    </div>
   );
 }
 
