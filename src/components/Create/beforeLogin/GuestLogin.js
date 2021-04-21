@@ -20,20 +20,34 @@ function GuestLogin() {
     }
   };
 
+  const handleKeypress = (e) => {
+    //it triggers by pressing the enter key
+    if (e.keyCode === 13) {
+      guestLoginHandler();
+    }
+  };
+
   return (
-    <div>
-      <Button onClick={() => guestLoginHandler()}>Guest Login</Button>
+    <div className="cont">
+      <h1 className="title my-4">Guest Login</h1>
       <Center>
         <Input
           type="password"
           size="sml"
           w="sml"
+          placeholder="Enter Password Here"
+          p={2}
+          color="white"
           my={2}
           value={pw}
           onChange={(e) => setPw(e.target.value)}
           isInvalid={pwError ? true : false}
+          onKeyPress={handleKeypress}
         ></Input>
       </Center>
+      <button className="btn mx-auto my-4" onClick={() => guestLoginHandler()}>
+        Login
+      </button>
     </div>
   );
 }
