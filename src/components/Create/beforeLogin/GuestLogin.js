@@ -22,7 +22,8 @@ function GuestLogin() {
 
   const handleKeypress = (e) => {
     //it triggers by pressing the enter key
-    if (e.keyCode === 13) {
+    console.log(e.key);
+    if (e.key === "Enter") {
       guestLoginHandler();
     }
   };

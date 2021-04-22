@@ -4,7 +4,7 @@ import logo from "../../joint.png";
 
 import Profile from "./Profile";
 import { useStoreState, useStoreActions } from "easy-peasy";
-import { Box, IconButton, Text } from "@chakra-ui/react";
+import { IconButton, Text } from "@chakra-ui/react";
 import { Link as ReactLink } from "react-router-dom";
 import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
@@ -58,6 +58,14 @@ function Nav() {
 
   return (
     <div>
+      {isGuest && (
+        <div className="bg-green relative">
+          <Text p={1}>
+            You're logged in as a guest. Refreshing your page will delete any
+            progress.
+          </Text>
+        </div>
+      )}
       <div className="nav bg-gray bg-opacity-30 absolute p-4 w-full flex text-white items-center flex-wrap">
         <ReactLink to="/">
           {" "}
@@ -138,14 +146,6 @@ function Nav() {
           </div>
         )}
       </div>
-      {isGuest && (
-        <Box bg="green.100">
-          <Text p={1}>
-            You're logged in as a guest. Refreshing your page will delete any
-            progress.
-          </Text>
-        </Box>
-      )}
     </div>
   );
 }
