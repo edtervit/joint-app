@@ -54,7 +54,7 @@ function LikedSongs() {
           }
         });
       }
-      while (spotifyResponse.next && offset < songLimit) {
+      while (spotifyResponse && spotifyResponse.next && offset < songLimit) {
         let newParams = {
           url: `https://api.spotify.com/v1/me/tracks?offset=${offset}&limit=50`,
           token: token,
