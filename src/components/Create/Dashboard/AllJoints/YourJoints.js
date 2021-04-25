@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Link, useToast } from "@chakra-ui/react";
+import { Link, Spinner, useToast } from "@chakra-ui/react";
 import { useStoreState, useStoreActions } from "easy-peasy";
 import { Link as ReactLink } from "react-router-dom";
-import Loading from "../../../reusable/Loading";
 
 function YourJoints() {
   //  //toast
@@ -75,7 +74,7 @@ function YourJoints() {
   return (
     <div>
       <h2 className="title text-2xl">Your Joints:</h2>
-      {isLoading && <Loading />}
+      {isLoading && <Spinner size="xl" color="white"></Spinner>}
       <div>
         {!yourJoints && !isLoading && (
           <p>

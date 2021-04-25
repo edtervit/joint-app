@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useStoreState, useStoreActions } from "easy-peasy";
 import { Link as ReactLink } from "react-router-dom";
-import Loading from "../../../reusable/Loading";
+
+import { Spinner } from "@chakra-ui/spinner";
 
 function OthersJoints() {
   const friendsJoints = useStoreState((state) => state.friendsJoints);
@@ -42,7 +43,10 @@ function OthersJoints() {
     <div className="my-4">
       <h2 className="title text-2xl">Joints others made with your link:</h2>
       <div>
-        {isLoading && !friendsJoints && <Loading />}
+        {isLoading && !friendsJoints && (
+          <Spinner size="xl" color="white"></Spinner>
+        )}
+
         {!friendsJoints && !isLoading && (
           <p>
             Nothing here 🙄, send your share link to friends and check back!{" "}
