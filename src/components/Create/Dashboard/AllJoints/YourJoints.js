@@ -89,9 +89,15 @@ function YourJoints() {
                 key={joint._id}
                 className="flex text-left my-2 w-full justify-between"
               >
-                <Link as={ReactLink} to={`/sharej/${joint._id}`}>
-                  <p>{joint.userFriendName}</p>
-                  <p className="font-bold">{joint.theList.length} Matches</p>
+                <Link
+                  as={ReactLink}
+                  to={`/sharej/${joint._id}`}
+                  className="underline"
+                >
+                  <p className="">{joint.userFriendName}</p>
+                  <p className="font-bold underline">
+                    {joint.theList.length} Matches
+                  </p>
                 </Link>
                 <button
                   className="btn2 mr-4"
