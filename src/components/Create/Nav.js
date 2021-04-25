@@ -84,7 +84,7 @@ function Nav() {
                 Playlist Maker
               </ReactLink>
               <a
-                className="text-white"
+                className="text-white btn border border-white bg-transparent py-1 px-3 font-normal"
                 href="https://ko-fi.com/edtervit"
                 target="_blank"
                 rel="noreferrer"

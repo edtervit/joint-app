@@ -8,12 +8,12 @@ function Profile() {
   return (
     <div className="profileDiv">
       <ProfileDiv>
-        <p className="text-white cursor-pointer" onClick={() => logOut()}>
-          Logout
-        </p>
         {profile.images.length > 0 && profile.images[0].url && (
           <img src={profile.images[0].url} alt="" />
         )}
+        <p className="text-white cursor-pointer" onClick={() => logOut()}>
+          Logout
+        </p>
       </ProfileDiv>
     </div>
   );
@@ -32,6 +32,6 @@ const ProfileDiv = styled.div`
     width: 50px;
     border-radius: 50%;
     object-fit: cover;
-    margin-left: 20px;
+    margin-right: 20px;
   }
 `;
