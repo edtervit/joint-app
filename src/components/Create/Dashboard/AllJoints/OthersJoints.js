@@ -56,9 +56,15 @@ function OthersJoints() {
           <div className="flex flex-col">
             {friendsJoints.map((joint, index) => (
               <div className="flex text-left my-2 w-full justify-between">
-                <ReactLink to={`/sharej/${joint._id}`} key={joint._id}>
+                <ReactLink
+                  to={`/sharej/${joint._id}`}
+                  key={joint._id}
+                  className=""
+                >
                   <p>{joint.userCreatorName}</p>
-                  <p className="font-bold">{joint.theList.length} Matches</p>
+                  <p className="font-bold underline">
+                    {joint.theList.length} Matches
+                  </p>
                 </ReactLink>
               </div>
             ))}
