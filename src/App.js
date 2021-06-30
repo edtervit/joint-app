@@ -6,6 +6,8 @@ import Compare from "./components/Compare/Compare";
 import ShareJoint from "./components/share/ShareJoint";
 import MusicProfile from "./components/Create/Dashboard/MusicProfile/MusicProfile";
 import Nav from "./components/Create/Nav";
+import Footer from "./components/Create/Footer";
+
 import { useStoreState } from "easy-peasy";
 import PlaylistMaker from "./components/Create/Dashboard/PlaylistMaker";
 
@@ -23,6 +25,7 @@ function App() {
         <Route path="/playlistmaker" component={PlaylistMaker} />
         <Route path="/guest" component={Brain} />
         <Route path="/" exact component={Brain} />
+        {isLogged && <Footer />}
       </Router>
     </div>
   );
