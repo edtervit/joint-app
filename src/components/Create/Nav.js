@@ -97,7 +97,7 @@ function Nav() {
             <div className="mobile nav md:hidden flex ml-auto items-center space-x-2">
               <Profile />
               <Menu as="div" className="relative">
-                <Menu.Button className="bg-transparent! border border-white p-2 text-2xl">
+                <Menu.Button className="bg-transparent! border border-white p-2 text-1xl">
                   {GiHamburgerMenu}
                 </Menu.Button>
                 <Menu.Items className="bg-black! bg-opacity-90! absolute flex flex-col top-11 px-6 py-4 rounded-md right-0 space-y-2">
