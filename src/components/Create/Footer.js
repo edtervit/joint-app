@@ -3,7 +3,7 @@ import React from "react";
 function Footer() {
   return (
     <div className="bg-gray bg-opacity-30 absolute p-4 w-full flex text-white items-center flex-wrap bottom-0 ">
-      <div>
+      <div className="text-center w-full md:w-max md:text-left ">
         <p>
           Contact us:{" "}
           <a href="mailto:ed@edtervit.co.uk" className="underline font-bold">
@@ -22,7 +22,7 @@ function Footer() {
           </a>
         </p>
       </div>
-      <div className="flex flex-col justify-self-end ml-auto">
+      <div className="flex flex-col md:justify-self-end md:ml-auto text-center justify-center w-full md:justify-end md:w-max md:text-left ">
         <p className="">
           Design by{" "}
           <a
