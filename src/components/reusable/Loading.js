@@ -5,13 +5,25 @@ import axios from "axios";
 function Loading(props) {
   const [meme, setMeme] = useState("");
 
+  const cancelToken = axios.CancelToken;
+  const source = cancelToken.source();
+
   const getMeme = async () => {
     const response = await axios(
-      "https://www.reddit.com/r/showerthoughts/top/.json"
-    );
-    const list = response.data.data.children;
-    const joke = list[Math.floor(Math.random() * list.length)].data.title;
-    setMeme(joke);
+      "https://www.reddit.com/r/showerthoughts/top/.json",
+      {
+        cancelToken: source.token,
+      }
+    ).catch((error) => {
+      if (axios.isCancel(error)) {
+        console.log("post Request canceled");
+      }
+    });
+    if (response && response.data) {
+      const list = response.data.data.children;
+      const joke = list[Math.floor(Math.random() * list.length)].data.title;
+      setMeme(joke);
+    }
   };
 
   useEffect(() => {
@@ -19,6 +31,9 @@ function Loading(props) {
     setInterval(function () {
       getMeme();
     }, 7500);
+    return () => {
+      source.cancel();
+    };
 
     // eslint-disable-next-line
   }, []);
