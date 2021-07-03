@@ -32,7 +32,6 @@ function QuickShareLink() {
           <h2 className="text-2xl font-bold">Your Share Link</h2>
           <div className="  bg-black bg-opacity-30 rounded-2xl max-w-max px-4 py-2 text-white flex items-center mt-4 mb-2 mx-auto">
             <Link
-              divShadow="inner"
               as={ReactLink}
               to={{ pathname: clipboardValue }}
               target="_blank"
