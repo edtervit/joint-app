@@ -67,7 +67,7 @@ function Wrapped(props) {
 
   return (
     <div className="flex justify-center">
-      <div className="black-box w-full md:w-500">
+      <div className="black-box w-full md:w-550">
         {!profile && <Redirect to="/" />}
         {length === "short" && (
           <p className="text-2xl mb-4 font-bold ">Your past 4 weeks wrapped!</p>
