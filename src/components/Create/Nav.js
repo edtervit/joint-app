@@ -81,8 +81,8 @@ function Nav() {
               <ReactLink className="text-white" to="/myprofile">
                 Profile
               </ReactLink>
-              <ReactLink className="text-white" to="/playlistmaker">
-                Playlist Maker
+              <ReactLink className="text-white" to="/alwayswrapped">
+                Always Wrapped
               </ReactLink>
               <a
                 className="text-white btn border border-white bg-transparent py-1 px-3 font-normal"
@@ -117,9 +117,9 @@ function Nav() {
                   <Menu.Item className="active-override">
                     <ReactLink
                       className="text-white active-override"
-                      to="/playlistmaker"
+                      to="/alwayswrapped"
                     >
-                      Playlist Maker
+                      Always Wrapped
                     </ReactLink>
                   </Menu.Item>
                   <Menu.Item className="active-override">
