@@ -11,10 +11,10 @@ function QuickLinks() {
       </p>
       <div className="text-white flex flex-col items-center space-y-4 my-4">
         <ReactLink
-          to="/playlistmaker"
+          to="/alwayswrapped"
           className="btn bg-black bg-opacity-30 w-full max-w-full"
         >
-          Playlist Maker
+          Always Wrapped
         </ReactLink>
         <ReactLink
           to="/myprofile"

@@ -6,8 +6,10 @@ import Compare from "./components/Compare/Compare";
 import ShareJoint from "./components/share/ShareJoint";
 import MusicProfile from "./components/Create/Dashboard/MusicProfile/MusicProfile";
 import Nav from "./components/Create/Nav";
+import Footer from "./components/Create/Footer";
+import AlwaysWrapped from "./components/Create/Dashboard/AlwaysWrapped";
+
 import { useStoreState } from "easy-peasy";
-import PlaylistMaker from "./components/Create/Dashboard/PlaylistMaker";
 
 function App() {
   const isLogged = useStoreState((state) => state.isLoggedIn);
@@ -20,9 +22,10 @@ function App() {
         <Route path="/s/:trackListID" component={FriendsSavedTracklist} />
         <Route path="/compare" component={Compare} />
         <Route path="/myprofile" component={MusicProfile} />
-        <Route path="/playlistmaker" component={PlaylistMaker} />
+        <Route path="/alwayswrapped" component={AlwaysWrapped} />
         <Route path="/guest" component={Brain} />
         <Route path="/" exact component={Brain} />
+        {isLogged && <Footer />}
       </Router>
     </div>
   );

@@ -4,10 +4,11 @@ import logo from "../../joint.png";
 
 import Profile from "./Profile";
 import { useStoreState, useStoreActions } from "easy-peasy";
-import { IconButton, Text } from "@chakra-ui/react";
+import { Text } from "@chakra-ui/react";
 import { Link as ReactLink } from "react-router-dom";
-import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
-import { HamburgerIcon } from "@chakra-ui/icons";
+import { Menu } from "@headlessui/react";
+
+import { GiHamburgerMenu } from "react-icons/gi";
 
 function Nav() {
   const isLogged = useStoreState((state) => state.isLoggedIn);
@@ -80,8 +81,8 @@ function Nav() {
               <ReactLink className="text-white" to="/myprofile">
                 Profile
               </ReactLink>
-              <ReactLink className="text-white" to="/playlistmaker">
-                Playlist Maker
+              <ReactLink className="text-white" to="/alwayswrapped">
+                Always Wrapped
               </ReactLink>
               <a
                 className="text-white btn border border-white bg-transparent py-1 px-3 font-normal"
@@ -95,37 +96,33 @@ function Nav() {
             </div>
             <div className="mobile nav md:hidden flex ml-auto items-center space-x-2">
               <Profile />
-              <Menu>
-                <MenuButton
-                  className="bg-transparent!"
-                  aria-label="menu"
-                  as={IconButton}
-                  icon={<HamburgerIcon />}
-                  variant="outline"
-                />
-                <MenuList className="bg-black! bg-opacity-90!">
-                  <MenuItem className="active-override">
+              <Menu as="div" className="relative">
+                <Menu.Button className="bg-transparent! border border-white p-2 text-1xl">
+                  {GiHamburgerMenu}
+                </Menu.Button>
+                <Menu.Items className="bg-black! bg-opacity-90! absolute flex flex-col top-11 px-6 py-4 rounded-md right-0 space-y-2">
+                  <Menu.Item className="active-override">
                     <ReactLink className="text-white active-override" to="/">
                       Home
                     </ReactLink>
-                  </MenuItem>
-                  <MenuItem className="active-override">
+                  </Menu.Item>
+                  <Menu.Item className="active-override">
                     <ReactLink
                       className="text-white active-override"
                       to="/myprofile"
                     >
                       Profile
                     </ReactLink>
-                  </MenuItem>
-                  <MenuItem className="active-override">
+                  </Menu.Item>
+                  <Menu.Item className="active-override">
                     <ReactLink
                       className="text-white active-override"
-                      to="/playlistmaker"
+                      to="/alwayswrapped"
                     >
-                      Playlist Maker
+                      Always Wrapped
                     </ReactLink>
-                  </MenuItem>
-                  <MenuItem className="active-override">
+                  </Menu.Item>
+                  <Menu.Item className="active-override">
                     <a
                       className="text-white active-override"
                       href="https://ko-fi.com/edtervit"
@@ -134,8 +131,8 @@ function Nav() {
                     >
                       Donate
                     </a>
-                  </MenuItem>
-                </MenuList>
+                  </Menu.Item>
+                </Menu.Items>
               </Menu>
             </div>
           </>

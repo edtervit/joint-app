@@ -57,7 +57,6 @@ const model = {
       normal: parsedToken,
       refresh: refreshToken,
     };
-    await actions.setTokens(tokens);
     if (urlState === "fromShare") {
       actions.setFromSharePage(true);
     } else if (urlState === "normal") {
@@ -84,6 +83,7 @@ const model = {
       if (customName[0] && customName[0].userCustomName) {
         actions.setCustomName(customName[0].userCustomName);
       }
+      await actions.setTokens(tokens);
       //if using is logged in with the guest account, activate guest mode
       if (data.id === "jxhj2l7avhhdl4ebfywbpon4g") {
         actions.setIsGuest(true);
