@@ -14,6 +14,7 @@ module.exports = {
       },
       width: {
         500: "500px",
+        550: "550px",
       },
       colors: {
         blue: {
