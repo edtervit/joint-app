@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useStoreState, useStoreActions } from "easy-peasy";
 import SaveProfileToDB from "./SaveProfileToDB";
 
@@ -7,6 +7,10 @@ import ListOfTracks from "../../reusable/ListOfTracks";
 function StepTwo() {
   let usersSelectedTracks = useStoreState((state) => state.usersSelectedTracks);
   const clearList = useStoreActions((action) => action.clearList);
+
+  useEffect(() => {
+    document.title = "Profile Builder - Step 2";
+  }, []);
 
   return (
     <div className="">

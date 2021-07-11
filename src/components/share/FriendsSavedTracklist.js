@@ -9,6 +9,12 @@ import logo from "../../joint.png";
 import { FaChevronDown } from "react-icons/fa";
 
 function FriendsSavedTracklist({ match }) {
+  //page title
+
+  useEffect(() => {
+    document.title = "Joint Playlist - Friend's Link";
+  }, []);
+
   //state
   const [isValid, setIsVaild] = useState(false);
   const [isLoading, setIsLoading] = useState(true);

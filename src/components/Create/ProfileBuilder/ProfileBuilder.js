@@ -6,6 +6,11 @@ import StepTwo from "./Steptwo";
 import { useToast } from "@chakra-ui/react";
 
 function ProfileBuilder() {
+  //page title
+  useEffect(() => {
+    document.title = "Profile Builder - Step 1";
+  }, []);
+
   //toast
   const toast = useToast();
   const isGuest = useStoreState((state) => state.isGuest);

@@ -12,7 +12,7 @@ import Footer from "./components/Create/Footer";
 import AlwaysWrapped from "./components/Create/Dashboard/AlwaysWrapped";
 
 //tracking
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 
 import { useStoreState } from "easy-peasy";
 
@@ -22,7 +22,7 @@ function App() {
   useEffect(() => {
     ReactGA.initialize("G-059VY6T503");
 
-    ReactGA.pageview(window.location.pathname + window.location.search);
+    ReactGA.send(window.location.pathname + window.location.search);
   }, []);
 
   return (
