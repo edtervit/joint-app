@@ -45,7 +45,7 @@ function Loading(props) {
       {props.importSongs && (
         <p>Each 100 songs takes about 1 second so bare with us.</p>
       )}
-      {meme && (
+      {props.showMeme && meme && (
         <div className="absolute bottom-20">
           <p className="text-center text-sm">{meme && meme}</p>
           <p className="text-center text-sm py-4">(thanks r/showerThoughts)</p>
