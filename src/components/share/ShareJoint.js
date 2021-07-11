@@ -9,6 +9,11 @@ import ListOfTracks from "../reusable/ListOfTracks";
 import Loading from "../reusable/Loading";
 
 function ShareJoint({ match }) {
+  //page title
+  useEffect(() => {
+    document.title = "Joint";
+  }, []);
+
   //state
   const [isValid, setIsVaild] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
