@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { useStoreState, useStoreActions } from "easy-peasy";
 import Konami from "react-konami-code";
@@ -10,6 +10,12 @@ import ProfileSongList from "./ProfileSongList";
 import CustomName from "./CustomName";
 
 function SavedTracklists() {
+  //page title
+
+  useEffect(() => {
+    document.title = "Profile";
+  }, []);
+
   //  //toast
   const toast = useToast();
 

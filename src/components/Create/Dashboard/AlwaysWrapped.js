@@ -1,7 +1,12 @@
 import React from "react";
+import { useEffect } from "react";
 import Wrapped from "../../Wrapped/Wrapped";
 
 function AlwaysWrapped() {
+  useEffect(() => {
+    document.title = "Always Wrapped";
+  }, []);
+
   return (
     <div className="bg-gradient-to-l from-purple-lighter to-orange-light flex flex-col min-h-screen items-center nav-pad">
       <div className="cont">

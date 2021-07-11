@@ -3,15 +3,12 @@ import AllJoints from "./AllJoints";
 import QuickLinks from "./QuickLinks";
 import QuickShareLink from "./QuickShareLink";
 import { useStoreState } from "easy-peasy";
-import ReactGA from "react-ga";
 
 function Dashboard() {
   const profile = useStoreState((state) => state.profile);
 
   useEffect(() => {
-    ReactGA.initialize("G-059VY6T503");
-
-    ReactGA.pageview("/dashboard");
+    document.title = "Dashboard";
   }, []);
 
   return (
