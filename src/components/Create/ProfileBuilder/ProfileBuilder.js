@@ -76,7 +76,7 @@ function ProfileBuilder() {
       <div className={isGettingData ? "hidden" : ""}>
         {!gotAllData && <SourcesIndex />}
       </div>
-      {isGettingData && <Loading importSongs={true} />}
+      {isGettingData && <Loading importSongs={true} showMeme={true} />}
       {gotAllData && <StepTwo />}
     </div>
   );
